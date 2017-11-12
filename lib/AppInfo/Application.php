@@ -40,12 +40,14 @@ class Application extends App {
 
 		$container = $this->getContainer();
 		$serverContainer = $container->getServer();
+		$config = $serverContainer->getConfig();
 
 		/* @var $config IConfig */
 		$config = $container->query(IConfig::class);
 		$dsn = $config->getSystemValue('sentry.dsn', null);
 
 		$this->client = new Raven_Client($dsn);
+		$this->client->setRelease($config->getSystemValue('version', '0.0.0'));
 		$serverContainer->registerService('SentryClient', function() {
 			return $this->client;
 		});
@@ -56,13 +58,6 @@ class Application extends App {
 		$errorHandler->registerExceptionHandler();
 		$errorHandler->registerErrorHandler();
 		$errorHandler->registerShutdownFunction();
-
-		$container = $this->getContainer();
-		$serverContainer = $container->getServer();
-
-		$serverContainer->registerService('SentryErrorHandler', function() use ($errorHandler) {
-			return $errorHandler;
-		});
 	}
 
 }
