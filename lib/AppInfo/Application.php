@@ -22,8 +22,10 @@
 
 namespace OCA\Sentry\AppInfo;
 
+use OCA\Sentry\Reporter\SentryReporterAdapter;
 use OCP\AppFramework\App;
 use OCP\IConfig;
+use OCP\Support\CrashReport\IRegistry;
 use Raven_Client;
 use Raven_ErrorHandler;
 
@@ -39,18 +41,20 @@ class Application extends App {
 		parent::__construct('sentry', $urlParams);
 
 		$container = $this->getContainer();
-		$serverContainer = $container->getServer();
-		$config = $serverContainer->getConfig();
 
 		/* @var $config IConfig */
 		$config = $container->query(IConfig::class);
 		$dsn = $config->getSystemValue('sentry.dsn', null);
 
-		$this->client = new Raven_Client($dsn);
-		$this->client->setRelease($config->getSystemValue('version', '0.0.0'));
-		$serverContainer->registerService('SentryClient', function() {
-			return $this->client;
-		});
+		if (!is_null($dsn)) {
+			$this->client = new Raven_Client($dsn);
+			$this->client->setRelease($config->getSystemValue('version', '0.0.0'));
+
+			/* @var $registry IRegistry */
+			$registry = $container->query(IRegistry::class);
+			$reporter = new SentryReporterAdapter($this->client);
+			$registry->register($reporter);
+		}
 	}
 
 	public function registerSentryClient() {
