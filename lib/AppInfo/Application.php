@@ -45,20 +45,35 @@ class Application extends App {
 		/* @var $config IConfig */
 		$config = $container->query(IConfig::class);
 		$dsn = $config->getSystemValue('sentry.dsn', null);
-
 		if (!is_null($dsn)) {
-			$this->client = new Raven_Client($dsn);
-			$this->client->setRelease($config->getSystemValue('version', '0.0.0'));
-
-			/* @var $registry IRegistry */
-			$registry = $container->query(IRegistry::class);
-			$reporter = new SentryReporterAdapter($this->client);
-			$registry->register($reporter);
+			$this->registerClient($dsn);
 		}
 	}
 
-	public function registerSentryClient() {
-		$errorHandler = new Raven_ErrorHandler($this->client);
+	/**
+	 * @param string $dsn
+	 */
+	private function registerClient($dsn) {
+		$container = $this->getContainer();
+		/* @var $config IConfig */
+		$config = $container->query(IConfig::class);
+
+		$client = new Raven_Client($dsn);
+		$client->setRelease($config->getSystemValue('version', '0.0.0'));
+		$container->registerService(Raven_Client::class, function() use ($client) {
+			return $client;
+		});
+
+		/* @var $registry IRegistry */
+		$registry = $container->query(IRegistry::class);
+		$reporter = $container->query(SentryReporterAdapter::class);
+		$registry->register($reporter);
+
+		$this->registerErrorHandlers($client);
+	}
+
+	private function registerErrorHandlers(Raven_Client $client) {
+		$errorHandler = new Raven_ErrorHandler($client);
 		$errorHandler->registerExceptionHandler();
 		$errorHandler->registerErrorHandler();
 		$errorHandler->registerShutdownFunction();

@@ -24,4 +24,3 @@ include_once __DIR__ . '/../vendor/autoload.php';
 use OCA\Sentry\AppInfo\Application;
 
 $app = new Application();
-$app->registerSentryClient();

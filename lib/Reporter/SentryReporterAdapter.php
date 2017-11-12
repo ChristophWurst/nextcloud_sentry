@@ -23,11 +23,15 @@
 namespace OCA\Sentry\Reporter;
 
 use Exception;
+use OCP\IUserSession;
 use OCP\Support\CrashReport\IReporter;
 use Raven_Client;
 use Throwable;
 
 class SentryReporterAdapter implements IReporter {
+
+	/** @var IUserSession */
+	private $userSession;
 
 	/** @var Raven_Client */
 	private $client;
@@ -35,8 +39,9 @@ class SentryReporterAdapter implements IReporter {
 	/**
 	 * @param Raven_Client $client
 	 */
-	public function __construct(Raven_Client $client) {
+	public function __construct(Raven_Client $client, IUserSession $userSession) {
 		$this->client = $client;
+		$this->userSession = $userSession;
 	}
 
 	/**
@@ -45,7 +50,16 @@ class SentryReporterAdapter implements IReporter {
 	 * @param Exception|Throwable $exception
 	 */
 	public function report($exception) {
-		$this->client->captureException($exception);
+		$context = [];
+
+		$user = $this->userSession->getUser();
+		if (!is_null($user)) {
+			$context['user'] = [
+				'id' => $user->getUID(),
+			];
+		}
+
+		$this->client->captureException($exception, $context);
 	}
 
 }
