@@ -1,0 +1,14 @@
+{
+	"name": "christophwurst/nextcloud_sentry",
+	"type": "library",
+	"license": "AGPL-3.0",
+	"authors": [
+		{
+			"name": "Christoph Wurst",
+			"email": "christoph@winzerhof-wurst.at"
+		}
+	],
+	"require": {
+		"sentry/sentry": "^1.8"
+	}
+}

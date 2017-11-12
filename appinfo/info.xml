@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<info xmlns:xsi= "http://www.w3.org/2001/XMLSchema-instance"
+	  xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
+	<id>sentry</id>
+	<name>Sentry</name>
+	<summary>Sentry client</summary>
+	<description>Sentry client</description>
+	<version>0.1.0</version>
+	<licence>agpl</licence>
+	<author>Christoph Wurst</author>
+	<namespace>Sentry</namespace>
+	<dependencies>
+		<php min-version="5.6" max-version="7.1" />
+		<nextcloud min-version="12" max-version="13" />
+	</dependencies>
+</info>
