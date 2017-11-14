@@ -48,18 +48,19 @@ class SentryReporterAdapter implements IReporter {
 	 * Report an (unhandled) exception to Sentry
 	 *
 	 * @param Exception|Throwable $exception
+	 * @param array $context
 	 */
-	public function report($exception) {
-		$context = [];
+	public function report($exception, array $context = []) {
+		$sentryContext = [];
 
 		$user = $this->userSession->getUser();
 		if (!is_null($user)) {
-			$context['user'] = [
+			$sentryContext['user'] = [
 				'id' => $user->getUID(),
 			];
 		}
 
-		$this->client->captureException($exception, $context);
+		$this->client->captureException($exception, $sentryContext);
 	}
 
 }
