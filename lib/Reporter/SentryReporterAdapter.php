@@ -25,6 +25,7 @@ namespace OCA\Sentry\Reporter;
 use Exception;
 use OCP\IUserSession;
 use OCP\Support\CrashReport\IReporter;
+use OCP\Util;
 use Raven_Client;
 use Throwable;
 
@@ -35,6 +36,15 @@ class SentryReporterAdapter implements IReporter {
 
 	/** @var Raven_Client */
 	private $client;
+
+	/** @var array mapping of log levels */
+	private $levels = [
+		Util::DEBUG => 'debug',
+		Util::INFO => 'info',
+		Util::WARN => 'warning',
+		Util::ERROR => 'error',
+		Util::FATAL => 'fatal',
+	];
 
 	/**
 	 * @param Raven_Client $client
@@ -58,6 +68,9 @@ class SentryReporterAdapter implements IReporter {
 			$sentryContext['user'] = [
 				'id' => $user->getUID(),
 			];
+		}
+		if (isset($context['level'])) {
+			$sentryContext['level'] = $this->levels[$context['level']];
 		}
 
 		$this->client->captureException($exception, $sentryContext);
