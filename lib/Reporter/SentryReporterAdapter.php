@@ -23,6 +23,7 @@
 namespace OCA\Sentry\Reporter;
 
 use Exception;
+use OCP\IConfig;
 use OCP\IUserSession;
 use OCP\Support\CrashReport\IReporter;
 use OCP\Util;
@@ -46,12 +47,16 @@ class SentryReporterAdapter implements IReporter {
 		Util::FATAL => 'fatal',
 	];
 
+	/** @var int */
+	private $minimumLogLevel;
+
 	/**
 	 * @param Raven_Client $client
 	 */
-	public function __construct(Raven_Client $client, IUserSession $userSession) {
+	public function __construct(Raven_Client $client, IUserSession $userSession, IConfig $config) {
 		$this->client = $client;
 		$this->userSession = $userSession;
+		$this->minimumLogLevel = (int)$config->getSystemValue('sentry.minimum.log.level', Util::WARN);
 	}
 
 	/**
@@ -63,14 +68,19 @@ class SentryReporterAdapter implements IReporter {
 	public function report($exception, array $context = []) {
 		$sentryContext = [];
 
+		if (isset($context['level'])) {
+			if ($context['level'] < $this->minimumLogLevel) {
+				return;
+			}
+
+			$sentryContext['level'] = $this->levels[$context['level']];
+		}
+
 		$user = $this->userSession->getUser();
 		if (!is_null($user)) {
 			$sentryContext['user'] = [
 				'id' => $user->getUID(),
 			];
-		}
-		if (isset($context['level'])) {
-			$sentryContext['level'] = $this->levels[$context['level']];
 		}
 
 		$this->client->captureException($exception, $sentryContext);
