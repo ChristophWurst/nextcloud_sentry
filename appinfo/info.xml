@@ -13,6 +13,9 @@
 	<types>
 		<authentication/>
 	</types>
+	<documentation>
+		<admin>https://github.com/ChristophWurst/nextcloud_sentry/blob/master/doc/admin.md</admin>
+	</documentation>
 	<category>integration</category>
 	<category>tools</category>
 	<website>https://github.com/ChristophWurst/nextcloud_sentry</website>
