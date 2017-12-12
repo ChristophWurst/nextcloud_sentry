@@ -8,6 +8,7 @@
 	<version>1.0.0</version>
 	<licence>agpl</licence>
 	<author>Christoph Wurst</author>
+	<author>Morris Jobke</author>
 	<namespace>Sentry</namespace>
 	<types>
 		<authentication/>
