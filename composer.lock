@@ -4,8 +4,36 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "1cb0a1304e35cf474fd831504d3c2b40",
+    "content-hash": "ad193ee1cc662555f8e32948cdce52db",
     "packages": [
+        {
+            "name": "christophwurst/nextcloud",
+            "version": "v13.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ChristophWurst/nextcloud_composer.git",
+                "reference": "a998a1f6c0d6577e5780d9d4b2837b65579de662"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ChristophWurst/nextcloud_composer/zipball/a998a1f6c0d6577e5780d9d4b2837b65579de662",
+                "reference": "a998a1f6c0d6577e5780d9d4b2837b65579de662",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "AGPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Christoph Wurst",
+                    "email": "christoph@winzerhof-wurst.at"
+                }
+            ],
+            "description": "Composer package containing Nextcloud's public API (classes, interfaces)",
+            "time": "2018-03-17T10:08:50+00:00"
+        },
         {
             "name": "sentry/sentry",
             "version": "1.8.3",
