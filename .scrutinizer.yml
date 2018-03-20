@@ -14,6 +14,3 @@ filter:
 imports:
     - php
 
-tools:
-    external_code_coverage:
-        timeout: 600 # Timeout in seconds. 10 minutes
