@@ -9,6 +9,6 @@
 	],
 	"require": {
 		"sentry/sentry": "^1.8",
-		"christophwurst/nextcloud": "13.0.1"
+		"christophwurst/nextcloud": "13.0.2"
 	}
 }
