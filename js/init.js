@@ -32,7 +32,6 @@ if (typeof sentry_public_dsn !== 'undefined') {
 	});
 
 	Raven.captureException(new Error('what'));
-	console.error(Raven);
 } else {
 	console.warn('no Sentry dsn found, no errors will be reported');
 }
