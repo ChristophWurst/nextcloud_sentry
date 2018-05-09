@@ -31,9 +31,6 @@ use Raven_ErrorHandler;
 
 class Application extends App {
 
-	/** @var Raven_Client */
-	private $client;
-
 	/**
 	 * @param array $urlParams
 	 */
