@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 1.2.0 - 2018-05-14
+### Changed
+- Updated Sentry SDK
+
 ## 1.1.0 - 2017-12-12
 ### Added
 - Configurable log level to filter out warnings
