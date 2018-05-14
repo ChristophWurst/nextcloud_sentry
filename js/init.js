@@ -30,8 +30,6 @@ if (typeof sentry_public_dsn !== 'undefined') {
 	Raven.setUserContext({
 		id: OC.currentUser
 	});
-
-	Raven.captureException(new Error('what'));
 } else {
 	console.warn('no Sentry dsn found, no errors will be reported');
 }
