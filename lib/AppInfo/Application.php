@@ -87,6 +87,7 @@ class Application extends App {
 		$parsedUrl = parse_url($publicDsn);
 		if (!isset($parsedUrl['scheme']) || !isset($parsedUrl['host'])) {
 			// Misconfigured setup -> ignore
+			return;
 		}
 
 		$domain = $parsedUrl['scheme'] . '://' . $parsedUrl['host'];
