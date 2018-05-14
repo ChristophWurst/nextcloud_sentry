@@ -21,4 +21,4 @@
  *
  */
 ?>
-var sentry_public_dsn = <?php print_unescaped(is_null($dsn) ? 'null' : "'$dsn'") ?>;
+var sentry_public_dsn = <?php print_unescaped(is_null($_['dsn']) ? 'null' : "'" . $_['dsn'] . "'") ?>;
