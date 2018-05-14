@@ -24,7 +24,7 @@
 
 import Raven from 'raven-js';
 
-if (typeof sentry_public_dsn !== 'undefined') {
+if (typeof sentry_public_dsn !== 'undefined' && sentry_public_dsn !== null) {
 	Raven.config(sentry_public_dsn).install();
 
 	Raven.setUserContext({
