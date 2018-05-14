@@ -1,7 +1,9 @@
-<?php
+/* global sentry_public_dsn, OC */
 
 /**
- * @author Christoph Wurst <christoph@winzerhof-wurst.at>
+ * @copyright 2018 Christoph Wurst <christoph@winzerhof-wurst.at>
+ *
+ * @author 2018 Christoph Wurst <christoph@winzerhof-wurst.at>
  *
  * @license GNU AGPL version 3 or any later version
  *
@@ -19,11 +21,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-include_once __DIR__ . '/../vendor/autoload.php';
 
-\OCP\Util::addScript('sentry', 'dsn');
-\OCP\Util::addScript('sentry', 'build/sentry');
+import Raven from 'raven-js';
 
-use OCA\Sentry\AppInfo\Application;
+if (typeof sentry_public_dsn !== 'undefined') {
+	Raven.config(sentry_public_dsn).install();
 
-$app = new Application();
+	Raven.setUserContext({
+		id: OC.currentUser
+	});
+} else {
+	console.warn('no Sentry dsn found, no errors will be reported');
+}

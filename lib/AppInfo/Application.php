@@ -22,17 +22,17 @@
 
 namespace OCA\Sentry\AppInfo;
 
+use OC;
 use OCA\Sentry\Reporter\SentryReporterAdapter;
 use OCP\AppFramework\App;
+use OCP\AppFramework\Http\ContentSecurityPolicy;
 use OCP\IConfig;
+use OCP\Security\IContentSecurityPolicyManager;
 use OCP\Support\CrashReport\IRegistry;
 use Raven_Client;
 use Raven_ErrorHandler;
 
 class Application extends App {
-
-	/** @var Raven_Client */
-	private $client;
 
 	/**
 	 * @param array $urlParams
@@ -47,6 +47,10 @@ class Application extends App {
 		$dsn = $config->getSystemValue('sentry.dsn', null);
 		if (!is_null($dsn)) {
 			$this->registerClient($dsn);
+		}
+		$publicDsn = $config->getSystemValue('sentry.public-dsn', null);
+		if (!is_null($publicDsn)) {
+			$this->addCsp($publicDsn);
 		}
 	}
 
@@ -77,6 +81,20 @@ class Application extends App {
 		$errorHandler->registerExceptionHandler();
 		$errorHandler->registerErrorHandler();
 		$errorHandler->registerShutdownFunction();
+	}
+
+	public function addCsp($publicDsn) {
+		$parsedUrl = parse_url($publicDsn);
+		if (!isset($parsedUrl['scheme']) || !isset($parsedUrl['host'])) {
+			// Misconfigured setup -> ignore
+			return;
+		}
+
+		$domain = $parsedUrl['scheme'] . '://' . $parsedUrl['host'];
+		$csp = new ContentSecurityPolicy();
+		$csp->addAllowedConnectDomain($domain);
+		$cspManager = OC::$server->query(IContentSecurityPolicyManager::class);
+		$cspManager->addDefaultPolicy($csp);
 	}
 
 }

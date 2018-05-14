@@ -1,7 +1,8 @@
 <?php
-
 /**
- * @author Christoph Wurst <christoph@winzerhof-wurst.at>
+ * @copyright 2018 Christoph Wurst <christoph@winzerhof-wurst.at>
+ *
+ * @author 2018 Christoph Wurst <christoph@winzerhof-wurst.at>
  *
  * @license GNU AGPL version 3 or any later version
  *
@@ -19,11 +20,5 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-include_once __DIR__ . '/../vendor/autoload.php';
-
-\OCP\Util::addScript('sentry', 'dsn');
-\OCP\Util::addScript('sentry', 'build/sentry');
-
-use OCA\Sentry\AppInfo\Application;
-
-$app = new Application();
+?>
+var sentry_public_dsn = <?php print_unescaped(is_null($dsn) ? 'null' : "'$dsn'") ?>;

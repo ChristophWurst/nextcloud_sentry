@@ -2,17 +2,27 @@
 
 ## Configuration
 
-All this app needs to operate is a valid Sentry DSN. You can set it via the command line
+All this app needs to operate is a valid Sentry DSN and a public DSN. You can set it via the command line
 
 ```bash
 php occ config:system:set sentry.dsn --value=https://xxxxx:yyyyy@sentry.io/1234567
+php occ config:system:set sentry.public-dsn --value=https://xxxxx@sentry.io/1234567
 ```
 
 or add the entry directly to `config/config.php`
 
 ```
-  "sentry.dsn" => "https://xxxxx:yyyyy@sentry.io/1234567"
+  "sentry.dsn" => "https://xxxxx:yyyyy@sentry.io/1234567",
+  "sentry.public-dsn" => "https://xxxxx@sentry.io/1234567",
 ```
+
+If you omit the `sentry.public-dsn` config, client-side (browser) errors won't be reported.
+
+### Preventing Abuse
+
+[It is recommended](https://docs.sentry.io/clients/javascript/usage/#preventing-abuse) to whitelist
+known hosts (your Nextcloud host) to prevent malicious reports.
+
 
 ### Minimum log level
 
