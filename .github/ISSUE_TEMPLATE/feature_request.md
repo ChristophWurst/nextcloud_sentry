@@ -1,6 +1,7 @@
 ---
 name: 🚀 Feature Request
 about: You have a neat idea that should be implemented?
+version: 0.1
 ---
 
 ### Feature Request

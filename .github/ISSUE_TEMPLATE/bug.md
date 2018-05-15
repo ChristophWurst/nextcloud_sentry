@@ -1,6 +1,7 @@
 ---
 name: 🐛 Bug
 about: Have you encountered a bug?
+version: 0.1
 ---
 
 ### Steps to reproduce
