@@ -42,6 +42,7 @@ class ScriptController extends Controller {
 	}
 
 	/**
+	 * @PublicPage
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
 	 */
