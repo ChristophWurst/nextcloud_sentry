@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 3.0.0 – 2018-08-02
+### Changed
+- Dropped Nextcloud 13 support
+- Requires php7.0+
+- Updated Sentry library
+
 ## 2.0.1 - 2018-05-16
 ### Fixed
 - JavaScript exception reporting on public pages
