@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * @author Christoph Wurst <christoph@winzerhof-wurst.at>
@@ -24,9 +25,9 @@ namespace OCA\Sentry\Reporter;
 
 use Exception;
 use OCP\IConfig;
+use OCP\ILogger;
 use OCP\IUserSession;
 use OCP\Support\CrashReport\IReporter;
-use OCP\Util;
 use Raven_Client;
 use Throwable;
 
@@ -40,11 +41,11 @@ class SentryReporterAdapter implements IReporter {
 
 	/** @var array mapping of log levels */
 	private $levels = [
-		Util::DEBUG => 'debug',
-		Util::INFO => 'info',
-		Util::WARN => 'warning',
-		Util::ERROR => 'error',
-		Util::FATAL => 'fatal',
+		ILogger::DEBUG => 'debug',
+		ILogger::INFO => 'info',
+		ILogger::WARN => 'warning',
+		ILogger::ERROR => 'error',
+		ILogger::FATAL => 'fatal',
 	];
 
 	/** @var int */
@@ -56,7 +57,7 @@ class SentryReporterAdapter implements IReporter {
 	public function __construct(Raven_Client $client, IUserSession $userSession, IConfig $config) {
 		$this->client = $client;
 		$this->userSession = $userSession;
-		$this->minimumLogLevel = (int)$config->getSystemValue('sentry.minimum.log.level', Util::WARN);
+		$this->minimumLogLevel = (int)$config->getSystemValue('sentry.minimum.log.level', ILogger::WARN);
 	}
 
 	/**
