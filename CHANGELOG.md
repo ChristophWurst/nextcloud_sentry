@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 3.1.0 – 2018-08-07
+### Added
+- Test command `occ sentry:test` to test the configuration
+
 ## 3.0.0 – 2018-08-02
 ### Changed
 - Dropped Nextcloud 13 support
