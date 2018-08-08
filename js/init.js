@@ -1,4 +1,4 @@
-/* global sentry_public_dsn, OC */
+/* global sentry_public_dsn, OC, oc_config */
 
 /**
  * @copyright 2018 Christoph Wurst <christoph@winzerhof-wurst.at>
@@ -30,6 +30,9 @@ if (typeof sentry_public_dsn !== 'undefined' && sentry_public_dsn !== null) {
 	Raven.setUserContext({
 		id: OC.currentUser
 	});
+	if (typeof oc_config.version !== 'undefined') {
+		Raven.setRelease(oc_config.version);
+	}
 } else {
 	console.warn('no Sentry dsn found, no errors will be reported');
 }
