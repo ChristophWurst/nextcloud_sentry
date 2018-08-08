@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 3.2.0 – 2018-08-08
+### Added
+- Release version tagging for JavaScript reports
+
 ## 3.1.0 – 2018-08-07
 ### Added
 - Test command `occ sentry:test` to test the configuration
