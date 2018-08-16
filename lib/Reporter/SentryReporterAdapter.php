@@ -68,6 +68,7 @@ class SentryReporterAdapter implements IReporter {
 	 */
 	public function report($exception, array $context = []) {
 		$sentryContext = [];
+		$sentryContext['tags'] = [];
 
 		if (isset($context['level'])) {
 			if ($context['level'] < $this->minimumLogLevel) {
@@ -75,6 +76,9 @@ class SentryReporterAdapter implements IReporter {
 			}
 
 			$sentryContext['level'] = $this->levels[$context['level']];
+		}
+		if (isset($context['app'])) {
+			$sentryContext['tags']['app'] = $context['app'];
 		}
 
 		$user = $this->userSession->getUser();
