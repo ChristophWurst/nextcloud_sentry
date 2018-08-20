@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 3.3.0 – 2018-08-20
+### Added
+- Tagging of the affected app if it's known by the context
+### Changed
+- Updated Sentry's PHP library
+
 ## 3.2.0 – 2018-08-08
 ### Added
 - Release version tagging for JavaScript reports
