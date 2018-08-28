@@ -1,26 +1,31 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "74e3c4766b0472dd8bfed844df5fbd9a",
+    "content-hash": "985d50efc851bd50a1932c0c96dc679b",
     "packages": [
         {
             "name": "christophwurst/nextcloud",
-            "version": "13.0.2",
+            "version": "14.0.0-beta2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ChristophWurst/nextcloud_composer.git",
-                "reference": "dcfe63673eed9a9a7971a96219055080868942fb"
+                "reference": "8dc33a2dd909c8bca0a77de1dd6b996cebf92e7e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ChristophWurst/nextcloud_composer/zipball/dcfe63673eed9a9a7971a96219055080868942fb",
-                "reference": "dcfe63673eed9a9a7971a96219055080868942fb",
+                "url": "https://api.github.com/repos/ChristophWurst/nextcloud_composer/zipball/8dc33a2dd909c8bca0a77de1dd6b996cebf92e7e",
+                "reference": "8dc33a2dd909c8bca0a77de1dd6b996cebf92e7e",
                 "shasum": ""
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "14.0.0-dev"
+                }
+            },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "AGPL-3.0-or-later"
@@ -32,20 +37,20 @@
                 }
             ],
             "description": "Composer package containing Nextcloud's public API (classes, interfaces)",
-            "time": "2018-04-26T12:12:23+00:00"
+            "time": "2018-08-07T05:05:28+00:00"
         },
         {
             "name": "sentry/sentry",
-            "version": "1.9.0",
+            "version": "1.9.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/getsentry/sentry-php.git",
-                "reference": "c90567d78382b803e563939654d1563ddee61707"
+                "reference": "6b4c80ee1f5d9d5ab5bae949f4eb5d758a0bf64b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/getsentry/sentry-php/zipball/c90567d78382b803e563939654d1563ddee61707",
-                "reference": "c90567d78382b803e563939654d1563ddee61707",
+                "url": "https://api.github.com/repos/getsentry/sentry-php/zipball/6b4c80ee1f5d9d5ab5bae949f4eb5d758a0bf64b",
+                "reference": "6b4c80ee1f5d9d5ab5bae949f4eb5d758a0bf64b",
                 "shasum": ""
             },
             "require": {
@@ -72,7 +77,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.9.x-dev"
+                    "dev-master": "1.10.x-dev"
                 }
             },
             "autoload": {
@@ -96,13 +101,15 @@
                 "log",
                 "logging"
             ],
-            "time": "2018-05-03T12:06:52+00:00"
+            "time": "2018-08-18T19:41:03+00:00"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "christophwurst/nextcloud": 10
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

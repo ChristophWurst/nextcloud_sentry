@@ -1,4 +1,4 @@
-/* global OC */
+/* global OC, oc_config */
 
 /**
  * @copyright 2018 Christoph Wurst <christoph@winzerhof-wurst.at>
@@ -32,6 +32,9 @@ loadConfig().then((config) => {
 		Raven.setUserContext({
 			id: OC.currentUser
 		});
+		if (typeof oc_config.version !== 'undefined') {
+			Raven.setRelease(oc_config.version);
+		}
 	} else {
 		console.warn('no Sentry dsn found, no errors will be reported');
 	}

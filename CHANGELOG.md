@@ -1,6 +1,26 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 3.3.0 – 2018-08-20
+### Added
+- Tagging of the affected app if it's known by the context
+### Changed
+- Updated Sentry's PHP library
+
+## 3.2.0 – 2018-08-08
+### Added
+- Release version tagging for JavaScript reports
+
+## 3.1.0 – 2018-08-07
+### Added
+- Test command `occ sentry:test` to test the configuration
+
+## 3.0.0 – 2018-08-02
+### Changed
+- Dropped Nextcloud 13 support
+- Requires php7.0+
+- Updated Sentry library
+
 ## 2.0.1 - 2018-05-16
 ### Fixed
 - JavaScript exception reporting on public pages
