@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright 2018 Christoph Wurst <christoph@winzerhof-wurst.at>
  *
@@ -20,5 +21,35 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-?>
-var sentry_public_dsn = <?php print_unescaped(is_null($_['dsn']) ? 'null' : "'" . $_['dsn'] . "'") ?>;
+
+namespace OCA\Sentry\Controller;
+
+use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http\JSONResponse;
+use OCP\IConfig;
+use OCP\IRequest;
+
+class ConfigController extends Controller {
+
+	/** @var IConfig */
+	private $config;
+
+	public function __construct(IRequest $request, IConfig $config) {
+		parent::__construct('sentry', $request);
+		$this->config = $config;
+	}
+
+	/**
+	 * @PublicPage
+	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 */
+	public function get(): JSONResponse {
+		$pubDsn = $this->config->getSystemValue('sentry.public-dsn', null);
+
+		return new JSONResponse([
+			'dsn' => $pubDsn,
+		]);
+	}
+
+}

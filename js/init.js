@@ -1,4 +1,4 @@
-/* global sentry_public_dsn, OC */
+/* global OC */
 
 /**
  * @copyright 2018 Christoph Wurst <christoph@winzerhof-wurst.at>
@@ -22,14 +22,17 @@
  *
  */
 
-import Raven from 'raven-js';
+import Raven from 'raven-js'
+import {loadConfig} from 'service/config';
 
-if (typeof sentry_public_dsn !== 'undefined' && sentry_public_dsn !== null) {
-	Raven.config(sentry_public_dsn).install();
+loadConfig().then((config) => {
+	if (typeof config !== 'undefined') {
+		Raven.config(sentry_public_dsn).install();
 
-	Raven.setUserContext({
-		id: OC.currentUser
-	});
-} else {
-	console.warn('no Sentry dsn found, no errors will be reported');
-}
+		Raven.setUserContext({
+			id: OC.currentUser
+		});
+	} else {
+		console.warn('no Sentry dsn found, no errors will be reported');
+	}
+});

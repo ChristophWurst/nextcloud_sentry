@@ -8,6 +8,7 @@
     "lib": "lib"
   },
   "dependencies": {
+    "nextcloud_fetch": "^2.1.0",
     "raven-js": "^3.24.2"
   },
   "devDependencies": {

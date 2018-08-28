@@ -21,8 +21,8 @@
 return [
 	'routes' => [
 		[
-			'name' => 'script#dsn',
-			'url' => '/js/dsn.js',
+			'name' => 'config#get',
+			'url' => '/config',
 			'verb' => 'GET'
 		],
 	]

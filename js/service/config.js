@@ -1,4 +1,4 @@
-<?php
+/* global OC */
 
 /**
  * @copyright 2018 Christoph Wurst <christoph@winzerhof-wurst.at>
@@ -22,38 +22,10 @@
  *
  */
 
-namespace OCA\Sentry\Controller;
+import {nc_fetch_json} from 'nextcloud_fetch';
 
-use OCP\AppFramework\Controller;
-use OCP\AppFramework\Http\DataDownloadResponse;
-use OCP\AppFramework\Http\Response;
-use OCP\AppFramework\Http\TemplateResponse;
-use OCP\IConfig;
-use OCP\IRequest;
+export function loadConfig () {
+	let url = OC.generateUrl('/apps/sentry/config');
 
-class ScriptController extends Controller {
-
-	/** @var IConfig */
-	private $config;
-
-	public function __construct(IRequest $request, IConfig $config) {
-		parent::__construct('sentry', $request);
-		$this->config = $config;
-	}
-
-	/**
-	 * @PublicPage
-	 * @NoAdminRequired
-	 * @NoCSRFRequired
-	 */
-	public function dsn(): Response {
-		$pubDsn = $this->config->getSystemValue('sentry.public-dsn', null);
-
-		$tmpl = new TemplateResponse('sentry', 'dsn.js', [
-			'dsn' => $pubDsn,
-			], 'blank');
-		$raw = $tmpl->render();
-		return new DataDownloadResponse($raw, 'dsn.js', 'application/javascript');
-	}
-
+	return nc_fetch_json(url);
 }
