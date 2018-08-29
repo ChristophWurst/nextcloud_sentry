@@ -21,7 +21,6 @@
  */
 include_once __DIR__ . '/../vendor/autoload.php';
 
-\OCP\Util::addScript('sentry', 'dsn');
 \OCP\Util::addScript('sentry', 'build/sentry');
 
 use OCA\Sentry\AppInfo\Application;

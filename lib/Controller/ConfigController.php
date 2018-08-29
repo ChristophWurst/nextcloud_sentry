@@ -26,13 +26,11 @@ declare(strict_types=1);
 namespace OCA\Sentry\Controller;
 
 use OCP\AppFramework\Controller;
-use OCP\AppFramework\Http\DataDownloadResponse;
-use OCP\AppFramework\Http\Response;
-use OCP\AppFramework\Http\TemplateResponse;
+use OCP\AppFramework\Http\JSONResponse;
 use OCP\IConfig;
 use OCP\IRequest;
 
-class ScriptController extends Controller {
+class ConfigController extends Controller {
 
 	/** @var IConfig */
 	private $config;
@@ -47,14 +45,12 @@ class ScriptController extends Controller {
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
 	 */
-	public function dsn(): Response {
+	public function get(): JSONResponse {
 		$pubDsn = $this->config->getSystemValue('sentry.public-dsn', null);
 
-		$tmpl = new TemplateResponse('sentry', 'dsn.js', [
+		return new JSONResponse([
 			'dsn' => $pubDsn,
-			], 'blank');
-		$raw = $tmpl->render();
-		return new DataDownloadResponse($raw, 'dsn.js', 'application/javascript');
+		]);
 	}
 
 }

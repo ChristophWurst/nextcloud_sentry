@@ -1,4 +1,5 @@
-<?php
+/* global OC */
+
 /**
  * @copyright 2018 Christoph Wurst <christoph@winzerhof-wurst.at>
  *
@@ -20,5 +21,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-?>
-var sentry_public_dsn = <?php print_unescaped(is_null($_['dsn']) ? 'null' : "'" . $_['dsn'] . "'") ?>;
+
+import {nc_fetch_json} from 'nextcloud_fetch';
+
+export function loadConfig () {
+	let url = OC.generateUrl('/apps/sentry/config');
+
+	return nc_fetch_json(url);
+}
