@@ -27,11 +27,12 @@ use Exception;
 use OCP\IConfig;
 use OCP\ILogger;
 use OCP\IUserSession;
+use OCP\Support\CrashReport\ICollectBreadcrumbs;
 use OCP\Support\CrashReport\IReporter;
 use Raven_Client;
 use Throwable;
 
-class SentryReporterAdapter implements IReporter {
+class SentryReporterAdapter implements IReporter, ICollectBreadcrumbs {
 
 	/** @var IUserSession */
 	private $userSession;
@@ -60,21 +61,11 @@ class SentryReporterAdapter implements IReporter {
 		$this->minimumLogLevel = (int)$config->getSystemValue('sentry.minimum.log.level', ILogger::WARN);
 	}
 
-	/**
-	 * Report an (unhandled) exception to Sentry
-	 *
-	 * @param Exception|Throwable $exception
-	 * @param array $context
-	 */
-	public function report($exception, array $context = []) {
+	private function buildSentryContext(array $context) {
 		$sentryContext = [];
 		$sentryContext['tags'] = [];
 
 		if (isset($context['level'])) {
-			if ($context['level'] < $this->minimumLogLevel) {
-				return;
-			}
-
 			$sentryContext['level'] = $this->levels[$context['level']];
 		}
 		if (isset($context['app'])) {
@@ -87,6 +78,32 @@ class SentryReporterAdapter implements IReporter {
 				'id' => $user->getUID(),
 			];
 		}
+		return $sentryContext;
+	}
+
+	public function collect(string $message, string $category, array $context = []) {
+		$sentryContext = $this->buildSentryContext($context);
+
+		$sentryContext['message'] = $message;
+		$sentryContext['category'] = $category;
+
+		$this->client->breadcrumbs->record($sentryContext);
+	}
+
+	/**
+	 * Report an (unhandled) exception to Sentry
+	 *
+	 * @param Exception|Throwable $exception
+	 * @param array $context
+	 */
+	public function report($exception, array $context = []) {
+		if (isset($context['level'])
+			&& $context['level'] < $this->minimumLogLevel) {
+			// TODO: report as breadcrumb instead?
+			return;
+		}
+
+		$sentryContext = $this->buildSentryContext($context);
 
 		$this->client->captureException($exception, $sentryContext);
 	}
