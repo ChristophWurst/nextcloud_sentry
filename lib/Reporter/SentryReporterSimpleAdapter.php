@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /**
@@ -31,16 +32,16 @@ use OCP\Support\CrashReport\IReporter;
 use Raven_Client;
 use Throwable;
 
-class SentryReporterAdapter implements IReporter {
+class SentryReporterSimpleAdapter implements IReporter {
 
 	/** @var IUserSession */
-	private $userSession;
+	protected $userSession;
 
 	/** @var Raven_Client */
-	private $client;
+	protected $client;
 
 	/** @var array mapping of log levels */
-	private $levels = [
+	protected $levels = [
 		ILogger::DEBUG => 'debug',
 		ILogger::INFO => 'info',
 		ILogger::WARN => 'warning',
@@ -49,7 +50,7 @@ class SentryReporterAdapter implements IReporter {
 	];
 
 	/** @var int */
-	private $minimumLogLevel;
+	protected $minimumLogLevel;
 
 	/**
 	 * @param Raven_Client $client
@@ -67,14 +68,22 @@ class SentryReporterAdapter implements IReporter {
 	 * @param array $context
 	 */
 	public function report($exception, array $context = []) {
+		if (isset($context['level'])
+			&& $context['level'] < $this->minimumLogLevel) {
+			// TODO: report as breadcrumb instead?
+			return;
+		}
+
+		$sentryContext = $this->buildSentryContext($context);
+
+		$this->client->captureException($exception, $sentryContext);
+	}
+
+	protected function buildSentryContext(array $context) {
 		$sentryContext = [];
 		$sentryContext['tags'] = [];
 
 		if (isset($context['level'])) {
-			if ($context['level'] < $this->minimumLogLevel) {
-				return;
-			}
-
 			$sentryContext['level'] = $this->levels[$context['level']];
 		}
 		if (isset($context['app'])) {
@@ -87,8 +96,6 @@ class SentryReporterAdapter implements IReporter {
 				'id' => $user->getUID(),
 			];
 		}
-
-		$this->client->captureException($exception, $sentryContext);
+		return $sentryContext;
 	}
-
 }
