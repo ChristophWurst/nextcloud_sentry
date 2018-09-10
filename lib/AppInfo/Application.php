@@ -24,7 +24,7 @@ declare(strict_types=1);
 namespace OCA\Sentry\AppInfo;
 
 use OC;
-use OCA\Sentry\Reporter\SentryReporterAdapter;
+use OCA\Sentry\Reporter\SentryReporterBreadcrumbAdapter;
 use OCP\AppFramework\App;
 use OCP\AppFramework\Http\ContentSecurityPolicy;
 use OCP\IConfig;
@@ -71,7 +71,7 @@ class Application extends App {
 
 		/* @var $registry IRegistry */
 		$registry = $container->query(IRegistry::class);
-		$reporter = $container->query(SentryReporterAdapter::class);
+		$reporter = $container->query(SentryReporterBreadcrumbAdapter::class);
 		$registry->register($reporter);
 
 		$this->registerErrorHandlers($client);

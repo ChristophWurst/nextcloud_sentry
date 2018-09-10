@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /**
@@ -27,21 +28,20 @@ use Exception;
 use OCP\IConfig;
 use OCP\ILogger;
 use OCP\IUserSession;
-use OCP\Support\CrashReport\ICollectBreadcrumbs;
 use OCP\Support\CrashReport\IReporter;
 use Raven_Client;
 use Throwable;
 
-class SentryReporterAdapter implements IReporter, ICollectBreadcrumbs {
+class SentryReporterSimpleAdapter implements IReporter {
 
 	/** @var IUserSession */
-	private $userSession;
+	protected $userSession;
 
 	/** @var Raven_Client */
-	private $client;
+	protected $client;
 
 	/** @var array mapping of log levels */
-	private $levels = [
+	protected $levels = [
 		ILogger::DEBUG => 'debug',
 		ILogger::INFO => 'info',
 		ILogger::WARN => 'warning',
@@ -50,7 +50,7 @@ class SentryReporterAdapter implements IReporter, ICollectBreadcrumbs {
 	];
 
 	/** @var int */
-	private $minimumLogLevel;
+	protected $minimumLogLevel;
 
 	/**
 	 * @param Raven_Client $client
@@ -59,35 +59,6 @@ class SentryReporterAdapter implements IReporter, ICollectBreadcrumbs {
 		$this->client = $client;
 		$this->userSession = $userSession;
 		$this->minimumLogLevel = (int)$config->getSystemValue('sentry.minimum.log.level', ILogger::WARN);
-	}
-
-	private function buildSentryContext(array $context) {
-		$sentryContext = [];
-		$sentryContext['tags'] = [];
-
-		if (isset($context['level'])) {
-			$sentryContext['level'] = $this->levels[$context['level']];
-		}
-		if (isset($context['app'])) {
-			$sentryContext['tags']['app'] = $context['app'];
-		}
-
-		$user = $this->userSession->getUser();
-		if (!is_null($user)) {
-			$sentryContext['user'] = [
-				'id' => $user->getUID(),
-			];
-		}
-		return $sentryContext;
-	}
-
-	public function collect(string $message, string $category, array $context = []) {
-		$sentryContext = $this->buildSentryContext($context);
-
-		$sentryContext['message'] = $message;
-		$sentryContext['category'] = $category;
-
-		$this->client->breadcrumbs->record($sentryContext);
 	}
 
 	/**
@@ -108,4 +79,23 @@ class SentryReporterAdapter implements IReporter, ICollectBreadcrumbs {
 		$this->client->captureException($exception, $sentryContext);
 	}
 
+	protected function buildSentryContext(array $context) {
+		$sentryContext = [];
+		$sentryContext['tags'] = [];
+
+		if (isset($context['level'])) {
+			$sentryContext['level'] = $this->levels[$context['level']];
+		}
+		if (isset($context['app'])) {
+			$sentryContext['tags']['app'] = $context['app'];
+		}
+
+		$user = $this->userSession->getUser();
+		if (!is_null($user)) {
+			$sentryContext['user'] = [
+				'id' => $user->getUID(),
+			];
+		}
+		return $sentryContext;
+	}
 }
