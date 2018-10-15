@@ -25,6 +25,8 @@ declare(strict_types=1);
 namespace OCA\Sentry\Reporter;
 
 use Exception;
+use OCP\Authentication\Exceptions\CredentialsUnavailableException;
+use OCP\Authentication\LoginCredentials\IStore;
 use OCP\IConfig;
 use OCP\ILogger;
 use OCP\IUserSession;
@@ -39,6 +41,9 @@ class SentryReporterSimpleAdapter implements IReporter {
 
 	/** @var Raven_Client */
 	protected $client;
+
+	/** @var IStore */
+	private $credentialStore;
 
 	/** @var array mapping of log levels */
 	protected $levels = [
@@ -55,10 +60,14 @@ class SentryReporterSimpleAdapter implements IReporter {
 	/**
 	 * @param Raven_Client $client
 	 */
-	public function __construct(Raven_Client $client, IUserSession $userSession, IConfig $config) {
+	public function __construct(Raven_Client $client,
+								IUserSession $userSession,
+								IConfig $config,
+								IStore $credentialStore) {
 		$this->client = $client;
 		$this->userSession = $userSession;
 		$this->minimumLogLevel = (int)$config->getSystemValue('sentry.minimum.log.level', ILogger::WARN);
+		$this->credentialStore = $credentialStore;
 	}
 
 	/**
@@ -95,6 +104,14 @@ class SentryReporterSimpleAdapter implements IReporter {
 			$sentryContext['user'] = [
 				'id' => $user->getUID(),
 			];
+
+			// Try to obtain the login name as well
+			try {
+				$credentials = $this->credentialStore->getLoginCredentials();
+				$sentryContext['user']['username'] = $credentials->getLoginName();
+			} catch (CredentialsUnavailableException $e) {
+
+			}
 		}
 		return $sentryContext;
 	}
