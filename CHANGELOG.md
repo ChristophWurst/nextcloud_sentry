@@ -1,6 +1,14 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 3.4.0 – 2018-11-09
+### Added
+- Breadcrumb support
+- Nextcloud 15 support
+- Set username (loginname) if possible
+### Fixed
+- Loading of public DSN for custom app directories
+
 ## 3.3.0 – 2018-08-20
 ### Added
 - Tagging of the affected app if it's known by the context
