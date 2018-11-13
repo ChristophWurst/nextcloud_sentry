@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 3.4.1 – 2018-11-13
+### Fixed
+- Infinite recursion during an error report
+
 ## 3.4.0 – 2018-11-09
 ### Added
 - Breadcrumb support
