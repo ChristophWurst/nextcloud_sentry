@@ -1,5 +1,3 @@
-/* global OC */
-
 /**
  * @copyright 2018 Christoph Wurst <christoph@winzerhof-wurst.at>
  *
@@ -22,10 +20,12 @@
  *
  */
 
-import {nc_fetch_json} from 'nextcloud_fetch';
+import Axios from 'nextcloud-axios'
+import {generateUrl} from 'nextcloud-server/dist/router'
 
-export function loadConfig () {
-	let url = OC.generateUrl('/apps/sentry/config');
+export const loadConfig = () => {
+	const url = generateUrl('/apps/sentry/config')
 
-	return nc_fetch_json(url);
+	return Axios.get(url)
+		.then(resp => resp.data)
 }
