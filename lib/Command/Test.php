@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2018, Roeland Jago Douma <roeland@famdouma.nl>
  *
@@ -24,7 +26,6 @@ declare(strict_types=1);
 
 namespace OCA\Sentry\Command;
 
-
 use OCP\ILogger;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -45,7 +46,9 @@ class Test extends Command {
 	}
 
 	public function execute(InputInterface $input, OutputInterface $output) {
+		$this->logger->info("staring sentry test command");
 		try {
+			$this->logger->warning("you should get a Sentry alert soon");
 			throw new \Exception('This is a sentry test exception!');
 		} catch (\Exception $e) {
 			$this->logger->logException($e, ['app' => 'sentry']);
