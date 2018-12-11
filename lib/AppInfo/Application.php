@@ -46,23 +46,23 @@ class Application extends App {
 
 		/* @var $config IConfig */
 		$config = $container->query(IConfig::class);
+		/** @var IContentSecurityPolicyManager $cspManager */
+		$cspManager = $container->query(IContentSecurityPolicyManager::class);
+
 		$dsn = $config->getSystemValue('sentry.dsn', null);
+		$reportUrl = $config->getSystemValue('sentry.csp-report-url', null);
 		if (!is_null($dsn)) {
-			$this->registerClient($dsn);
+			$this->registerClient($config, $dsn);
 		}
 		$publicDsn = $config->getSystemValue('sentry.public-dsn', null);
-		if (!is_null($publicDsn)) {
-			$this->addCsp($publicDsn);
-		}
+		$this->addCsp($cspManager, $publicDsn, $reportUrl);
 	}
 
 	/**
 	 * @param string $dsn
 	 */
-	private function registerClient($dsn) {
+	private function registerClient(IConfig $config, string $dsn) {
 		$container = $this->getContainer();
-		/* @var $config IConfig */
-		$config = $container->query(IConfig::class);
 
 		$client = new Raven_Client($dsn);
 		$client->setRelease($config->getSystemValue('version', '0.0.0'));
@@ -85,17 +85,31 @@ class Application extends App {
 		$errorHandler->registerShutdownFunction();
 	}
 
-	public function addCsp($publicDsn) {
-		$parsedUrl = parse_url($publicDsn);
-		if (!isset($parsedUrl['scheme']) || !isset($parsedUrl['host'])) {
-			// Misconfigured setup -> ignore
+	public function addCsp(IContentSecurityPolicyManager $cspManager,
+						   string $publicDsn = null,
+						   string $reportUrl = null) {
+		if (is_null($publicDsn) && is_null($reportUrl)) {
+			// Don't add any custom CSP
 			return;
 		}
 
-		$domain = $parsedUrl['scheme'] . '://' . $parsedUrl['host'];
 		$csp = new ContentSecurityPolicy();
-		$csp->addAllowedConnectDomain($domain);
-		$cspManager = OC::$server->query(IContentSecurityPolicyManager::class);
+
+		if (!is_null($publicDsn)) {
+			$parsedUrl = parse_url($publicDsn);
+			if (!isset($parsedUrl['scheme']) || !isset($parsedUrl['host'])) {
+				// Misconfigured setup -> ignore
+				return;
+			}
+
+			$domain = $parsedUrl['scheme'] . '://' . $parsedUrl['host'];
+			$csp->addAllowedConnectDomain($domain);
+		}
+
+		if (!is_null($reportUrl)) {
+			$csp->addReportTo($reportUrl);
+		}
+
 		$cspManager->addDefaultPolicy($csp);
 	}
 
