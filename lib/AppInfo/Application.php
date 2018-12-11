@@ -25,7 +25,7 @@ namespace OCA\Sentry\AppInfo;
 
 use OC;
 use OCA\Sentry\Reporter\SentryReporterBreadcrumbAdapter;
-use OCA\Sentry\Reporter\SentryReporterSimpleAdapter;
+use OCA\Sentry\Reporter\SentryReporterAdapter;
 use OCP\AppFramework\App;
 use OCP\AppFramework\Http\ContentSecurityPolicy;
 use OCP\IConfig;
@@ -33,7 +33,6 @@ use OCP\Security\IContentSecurityPolicyManager;
 use OCP\Support\CrashReport\IRegistry;
 use Raven_Client;
 use Raven_ErrorHandler;
-use function version_compare;
 
 class Application extends App {
 
@@ -73,12 +72,7 @@ class Application extends App {
 
 		/* @var $registry IRegistry */
 		$registry = $container->query(IRegistry::class);
-		$serverVersion = $config->getSystemValue('version');
-		if (version_compare($serverVersion, '15.0.0', '<')) {
-			$reporter = $container->query(SentryReporterSimpleAdapter::class);
-		} else {
-			$reporter = $container->query(SentryReporterBreadcrumbAdapter::class);
-		}
+		$reporter = $container->query(SentryReporterAdapter::class);
 		$registry->register($reporter);
 
 		$this->registerErrorHandlers($client);

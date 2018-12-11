@@ -30,11 +30,12 @@ use OCP\Authentication\Exceptions\CredentialsUnavailableException;
 use OCP\IConfig;
 use OCP\ILogger;
 use OCP\IUserSession;
+use OCP\Support\CrashReport\ICollectBreadcrumbs;
 use OCP\Support\CrashReport\IReporter;
 use Raven_Client;
 use Throwable;
 
-class SentryReporterSimpleAdapter implements IReporter {
+class SentryReporterAdapter implements IReporter, ICollectBreadcrumbs {
 
 	/** @var IUserSession */
 	protected $userSession;
@@ -112,4 +113,14 @@ class SentryReporterSimpleAdapter implements IReporter {
 		}
 		return $sentryContext;
 	}
+
+	public function collect(string $message, string $category, array $context = []) {
+		$sentryContext = $this->buildSentryContext($context);
+
+		$sentryContext['message'] = $message;
+		$sentryContext['category'] = $category;
+
+		$this->client->breadcrumbs->record($sentryContext);
+	}
+
 }
