@@ -1,6 +1,15 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 4.0.0 – 2018-12-12
+### Added
+- Test command now includes breadcrumbs
+- Nextcloud 16 support
+### Changed
+- Dropped Nextcloud 14 support
+### Fixed
+- JavaScript reports
+
 ## 3.4.1 – 2018-11-13
 ### Fixed
 - Infinite recursion during an error report
