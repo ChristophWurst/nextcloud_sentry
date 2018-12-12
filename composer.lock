@@ -4,26 +4,29 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "022f4baf13194927c82729912cd2e0a2",
+    "content-hash": "b00f8d9f3cc4f35400816e3ffc7ca807",
     "packages": [
         {
             "name": "christophwurst/nextcloud",
-            "version": "v14.0.4",
+            "version": "v15.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ChristophWurst/nextcloud_composer.git",
-                "reference": "cfe25d62c66c52edc9d59a3f3327801c057549f2"
+                "reference": "014198311112df2893b834a4a079348e6e4b850d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ChristophWurst/nextcloud_composer/zipball/cfe25d62c66c52edc9d59a3f3327801c057549f2",
-                "reference": "cfe25d62c66c52edc9d59a3f3327801c057549f2",
+                "url": "https://api.github.com/repos/ChristophWurst/nextcloud_composer/zipball/014198311112df2893b834a4a079348e6e4b850d",
+                "reference": "014198311112df2893b834a4a079348e6e4b850d",
                 "shasum": ""
+            },
+            "require": {
+                "php": "^7.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "14.0.0-dev"
+                    "dev-master": "15.0.0-dev"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -37,7 +40,7 @@
                 }
             ],
             "description": "Composer package containing Nextcloud's public API (classes, interfaces)",
-            "time": "2018-12-05T11:30:34+00:00"
+            "time": "2018-12-12T09:46:24+00:00"
         },
         {
             "name": "sentry/sentry",
