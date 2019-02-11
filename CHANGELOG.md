@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 4.0.1 – 2019-02-12
+### Changed
+- Update some dependencies
+### Fixed
+- Update vulnerable `lodash` dependency
+
 ## 4.0.0 – 2018-12-12
 ### Added
 - Test command now includes breadcrumbs
