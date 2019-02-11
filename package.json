@@ -13,7 +13,7 @@
     "raven-js": "^3.27.0"
   },
   "devDependencies": {
-    "webpack": "^4.7.0",
+    "webpack": "^4.29.3",
     "webpack-cli": "^3.2.3",
     "webpack-merge": "^4.2.1"
   },
