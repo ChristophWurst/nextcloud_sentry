@@ -29,6 +29,7 @@ use OCA\Sentry\Reporter\SentryReporterAdapter;
 use OCP\AppFramework\App;
 use OCP\AppFramework\Http\ContentSecurityPolicy;
 use OCP\IConfig;
+use OCP\IInitialStateService;
 use OCP\Security\IContentSecurityPolicyManager;
 use OCP\Support\CrashReport\IRegistry;
 use Raven_Client;
@@ -51,6 +52,7 @@ class Application extends App {
 			$this->registerClient($dsn);
 		}
 		$publicDsn = $config->getSystemValue('sentry.public-dsn', null);
+		$this->setInitialState($publicDsn);
 		if (!is_null($publicDsn)) {
 			$this->addCsp($publicDsn);
 		}
@@ -85,7 +87,7 @@ class Application extends App {
 		$errorHandler->registerShutdownFunction();
 	}
 
-	public function addCsp($publicDsn) {
+	private function addCsp($publicDsn) {
 		$parsedUrl = parse_url($publicDsn);
 		if (!isset($parsedUrl['scheme']) || !isset($parsedUrl['host'])) {
 			// Misconfigured setup -> ignore
@@ -97,6 +99,19 @@ class Application extends App {
 		$csp->addAllowedConnectDomain($domain);
 		$cspManager = OC::$server->query(IContentSecurityPolicyManager::class);
 		$cspManager->addDefaultPolicy($csp);
+	}
+
+	private function setInitialState(?string $dsn) {
+		$container = $this->getContainer();
+
+		/** @var IInitialStateService $stateService */
+		$stateService = $container->query(IInitialStateService::class);
+
+		$stateService->provideLazyInitialState('sentry', 'dsn', function () use ($dsn) {
+			return [
+				'dsn' => $dsn
+			];
+		});
 	}
 
 }
