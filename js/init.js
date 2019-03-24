@@ -28,7 +28,7 @@ import {loadConfig} from 'service/config'
 loadConfig()
 	.then(config => {
 		if (typeof config.dsn !== 'string') {
-			config.warn('no sentry dsn set')
+			console.warn('no sentry dsn set')
 			return
 		}
 
