@@ -18,8 +18,8 @@
     "webpack-merge": "^4.2.1"
   },
   "scripts": {
-    "build": "./node_modules/webpack-cli/bin/webpack.js --config js/webpack.prod.config.js",
-    "dev": "./node_modules/webpack-cli/bin/webpack.js --config js/webpack.dev.config.js --watch",
+    "build": "webpack --config js/webpack.prod.config.js",
+    "dev": "webpack --config js/webpack.dev.config.js --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
