@@ -23,21 +23,21 @@
  */
 
 import Raven from 'raven-js'
-import {loadConfig} from 'service/config'
 
-loadConfig()
-	.then(config => {
-		if (typeof config.dsn !== 'string') {
-			console.warn('no sentry dsn set')
-			return
-		}
+try {
+	const initialState = OCP.InitialState.loadState('sentry', 'dsn');
 
-		Raven.config(config.dsn).install()
+	if (typeof initialState.dsn !== 'string') {
+		console.warn('no sentry dsn set')
+	} else {
+		Raven.config(initialState.dsn).install()
 		Raven.setUserContext({
 			id: OC.currentUser
 		})
 		if (typeof oc_config.version !== 'undefined') {
 			Raven.setRelease(oc_config.version)
 		}
-	})
-	.catch(e => console.error('could not load sentry config', e))
+	}
+} catch (e) {
+	console.error('could not load sentry config', e)
+}
