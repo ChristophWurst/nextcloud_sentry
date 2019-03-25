@@ -2,10 +2,10 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
-	entry: './js/init.js',
+	entry: path.join(__dirname, 'init.js'),
 	output: {
 		filename: 'sentry.js',
-		path: __dirname + '/build'
+		path: path.resolve(__dirname, '../js')
 	},
 	resolve: {
 		modules: [path.resolve(__dirname), 'node_modules'],
