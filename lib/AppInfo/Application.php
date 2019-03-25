@@ -24,7 +24,6 @@ declare(strict_types=1);
 namespace OCA\Sentry\AppInfo;
 
 use OC;
-use OCA\Sentry\Reporter\SentryReporterBreadcrumbAdapter;
 use OCA\Sentry\Reporter\SentryReporterAdapter;
 use OCP\AppFramework\App;
 use OCP\AppFramework\Http\ContentSecurityPolicy;
@@ -47,13 +46,13 @@ class Application extends App {
 
 		/* @var $config IConfig */
 		$config = $container->query(IConfig::class);
-		$dsn = $config->getSystemValue('sentry.dsn', null);
-		if (!is_null($dsn)) {
+		$dsn = $config->getSystemValueString('sentry.dsn', '');
+		if ($dsn !== '') {
 			$this->registerClient($dsn);
 		}
-		$publicDsn = $config->getSystemValue('sentry.public-dsn', null);
+		$publicDsn = $config->getSystemValueString('sentry.public-dsn', '');
 		$this->setInitialState($publicDsn);
-		if (!is_null($publicDsn)) {
+		if ($publicDsn !== '') {
 			$this->addCsp($publicDsn);
 		}
 	}
@@ -61,7 +60,7 @@ class Application extends App {
 	/**
 	 * @param string $dsn
 	 */
-	private function registerClient($dsn) {
+	private function registerClient(string $dsn): void {
 		$container = $this->getContainer();
 		/* @var $config IConfig */
 		$config = $container->query(IConfig::class);
@@ -80,16 +79,16 @@ class Application extends App {
 		$this->registerErrorHandlers($client);
 	}
 
-	private function registerErrorHandlers(Raven_Client $client) {
+	private function registerErrorHandlers(Raven_Client $client): void {
 		$errorHandler = new Raven_ErrorHandler($client);
 		$errorHandler->registerExceptionHandler();
 		$errorHandler->registerErrorHandler();
 		$errorHandler->registerShutdownFunction();
 	}
 
-	private function addCsp($publicDsn) {
+	private function addCsp(string $publicDsn): void {
 		$parsedUrl = parse_url($publicDsn);
-		if (!isset($parsedUrl['scheme']) || !isset($parsedUrl['host'])) {
+		if (!isset($parsedUrl['scheme'], $parsedUrl['host'])) {
 			// Misconfigured setup -> ignore
 			return;
 		}
@@ -101,7 +100,7 @@ class Application extends App {
 		$cspManager->addDefaultPolicy($csp);
 	}
 
-	private function setInitialState(?string $dsn) {
+	private function setInitialState(string $dsn): void {
 		$container = $this->getContainer();
 
 		/** @var IInitialStateService $stateService */
@@ -109,7 +108,7 @@ class Application extends App {
 
 		$stateService->provideLazyInitialState('sentry', 'dsn', function () use ($dsn) {
 			return [
-				'dsn' => $dsn
+				'dsn' => $dsn === '' ? null : $dsn,
 			];
 		});
 	}
