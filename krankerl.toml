@@ -6,6 +6,7 @@ exclude = [
 	"composer.*",
 	"build",
 	"node_modules",
+	"src",
 	"krankerl.toml"
 ]
 
