@@ -8,7 +8,9 @@
 		}
 	],
 	"require": {
-		"sentry/sentry": "^1.8",
+		"sentry/sentry": "^1.8"
+	},
+	"require-dev": {
 		"christophwurst/nextcloud": "^16.0.0-alpha1"
 	}
 }
