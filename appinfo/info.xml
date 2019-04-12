@@ -22,8 +22,8 @@
 	<bugs>https://github.com/ChristophWurst/nextcloud_sentry/issues</bugs>
 	<repository>https://github.com/ChristophWurst/nextcloud_sentry</repository>
 	<dependencies>
-		<php min-version="7.0" max-version="7.3" />
-		<nextcloud min-version="16" max-version="16" />
+		<php min-version="7.1" max-version="7.3" />
+		<nextcloud min-version="16" max-version="17" />
 	</dependencies>
 	<commands>
 		<command>OCA\Sentry\Command\Test</command>
