@@ -31,11 +31,11 @@ use OCP\IConfig;
 use OCP\ILogger;
 use OCP\IUserSession;
 use OCP\Support\CrashReport\ICollectBreadcrumbs;
-use OCP\Support\CrashReport\IReporter;
+use OCP\Support\CrashReport\IMessageReporter;
 use Raven_Client;
 use Throwable;
 
-class SentryReporterAdapter implements IReporter, ICollectBreadcrumbs {
+class SentryReporterAdapter implements IMessageReporter, ICollectBreadcrumbs {
 
 	/** @var IUserSession */
 	protected $userSession;
@@ -121,6 +121,24 @@ class SentryReporterAdapter implements IReporter, ICollectBreadcrumbs {
 		$sentryContext['category'] = $category;
 
 		$this->client->breadcrumbs->record($sentryContext);
+	}
+
+	/**
+	 * Report a (error) message
+	 *
+	 * @param string $message
+	 * @param array $context
+	 */
+	public function reportMessage(string $message, array $context = []): void {
+		if (isset($context['level'])
+			&& $context['level'] < $this->minimumLogLevel) {
+			$this->collect($message, 'message', $context);
+			return;
+		}
+
+		$sentryContext = $this->buildSentryContext($context);
+
+		$this->client->captureMessage($message, $sentryContext);
 	}
 
 }
