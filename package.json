@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "nextcloud-axios": "^0.2.0",
-    "nextcloud-server": "^0.15.9",
+    "nextcloud-server": "^0.15.10",
     "raven-js": "^3.27.2"
   },
   "devDependencies": {
