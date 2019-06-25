@@ -22,6 +22,7 @@
  *
  */
 
+import { getCurrentUser } from 'nextcloud-auth'
 import Raven from 'raven-js'
 
 try {
@@ -31,9 +32,12 @@ try {
 		console.warn('no sentry dsn set')
 	} else {
 		Raven.config(initialState.dsn).install()
-		Raven.setUserContext({
-			id: OC.currentUser
-		})
+		const user = getCurrentUser();
+		if (user !== null) {
+			Raven.setUserContext({
+				id: user.uid
+			})
+		}
 		if (typeof oc_config.version !== 'undefined') {
 			Raven.setRelease(oc_config.version)
 		}
