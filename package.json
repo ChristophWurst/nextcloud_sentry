@@ -8,7 +8,7 @@
     "lib": "lib"
   },
   "dependencies": {
-    "nextcloud-auth": "0.0.2",
+    "nextcloud-auth": "0.0.3",
     "nextcloud-axios": "^0.2.0",
     "raven-js": "^3.27.2"
   },
