@@ -1,9 +1,7 @@
-/* global OC, oc_config */
-
-/**
- * @copyright 2018 Christoph Wurst <christoph@winzerhof-wurst.at>
+/*
+ * @copyright 2019 Christoph Wurst <christoph@winzerhof-wurst.at>
  *
- * @author 2018 Christoph Wurst <christoph@winzerhof-wurst.at>
+ * @author 2019 Christoph Wurst <christoph@winzerhof-wurst.at>
  *
  * @license GNU AGPL version 3 or any later version
  *
@@ -19,39 +17,17 @@
  *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
  */
 
 import {getCurrentUser} from 'nextcloud-auth'
-import * as Sentry from '@sentry/browser';
+import {getLoggerBuilder} from 'nextcloud-logger'
 
-import Logger from './logger'
+const builder = getLoggerBuilder()
+	.setApp('sentry')
 
-try {
-	const initialState = OCP.InitialState.loadState('sentry', 'dsn');
-
-	if (typeof initialState.dsn !== 'string') {
-		Logger.warn('no sentry dsn set')
-	} else {
-		const config = {
-			dsn: initialState.dsn,
-		}
-
-		if (typeof OC.config.version !== 'undefined') {
-			config.release = oc_config.version
-		}
-
-		Sentry.init(config)
-
-		const user = getCurrentUser();
-		if (user !== null) {
-			Sentry.setUser({
-				id: user.uid
-			})
-		}
-
-		Logger.debug('initialized')
-	}
-} catch (e) {
-	Logger.error('could not load sentry config', e)
+const user = getCurrentUser()
+if (user !== null) {
+	builder.setUid(user.uid)
 }
+
+export default builder.build()
