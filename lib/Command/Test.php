@@ -46,7 +46,7 @@ class Test extends Command {
 	}
 
 	public function execute(InputInterface $input, OutputInterface $output) {
-		$this->logger->info("staring sentry test command");
+		$this->logger->info("starting sentry test command");
 		try {
 			$this->logger->warning("you should get at least one Sentry alert soon");
 			$this->logger->emergency("This is a sentry emergency test message");

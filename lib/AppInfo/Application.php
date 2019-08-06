@@ -31,8 +31,7 @@ use OCP\IConfig;
 use OCP\IInitialStateService;
 use OCP\Security\IContentSecurityPolicyManager;
 use OCP\Support\CrashReport\IRegistry;
-use Raven_Client;
-use Raven_ErrorHandler;
+use function Sentry\init as initSentry;
 
 class Application extends App {
 
@@ -65,25 +64,15 @@ class Application extends App {
 		/* @var $config IConfig */
 		$config = $container->query(IConfig::class);
 
-		$client = new Raven_Client($dsn);
-		$client->setRelease($config->getSystemValue('version', '0.0.0'));
-		$container->registerService(Raven_Client::class, function () use ($client) {
-			return $client;
-		});
+		initSentry([
+			'dsn' => $dsn,
+			'release' => $config->getSystemValue('version', '0.0.0'),
+		]);
 
 		/* @var $registry IRegistry */
 		$registry = $container->query(IRegistry::class);
 		$reporter = $container->query(SentryReporterAdapter::class);
 		$registry->register($reporter);
-
-		$this->registerErrorHandlers($client);
-	}
-
-	private function registerErrorHandlers(Raven_Client $client): void {
-		$errorHandler = new Raven_ErrorHandler($client);
-		$errorHandler->registerExceptionHandler();
-		$errorHandler->registerErrorHandler();
-		$errorHandler->registerShutdownFunction();
 	}
 
 	private function addCsp(string $publicDsn): void {

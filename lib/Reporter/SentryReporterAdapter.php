@@ -32,7 +32,13 @@ use OCP\ILogger;
 use OCP\IUserSession;
 use OCP\Support\CrashReport\ICollectBreadcrumbs;
 use OCP\Support\CrashReport\IMessageReporter;
-use Raven_Client;
+use function Sentry\addBreadcrumb;
+use Sentry\Breadcrumb;
+use function Sentry\captureException;
+use function Sentry\captureMessage;
+use function Sentry\configureScope;
+use Sentry\Severity;
+use Sentry\State\Scope;
 use Throwable;
 
 class SentryReporterAdapter implements IMessageReporter, ICollectBreadcrumbs {
@@ -40,29 +46,24 @@ class SentryReporterAdapter implements IMessageReporter, ICollectBreadcrumbs {
 	/** @var IUserSession */
 	protected $userSession;
 
-	/** @var Raven_Client */
-	protected $client;
-
 	/** @var CredentialStoreHelper */
 	private $credentialStoreHelper;
 
 	/** @var array mapping of log levels */
 	protected $levels = [
-		ILogger::DEBUG => 'debug',
-		ILogger::INFO => 'info',
-		ILogger::WARN => 'warning',
-		ILogger::ERROR => 'error',
-		ILogger::FATAL => 'fatal',
+		ILogger::DEBUG => Severity::DEBUG,
+		ILogger::INFO => Severity::INFO,
+		ILogger::WARN => Severity::WARNING,
+		ILogger::ERROR => Severity::ERROR,
+		ILogger::FATAL => Severity::FATAL,
 	];
 
 	/** @var int */
 	protected $minimumLogLevel;
 
-	public function __construct(Raven_Client $client,
-								IUserSession $userSession,
+	public function __construct(IUserSession $userSession,
 								IConfig $config,
 								CredentialStoreHelper $credentialStoreHelper) {
-		$this->client = $client;
 		$this->userSession = $userSession;
 		$this->minimumLogLevel = (int)$config->getSystemValue('sentry.minimum.log.level', ILogger::WARN);
 		$this->credentialStoreHelper = $credentialStoreHelper;
@@ -81,46 +82,51 @@ class SentryReporterAdapter implements IMessageReporter, ICollectBreadcrumbs {
 			return;
 		}
 
-		$sentryContext = $this->buildSentryContext($context);
+		$this->setSentryScope($context);
 
-		$this->client->captureException($exception, $sentryContext);
+		captureException($exception);
 	}
 
-	protected function buildSentryContext(array $context): array {
-		$sentryContext = [];
-		$sentryContext['tags'] = [];
-
-		if (isset($context['level'])) {
-			$sentryContext['level'] = $this->levels[$context['level']];
-		}
-		if (isset($context['app'])) {
-			$sentryContext['tags']['app'] = $context['app'];
-		}
-
-		$user = $this->userSession->getUser();
-		if (!is_null($user)) {
-			$sentryContext['user'] = [
-				'id' => $user->getUID(),
-			];
-
-			// Try to obtain the login name as well
-			try {
-				$credentials = $this->credentialStoreHelper->getLoginCredentials();
-				$sentryContext['user']['username'] = $credentials->getLoginName();
-			} catch (CredentialsUnavailableException $e) {
-
+	protected function setSentryScope(array $context): void {
+		configureScope(function (Scope $scope) use ($context): void {
+			if (isset($context['level'])) {
+				$scope->setLevel(
+					new Severity($this->levels[$context['level']])
+				);
 			}
-		}
-		return $sentryContext;
+			if (isset($context['app'])) {
+				$scope->setExtra('app', $context['app']);
+			}
+
+			$user = $this->userSession->getUser();
+			if ($user !== null) {
+				// Try to obtain the login name as well
+				try {
+					$credentials = $this->credentialStoreHelper->getLoginCredentials();
+					$username = $credentials->getLoginName();
+				} catch (CredentialsUnavailableException $e) {
+					$username = null;
+				}
+
+				$scope->setUser([
+					'id' => $user->getUID(),
+					'username' => $username,
+				]);
+			}
+		});
 	}
 
 	public function collect(string $message, string $category, array $context = []) {
-		$sentryContext = $this->buildSentryContext($context);
+		if (isset($context['app'])) {
+			$message = "[" . $context['app'] . "] " . $message;
+		}
 
-		$sentryContext['message'] = $message;
-		$sentryContext['category'] = $category;
+		$this->setSentryScope($context);
 
-		$this->client->breadcrumbs->record($sentryContext);
+		$level = isset($context['level']);
+		$sentryLevel = $this->levels[$level] ?? Breadcrumb::LEVEL_WARNING;
+
+		addBreadcrumb(new Breadcrumb($sentryLevel, Breadcrumb::TYPE_ERROR, $category, $message));
 	}
 
 	/**
@@ -130,15 +136,20 @@ class SentryReporterAdapter implements IMessageReporter, ICollectBreadcrumbs {
 	 * @param array $context
 	 */
 	public function reportMessage(string $message, array $context = []): void {
+		if (isset($context['app'])) {
+			$message = "[" . $context['app'] . "] " . $message;
+		}
+
 		if (isset($context['level'])
 			&& $context['level'] < $this->minimumLogLevel) {
 			$this->collect($message, 'message', $context);
 			return;
 		}
 
-		$sentryContext = $this->buildSentryContext($context);
-
-		$this->client->captureMessage($message, $sentryContext);
+		captureMessage(
+			$message,
+			new Severity($this->levels[$context['level']])
+		);
 	}
 
 }
