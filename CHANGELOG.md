@@ -1,6 +1,18 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 5.0.0 – 2019-08-07
+### Added
+- Nextcloud 17 support
+- Faster loading of the client-side config
+### Changed
+- New Sentry SDKs
+### Fixed
+- Update vulnerable `lodash` dependency
+### Removed
+- Nextcloud 15 support
+- php7.0 support
+
 ## 4.0.1 – 2019-02-12
 ### Changed
 - Update some dependencies

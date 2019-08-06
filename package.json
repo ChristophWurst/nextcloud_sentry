@@ -1,6 +1,6 @@
 {
   "name": "nextcloud_sentry",
-  "version": "4.0.1",
+  "version": "5.0.0",
   "description": "Sentry integration for Nextcloud",
   "main": "init.js",
   "directories": {
