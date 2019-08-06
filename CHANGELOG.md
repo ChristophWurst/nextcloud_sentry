@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 4.1.0 – 2019-08-07
+### Changed
+- New Sentry SDKs
+### Fixed
+- Update vulnerable `lodash` dependency
+
 ## 4.0.1 – 2019-02-12
 ### Changed
 - Update some dependencies
