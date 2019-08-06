@@ -118,7 +118,7 @@ class SentryReporterAdapter implements IReporter, ICollectBreadcrumbs {
 	public function collect(string $message, string $category, array $context = []) {
 		$this->setSentryScope($context);
 
-		$level = isset($context['level']);
+		$level = $context['level'] ?? ILogger::WARN;
 		$sentryLevel = $this->levels[$level] ?? Breadcrumb::LEVEL_WARNING;
 
 		addBreadcrumb(new Breadcrumb($sentryLevel, Breadcrumb::TYPE_ERROR, $category, $message));
