@@ -123,7 +123,7 @@ class SentryReporterAdapter implements IMessageReporter, ICollectBreadcrumbs {
 
 		$this->setSentryScope($context);
 
-		$level = isset($context['level']);
+		$level = $context['level'] ?? ILogger::WARN;
 		$sentryLevel = $this->levels[$level] ?? Breadcrumb::LEVEL_WARNING;
 
 		addBreadcrumb(new Breadcrumb($sentryLevel, Breadcrumb::TYPE_ERROR, $category, $message));
