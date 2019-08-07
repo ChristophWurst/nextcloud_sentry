@@ -8,9 +8,10 @@
     "lib": "lib"
   },
   "dependencies": {
+    "@sentry/browser": "^5.5.0",
     "nextcloud-auth": "0.0.3",
     "nextcloud-axios": "^0.2.0",
-    "raven-js": "^3.27.2"
+    "nextcloud-logger": "0.0.3"
   },
   "devDependencies": {
     "webpack": "^4.39.1",
