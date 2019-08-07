@@ -136,19 +136,19 @@ class SentryReporterAdapter implements IMessageReporter, ICollectBreadcrumbs {
 	 * @param array $context
 	 */
 	public function reportMessage(string $message, array $context = []): void {
-		if (isset($context['app'])) {
-			$message = "[" . $context['app'] . "] " . $message;
-		}
-
 		if (isset($context['level'])
 			&& $context['level'] < $this->minimumLogLevel) {
 			$this->collect($message, 'message', $context);
 			return;
 		}
 
+		if (isset($context['app'])) {
+			$message = "[" . $context['app'] . "] " . $message;
+		}
+
 		captureMessage(
 			$message,
-			new Severity($this->levels[$context['level']])
+			new Severity($this->levels[$context['level'] ?? ILogger::WARN] ?? Severity::WARNING)
 		);
 	}
 
