@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 ## 5.1.0 – 2019-08-26
 ### Added
 - Ability to report messages
-- Ability to report CSP violations (see admin seetings for configuration)
+- Ability to report CSP violations (see admin see settings for configuration)
 ### Changed
 - New Sentry SDKs
 
