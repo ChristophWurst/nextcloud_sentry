@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 5.1.0 – 2019-08-26
+### Added
+- Ability to report messages
+- Ability to report CSP violations (see admin seetings for configuration)
+### Changed
+- New Sentry SDKs
+
 ## 5.0.0 – 2019-08-07
 ### Added
 - Nextcloud 17 support
