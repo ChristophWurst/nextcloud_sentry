@@ -31,16 +31,17 @@ use OCP\IConfig;
 use OCP\ILogger;
 use OCP\IUserSession;
 use OCP\Support\CrashReport\ICollectBreadcrumbs;
-use OCP\Support\CrashReport\IReporter;
+use OCP\Support\CrashReport\IMessageReporter;
 use function Sentry\addBreadcrumb;
 use Sentry\Breadcrumb;
 use function Sentry\captureException;
+use function Sentry\captureMessage;
 use function Sentry\configureScope;
 use Sentry\Severity;
 use Sentry\State\Scope;
 use Throwable;
 
-class SentryReporterAdapter implements IReporter, ICollectBreadcrumbs {
+class SentryReporterAdapter implements IMessageReporter, ICollectBreadcrumbs {
 
 	/** @var IUserSession */
 	protected $userSession;
@@ -116,12 +117,39 @@ class SentryReporterAdapter implements IReporter, ICollectBreadcrumbs {
 	}
 
 	public function collect(string $message, string $category, array $context = []) {
+		if (isset($context['app'])) {
+			$message = "[" . $context['app'] . "] " . $message;
+		}
+
 		$this->setSentryScope($context);
 
 		$level = $context['level'] ?? ILogger::WARN;
 		$sentryLevel = $this->levels[$level] ?? Breadcrumb::LEVEL_WARNING;
 
 		addBreadcrumb(new Breadcrumb($sentryLevel, Breadcrumb::TYPE_ERROR, $category, $message));
+	}
+
+	/**
+	 * Report a (error) message
+	 *
+	 * @param string $message
+	 * @param array $context
+	 */
+	public function reportMessage(string $message, array $context = []): void {
+		if (isset($context['level'])
+			&& $context['level'] < $this->minimumLogLevel) {
+			$this->collect($message, 'message', $context);
+			return;
+		}
+
+		if (isset($context['app'])) {
+			$message = "[" . $context['app'] . "] " . $message;
+		}
+
+		captureMessage(
+			$message,
+			new Severity($this->levels[$context['level'] ?? ILogger::WARN] ?? Severity::WARNING)
+		);
 	}
 
 }
