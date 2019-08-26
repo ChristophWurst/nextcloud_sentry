@@ -5,7 +5,7 @@
 	<name>Sentry</name>
 	<summary>Sentry client</summary>
 	<description>A Sentry integration that sends unhandled exceptions to a Sentry instance to aggregate application crashes. You either have to set up your own Sentry instance or use your sentry.io account. See the admin documentation for how to configure this app.</description>
-	<version>3.4.1</version>
+	<version>5.0.0</version>
 	<licence>agpl</licence>
 	<author>Christoph Wurst</author>
 	<author>Morris Jobke</author>
@@ -22,8 +22,8 @@
 	<bugs>https://github.com/ChristophWurst/nextcloud_sentry/issues</bugs>
 	<repository>https://github.com/ChristophWurst/nextcloud_sentry</repository>
 	<dependencies>
-		<php min-version="7.0" max-version="7.3" />
-		<nextcloud min-version="15" max-version="16" />
+		<php min-version="7.1" max-version="7.3" />
+		<nextcloud min-version="17" max-version="17" />
 	</dependencies>
 	<commands>
 		<command>OCA\Sentry\Command\Test</command>

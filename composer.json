@@ -8,7 +8,10 @@
 		}
 	],
 	"require": {
-		"sentry/sentry": "^1.8",
-		"christophwurst/nextcloud": "14.0.4"
+		"sentry/sdk": "^2.0"
+	},
+	"require-dev": {
+		"christophwurst/nextcloud": "^17.0.0-dev",
+		"roave/security-advisories": "dev-master"
 	}
 }

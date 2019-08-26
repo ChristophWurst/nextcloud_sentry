@@ -1,5 +1,4 @@
-<?php
-declare(strict_types=1);
+/* global OC, oc_config */
 
 /**
  * @copyright 2018 Christoph Wurst <christoph@winzerhof-wurst.at>
@@ -23,34 +22,36 @@ declare(strict_types=1);
  *
  */
 
-namespace OCA\Sentry\Controller;
+import {getCurrentUser} from 'nextcloud-auth'
+import * as Sentry from '@sentry/browser';
 
-use OCP\AppFramework\Controller;
-use OCP\AppFramework\Http\JSONResponse;
-use OCP\IConfig;
-use OCP\IRequest;
+import Logger from './logger'
 
-class ConfigController extends Controller {
+try {
+	const initialState = OCP.InitialState.loadState('sentry', 'dsn');
 
-	/** @var IConfig */
-	private $config;
+	if (typeof initialState.dsn !== 'string') {
+		Logger.warn('no sentry dsn set')
+	} else {
+		const config = {
+			dsn: initialState.dsn,
+		}
 
-	public function __construct(IRequest $request, IConfig $config) {
-		parent::__construct('sentry', $request);
-		$this->config = $config;
+		if (typeof OC.config.version !== 'undefined') {
+			config.release = oc_config.version
+		}
+
+		Sentry.init(config)
+
+		const user = getCurrentUser();
+		if (user !== null) {
+			Sentry.setUser({
+				id: user.uid
+			})
+		}
+
+		Logger.debug('initialized')
 	}
-
-	/**
-	 * @PublicPage
-	 * @NoAdminRequired
-	 * @NoCSRFRequired
-	 */
-	public function get(): JSONResponse {
-		$pubDsn = $this->config->getSystemValue('sentry.public-dsn', null);
-
-		return new JSONResponse([
-			'dsn' => $pubDsn,
-		]);
-	}
-
+} catch (e) {
+	Logger.error('could not load sentry config', e)
 }

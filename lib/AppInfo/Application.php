@@ -24,15 +24,16 @@ declare(strict_types=1);
 namespace OCA\Sentry\AppInfo;
 
 use OC;
-use OCA\Sentry\Reporter\SentryReporterBreadcrumbAdapter;
 use OCA\Sentry\Reporter\SentryReporterAdapter;
 use OCP\AppFramework\App;
 use OCP\AppFramework\Http\ContentSecurityPolicy;
+use OCP\EventDispatcher\IEventDispatcher;
 use OCP\IConfig;
+use OCP\IInitialStateService;
+use OCP\Security\CSP\AddContentSecurityPolicyEvent;
 use OCP\Security\IContentSecurityPolicyManager;
 use OCP\Support\CrashReport\IRegistry;
-use Raven_Client;
-use Raven_ErrorHandler;
+use function Sentry\init as initSentry;
 
 class Application extends App {
 
@@ -46,71 +47,75 @@ class Application extends App {
 
 		/* @var $config IConfig */
 		$config = $container->query(IConfig::class);
-		/** @var IContentSecurityPolicyManager $cspManager */
-		$cspManager = $container->query(IContentSecurityPolicyManager::class);
-
 		$dsn = $config->getSystemValue('sentry.dsn', null);
 		$reportUrl = $config->getSystemValue('sentry.csp-report-url', null);
-		if (!is_null($dsn)) {
-			$this->registerClient($config, $dsn);
+
+		if ($dsn !== '') {
+			$this->registerClient($dsn);
 		}
-		$publicDsn = $config->getSystemValue('sentry.public-dsn', null);
-		$this->addCsp($cspManager, $publicDsn, $reportUrl);
+		$publicDsn = $config->getSystemValueString('sentry.public-dsn', '');
+		$this->setInitialState($publicDsn);
+
+		/** @var IEventDispatcher $dispatcher */
+		$dispatcher = $container->query(IEventDispatcher::class);
+		$dispatcher->addListener(AddContentSecurityPolicyEvent::class, function (AddContentSecurityPolicyEvent $event) use ($reportUrl, $publicDsn) {
+			$event->addPolicy($this->createCsp($publicDsn, $reportUrl));
+		});
 	}
 
 	/**
 	 * @param string $dsn
 	 */
-	private function registerClient(IConfig $config, string $dsn) {
+	private function registerClient(string $dsn): void {
 		$container = $this->getContainer();
+		/* @var $config IConfig */
+		$config = $container->query(IConfig::class);
 
-		$client = new Raven_Client($dsn);
-		$client->setRelease($config->getSystemValue('version', '0.0.0'));
-		$container->registerService(Raven_Client::class, function () use ($client) {
-			return $client;
-		});
+		initSentry([
+			'dsn' => $dsn,
+			'release' => $config->getSystemValue('version', '0.0.0'),
+		]);
 
 		/* @var $registry IRegistry */
 		$registry = $container->query(IRegistry::class);
 		$reporter = $container->query(SentryReporterAdapter::class);
 		$registry->register($reporter);
-
-		$this->registerErrorHandlers($client);
 	}
 
-	private function registerErrorHandlers(Raven_Client $client) {
-		$errorHandler = new Raven_ErrorHandler($client);
-		$errorHandler->registerExceptionHandler();
-		$errorHandler->registerErrorHandler();
-		$errorHandler->registerShutdownFunction();
-	}
-
-	public function addCsp(IContentSecurityPolicyManager $cspManager,
-						   string $publicDsn = null,
-						   string $reportUrl = null) {
-		if (is_null($publicDsn) && is_null($reportUrl)) {
+	private function createCsp(?string $publicDsn, ?string $reportUrl): ContentSecurityPolicy {
+		$csp = new ContentSecurityPolicy();
+		if ($publicDsn === null && $reportUrl === null) {
 			// Don't add any custom CSP
-			return;
+			return $csp;
 		}
 
-		$csp = new ContentSecurityPolicy();
-
-		if (!is_null($publicDsn)) {
+		if ($publicDsn !== null) {
 			$parsedUrl = parse_url($publicDsn);
-			if (!isset($parsedUrl['scheme']) || !isset($parsedUrl['host'])) {
+			if (!isset($parsedUrl['scheme'], $parsedUrl['host'])) {
 				// Misconfigured setup -> ignore
-				return;
+				return $csp;
 			}
 
 			$domain = $parsedUrl['scheme'] . '://' . $parsedUrl['host'];
 			$csp->addAllowedConnectDomain($domain);
 		}
-
-		if (!is_null($reportUrl)) {
+		if ($reportUrl !== null) {
 			$csp->addReportTo($reportUrl);
 		}
+		return $csp;
+	}
 
-		$cspManager->addDefaultPolicy($csp);
+	private function setInitialState(string $dsn): void {
+		$container = $this->getContainer();
+
+		/** @var IInitialStateService $stateService */
+		$stateService = $container->query(IInitialStateService::class);
+
+		$stateService->provideLazyInitialState('sentry', 'dsn', function () use ($dsn) {
+			return [
+				'dsn' => $dsn === '' ? null : $dsn,
+			];
+		});
 	}
 
 }

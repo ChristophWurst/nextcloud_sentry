@@ -1,7 +1,7 @@
-/**
- * @copyright 2018 Christoph Wurst <christoph@winzerhof-wurst.at>
+/*
+ * @copyright 2019 Christoph Wurst <christoph@winzerhof-wurst.at>
  *
- * @author 2018 Christoph Wurst <christoph@winzerhof-wurst.at>
+ * @author 2019 Christoph Wurst <christoph@winzerhof-wurst.at>
  *
  * @license GNU AGPL version 3 or any later version
  *
@@ -17,15 +17,17 @@
  *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
  */
 
-import Axios from 'nextcloud-axios'
-import {generateUrl} from 'nextcloud-server/dist/router'
+import {getCurrentUser} from 'nextcloud-auth'
+import {getLoggerBuilder} from 'nextcloud-logger'
 
-export const loadConfig = () => {
-	const url = generateUrl('/apps/sentry/config')
+const builder = getLoggerBuilder()
+	.setApp('sentry')
 
-	return Axios.get(url)
-		.then(resp => resp.data)
+const user = getCurrentUser()
+if (user !== null) {
+	builder.setUid(user.uid)
 }
+
+export default builder.build()
