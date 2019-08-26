@@ -91,13 +91,10 @@ class Application extends App {
 
 		if ($publicDsn !== null) {
 			$parsedUrl = parse_url($publicDsn);
-			if (!isset($parsedUrl['scheme'], $parsedUrl['host'])) {
-				// Misconfigured setup -> ignore
-				return $csp;
+			if (isset($parsedUrl['scheme'], $parsedUrl['host'])) {
+				$domain = $parsedUrl['scheme'] . '://' . $parsedUrl['host'];
+				$csp->addAllowedConnectDomain($domain);
 			}
-
-			$domain = $parsedUrl['scheme'] . '://' . $parsedUrl['host'];
-			$csp->addAllowedConnectDomain($domain);
 		}
 		if ($reportUrl !== null) {
 			$csp->addReportTo($reportUrl);
