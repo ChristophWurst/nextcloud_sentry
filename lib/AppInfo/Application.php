@@ -27,8 +27,10 @@ use OC;
 use OCA\Sentry\Reporter\SentryReporterAdapter;
 use OCP\AppFramework\App;
 use OCP\AppFramework\Http\ContentSecurityPolicy;
+use OCP\EventDispatcher\IEventDispatcher;
 use OCP\IConfig;
 use OCP\IInitialStateService;
+use OCP\Security\CSP\AddContentSecurityPolicyEvent;
 use OCP\Security\IContentSecurityPolicyManager;
 use OCP\Support\CrashReport\IRegistry;
 use function Sentry\init as initSentry;
@@ -45,15 +47,20 @@ class Application extends App {
 
 		/* @var $config IConfig */
 		$config = $container->query(IConfig::class);
-		$dsn = $config->getSystemValueString('sentry.dsn', '');
+		$dsn = $config->getSystemValue('sentry.dsn', null);
+		$reportUrl = $config->getSystemValue('sentry.csp-report-url', null);
+
 		if ($dsn !== '') {
 			$this->registerClient($dsn);
 		}
 		$publicDsn = $config->getSystemValueString('sentry.public-dsn', '');
 		$this->setInitialState($publicDsn);
-		if ($publicDsn !== '') {
-			$this->addCsp($publicDsn);
-		}
+
+		/** @var IEventDispatcher $dispatcher */
+		$dispatcher = $container->query(IEventDispatcher::class);
+		$dispatcher->addListener(AddContentSecurityPolicyEvent::class, function (AddContentSecurityPolicyEvent $event) use ($reportUrl, $publicDsn) {
+			$event->addPolicy($this->createCsp($publicDsn, $reportUrl));
+		});
 	}
 
 	/**
@@ -75,18 +82,24 @@ class Application extends App {
 		$registry->register($reporter);
 	}
 
-	private function addCsp(string $publicDsn): void {
-		$parsedUrl = parse_url($publicDsn);
-		if (!isset($parsedUrl['scheme'], $parsedUrl['host'])) {
-			// Misconfigured setup -> ignore
-			return;
+	private function createCsp(?string $publicDsn, ?string $reportUrl): ContentSecurityPolicy {
+		$csp = new ContentSecurityPolicy();
+		if ($publicDsn === null && $reportUrl === null) {
+			// Don't add any custom CSP
+			return $csp;
 		}
 
-		$domain = $parsedUrl['scheme'] . '://' . $parsedUrl['host'];
-		$csp = new ContentSecurityPolicy();
-		$csp->addAllowedConnectDomain($domain);
-		$cspManager = OC::$server->query(IContentSecurityPolicyManager::class);
-		$cspManager->addDefaultPolicy($csp);
+		if ($publicDsn !== null) {
+			$parsedUrl = parse_url($publicDsn);
+			if (isset($parsedUrl['scheme'], $parsedUrl['host'])) {
+				$domain = $parsedUrl['scheme'] . '://' . $parsedUrl['host'];
+				$csp->addAllowedConnectDomain($domain);
+			}
+		}
+		if ($reportUrl !== null) {
+			$csp->addReportTo($reportUrl);
+		}
+		return $csp;
 	}
 
 	private function setInitialState(string $dsn): void {

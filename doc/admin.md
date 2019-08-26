@@ -18,6 +18,16 @@ or add the entry directly to `config/config.php`
 
 If you omit the `sentry.public-dsn` config, client-side (browser) errors won't be reported.
 
+### CSP error reporting
+
+[Sentry can capture CSP violation reports](https://docs.sentry.io/error-reporting/security-policy-reporting/). Just set the `sentry.csp-report-url` in addition to your other configuration parameters:
+
+```
+  "sentry.dsn" => "https://xxxxx:yyyyy@sentry.io/1234567",
+  "sentry.public-dsn" => "https://xxxxx@sentry.io/1234567",
+  "sentry.csp-report-url" => "https://sentry.io/api/1234567/security/?sentry_key=adf205d197bd7201da1d564379e694a2",
+```
+
 ### Preventing Abuse
 
 [It is recommended](https://docs.sentry.io/clients/javascript/usage/#preventing-abuse) to whitelist
