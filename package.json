@@ -14,7 +14,7 @@
     "nextcloud-logger": "0.0.6"
   },
   "devDependencies": {
-    "webpack": "^4.39.3",
+    "webpack": "^4.40.0",
     "webpack-cli": "^3.3.8",
     "webpack-merge": "^4.2.2"
   },
