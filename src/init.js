@@ -22,7 +22,7 @@
  *
  */
 
-import {getCurrentUser} from 'nextcloud-auth'
+import {getCurrentUser} from '@nextcloud/auth'
 import * as Sentry from '@sentry/browser';
 
 import Logger from './logger'
