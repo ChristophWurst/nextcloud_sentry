@@ -1,6 +1,17 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 6.0.0 – 2019-12-04
+### Added
+- php7.4 support
+- Nextcloud 18 support
+### Changed
+- New Sentry JavaScript SDK
+### Fixed
+- App name as tag regression
+### Removed
+- php7.1 support
+
 ## 5.2.0 – 2019-12-04
 ### Changed
 - New Sentry JavaScript SDK
