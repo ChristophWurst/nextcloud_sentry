@@ -13,5 +13,8 @@
 	"require-dev": {
 		"christophwurst/nextcloud": "^17.0.0-dev",
 		"roave/security-advisories": "dev-master"
+	},
+	"scripts": {
+		"lint": "find . -name \\*.php -not -path './vendor/*' -not -path './build/*' -exec php -l \"{}\" \\;"
 	}
 }
