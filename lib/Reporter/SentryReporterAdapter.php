@@ -95,7 +95,7 @@ class SentryReporterAdapter implements IMessageReporter, ICollectBreadcrumbs {
 				);
 			}
 			if (isset($context['app'])) {
-				$scope->setExtra('app', $context['app']);
+				$scope->setTag('app', $context['app']);
 			}
 
 			$user = $this->userSession->getUser();
