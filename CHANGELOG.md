@@ -1,10 +1,15 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 5.2.0 – 2019-11-04
+### Changed
+- New Sentry JavaScript SDK
+- Updated dependencies
+
 ## 5.1.0 – 2019-08-26
 ### Added
 - Ability to report messages
-- Ability to report CSP violations (see admin see settings for configuration)
+- Ability to report CSP violations (see admin docs for configuration)
 ### Changed
 - New Sentry SDKs
 
