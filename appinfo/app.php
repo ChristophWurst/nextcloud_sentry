@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @author Christoph Wurst <christoph@winzerhof-wurst.at>
@@ -25,4 +25,4 @@ include_once __DIR__ . '/../vendor/autoload.php';
 
 use OCA\Sentry\AppInfo\Application;
 
-$app = new Application();
+\OC::$server->query(Application::class);
