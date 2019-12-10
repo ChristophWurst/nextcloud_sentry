@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 6.0.1 – 2019-12-10
+### Changed
+- New Sentry SDKs
+### Fixed
+- Application class instantiation warning
+
 ## 6.0.0 – 2019-12-04
 ### Added
 - php7.4 support
