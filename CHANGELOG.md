@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 6.0.2 – 2019-12-12
+### Fixed
+- JavaScript vulnerability in `serialize-javascript` dependency
+
 ## 6.0.1 – 2019-12-10
 ### Changed
 - New Sentry SDKs
