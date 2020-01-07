@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 6.0.3 – 2020-01-07
+### Changed
+- New and updated translations
+- Updated dependencies
+
 ## 6.0.2 – 2019-12-12
 ### Fixed
 - JavaScript vulnerability in `serialize-javascript` dependency
