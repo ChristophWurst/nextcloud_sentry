@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 6.1.0 - 2020-01-10
+### Changed
+- Updated Sentry SDKs
+
 ## 6.0.3 – 2020-01-07
 ### Changed
 - New and updated translations
