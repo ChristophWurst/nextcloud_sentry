@@ -14,7 +14,10 @@ All notable changes to this project will be documented in this file.
 ### Fixed
 - JavaScript vulnerability in `serialize-javascript` dependency
 
-## 6.0.1 – 2019-12-10
+## 6.1.1 – 2019-12-10
+- Downgraded Sentry php SDK due to conflict with Nextcloud's Guzzle client
+
+## 6.1.0 – 2019-12-10
 ### Changed
 - New Sentry SDKs
 ### Fixed
