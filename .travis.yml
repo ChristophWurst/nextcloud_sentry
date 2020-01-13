@@ -1,0 +1,94 @@
+sudo: required
+dist: trusty
+language: php
+php:
+  - 7.3
+  - 7.4snapshot
+jobs:
+  allow_failures:
+  - php: nightly
+
+addons:
+  apt:
+    packages:
+    - mysql-server-5.6
+    - mysql-client-core-5.6
+    - mysql-client-5.6
+
+services:
+  - docker
+  - postgresql
+
+env:
+  global:
+  - CORE_BRANCH=master
+  - TEST_SUITE=TEST-PHP
+  - DB=mysql
+  - PATCH_VERSION_CHECK=FALSE
+  matrix:
+  - TEST_SUITE=LINT-PHP
+  - TEST_SUITE=TEST-PHP
+
+matrix:
+  include:
+    - php: 7.3
+      env: "DB=pgsql"
+    - php: 7.3
+      env: "DB=pgsql CORE_BRANCH=stable17"
+    - php: 7.3
+      env: "CORE_BRANCH=stable17"
+    - php: 7.3
+      env: "DB=sqlite CORE_BRANCH=stable17"
+    - php: nightly
+      env: "DB=sqlite PATCH_VERSION_CHECK=TRUE"
+  fast_finish: true
+
+branches:
+  only:
+  - master
+  - "/^stable\\d+(\\.\\d+)?$/"
+  - /^v\d++(\.\d+)?+(\.\d+)?+(\.\d+)?$/
+  - refactor/vue
+
+cache:
+  directories:
+  - "$HOME/.composer/cache/files"
+  - "$HOME/.npm"
+
+before_install:
+  - php --info
+  # XDebug is only needed if we report coverage -> speeds up other builds
+  - phpenv config-rm xdebug.ini || true
+
+  # Set up DB
+  - if [[ "$DB" == 'pgsql' ]]; then createuser -U travis -s oc_autotest; fi
+  - if [[ "$DB" == 'mysql' ]]; then mysql -u root -e 'create database oc_autotest;'; fi
+  - if [[ "$DB" == 'mysql' ]]; then mysql -u root -e "CREATE USER 'oc_autotest'@'localhost' IDENTIFIED BY '';"; fi
+  - if [[ "$DB" == 'mysql' ]]; then mysql -u root -e "GRANT ALL ON oc_autotest.* TO 'oc_autotest'@'localhost';"; fi
+
+  - cd ..
+  - git clone https://github.com/nextcloud/server.git --recursive --depth 1 -b $CORE_BRANCH core
+  - if [[ "$PATCH_VERSION_CHECK" = "TRUE" ]]; then echo "<?php" > core/lib/versioncheck.php; fi
+  - if [[ "$PATCH_VERSION_CHECK" = "TRUE" ]]; then  sed -ri 's/(<php min\-version="[0-9\.]+") max\-version="[0-9\.]+"/\1/g' sentry/appinfo/info.xml; fi
+  - mv nextcloud_sentry core/apps/sentry
+
+install:
+  # Set up core
+  - sh -c "if [ '$TEST_SUITE' = 'TEST-PHP' ]; then php -f core/occ maintenance:install --database-name oc_autotest --database-user oc_autotest --admin-user admin --admin-pass admin --database $DB --database-pass=''; fi"
+  # Set up app
+  - sh -c "if [ '$TEST_SUITE' = 'TEST-PHP' ]; then php -f core/occ app:enable sentry; fi"
+  # Enable app twice to check occ errors of registered commands
+  - sh -c "if [ '$TEST_SUITE' = 'TEST-PHP' ]; then php -f core/occ app:enable sentry; fi"
+  - cd core/apps/sentry
+  # Install composer deps
+  - composer i
+  # Install npm deps
+  - npm i
+
+script:
+  # Run server's app code checker
+  - sh -c "if [ '$TEST_SUITE' = 'LINT-PHP' ]; then php ../../occ app:check-code sentry; fi"
+
+  # Run PHP tests
+  - sh -c "if [ '$TEST_SUITE' = 'TEST-PHP' ]; then composer test:unit; fi"
+  - sh -c "if [ '$TEST_SUITE' = 'TEST-PHP' ]; then composer test:integration; fi"

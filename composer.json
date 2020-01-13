@@ -8,13 +8,18 @@
 		}
 	],
 	"require": {
-		"sentry/sdk": "^2.0"
+		"sentry/sdk": "^2.0",
+		"christophwurst/nextcloud_testing": "^0.9.1"
 	},
 	"require-dev": {
 		"christophwurst/nextcloud": "^17.0.0-dev",
 		"roave/security-advisories": "dev-master"
 	},
 	"scripts": {
-		"lint": "find . -name \\*.php -not -path './vendor/*' -not -path './build/*' -exec php -l \"{}\" \\;"
+		"lint": "find . -name \\*.php -not -path './vendor/*' -not -path './build/*' -exec php -l \"{}\" \\;",
+		"test:integration": "phpunit -c tests/phpunit.integration.xml tests/Integration --fail-on-warning",
+		"test:integration:dev": "phpunit -c tests/phpunit.integration.xml tests/Integration --no-coverage --fail-on-warning",
+		"test:unit": "phpunit -c tests/phpunit.unit.xml tests/Unit --fail-on-warning",
+		"test:unit:dev": "phpunit -c tests/phpunit.unit.xml tests/Unit --no-coverage --fail-on-warning"
 	}
 }
