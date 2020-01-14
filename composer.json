@@ -8,11 +8,12 @@
 		}
 	],
 	"require": {
-		"sentry/sdk": "^2.0",
-		"christophwurst/nextcloud_testing": "^0.9.1"
+		"christophwurst/nextcloud_testing": "^0.9.1",
+		"sentry/sentry": "^2.3",
+		"christophwurst/nextcloud-http-client": "^0.0.1"
 	},
 	"require-dev": {
-		"christophwurst/nextcloud": "^17.0.0-dev",
+		"christophwurst/nextcloud": "^19.0.0-dev",
 		"roave/security-advisories": "dev-master"
 	},
 	"scripts": {
