@@ -26,19 +26,19 @@ namespace OCA\Sentry\Reporter;
 
 use Exception;
 use OCA\Sentry\Helper\CredentialStoreHelper;
+use function OCA\Sentry\Vendor\Sentry\addBreadcrumb;
+use OCA\Sentry\Vendor\Sentry\Breadcrumb;
+use function OCA\Sentry\Vendor\Sentry\captureException;
+use function OCA\Sentry\Vendor\Sentry\captureMessage;
+use function OCA\Sentry\Vendor\Sentry\configureScope;
+use OCA\Sentry\Vendor\Sentry\Severity;
+use OCA\Sentry\Vendor\Sentry\State\Scope;
 use OCP\Authentication\Exceptions\CredentialsUnavailableException;
 use OCP\IConfig;
 use OCP\ILogger;
 use OCP\IUserSession;
 use OCP\Support\CrashReport\ICollectBreadcrumbs;
 use OCP\Support\CrashReport\IMessageReporter;
-use function Sentry\addBreadcrumb;
-use Sentry\Breadcrumb;
-use function Sentry\captureException;
-use function Sentry\captureMessage;
-use function Sentry\configureScope;
-use Sentry\Severity;
-use Sentry\State\Scope;
 use Throwable;
 
 class SentryReporterAdapter implements IMessageReporter, ICollectBreadcrumbs, ISentryReporter {

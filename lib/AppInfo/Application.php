@@ -30,6 +30,7 @@ use OCA\Sentry\Listener\CustomCspListener;
 use OCA\Sentry\Reporter\ISentryReporter;
 use OCA\Sentry\Reporter\RecursionAwareReporter;
 use OCA\Sentry\Reporter\SentryReporterAdapter;
+use function OCA\Sentry\Vendor\Sentry\init as initSentry;
 use OCP\AppFramework\App;
 use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IBootstrap;
@@ -44,7 +45,6 @@ use OCP\Support\CrashReport\IReporter;
 use OCP\Util;
 use Psr\Container\ContainerInterface;
 use function parse_url;
-use function Sentry\init as initSentry;
 
 class Application extends App implements IBootstrap {
 
@@ -55,6 +55,7 @@ class Application extends App implements IBootstrap {
 	public function register(IRegistrationContext $context): void {
 		// Register the autoloader
 		include_once __DIR__ . '/../../vendor/autoload.php';
+		include_once __DIR__ . '/../../lib/Vendor/Sentry/functions.php';
 
 		// Wire the interface to our decorator and implementation
 		$context->registerService(ISentryReporter::class, function (ContainerInterface $c) {

@@ -45,7 +45,7 @@ class Test extends Command {
 			->setDescription('Fire off a test sentry event');
 	}
 
-	public function execute(InputInterface $input, OutputInterface $output) {
+	public function execute(InputInterface $input, OutputInterface $output): int {
 		$this->logger->info("starting sentry test command");
 		try {
 			$this->logger->warning("you should get at least one Sentry alert soon");
@@ -53,6 +53,8 @@ class Test extends Command {
 			throw new \Exception('This is a sentry test exception!');
 		} catch (\Exception $e) {
 			$this->logger->logException($e, ['app' => 'sentry']);
+
+			return 1;
 		}
 	}
 }

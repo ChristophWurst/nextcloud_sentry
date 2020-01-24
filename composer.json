@@ -8,20 +8,48 @@
 		}
 	],
 	"require": {
-		"nyholm/psr7": "^1.4",
+		"sentry/sdk": "^3.1",
 		"php-http/curl-client": "^2.2",
 		"sentry/sentry": "^3.3"
 	},
 	"require-dev": {
 		"christophwurst/nextcloud_testing": "^0.12.4",
 		"christophwurst/nextcloud": "^21.0.0",
-		"roave/security-advisories": "dev-master"
+		"roave/security-advisories": "dev-master",
+		"coenjacobs/mozart": "^0.7.1"
 	},
 	"scripts": {
 		"lint": "find . -name \\*.php -not -path './vendor/*' -not -path './build/*' -print0 | xargs -0 -n1 php -l",
 		"test:integration": "phpunit -c tests/phpunit.integration.xml tests/Integration --fail-on-warning",
 		"test:integration:dev": "phpunit -c tests/phpunit.integration.xml tests/Integration --no-coverage --fail-on-warning",
 		"test:unit": "phpunit -c tests/phpunit.unit.xml tests/Unit --fail-on-warning",
-		"test:unit:dev": "phpunit -c tests/phpunit.unit.xml tests/Unit --no-coverage --fail-on-warning"
+		"test:unit:dev": "phpunit -c tests/phpunit.unit.xml tests/Unit --no-coverage --fail-on-warning",
+		"post-install-cmd": [
+			"\"vendor/bin/mozart\" compose",
+			"composer dump-autoload"
+		],
+		"post-update-cmd": [
+			"\"vendor/bin/mozart\" compose",
+			"composer dump-autoload"
+		]
+	},
+	"extra": {
+		"mozart": {
+			"dep_namespace": "OCA\\Sentry\\Vendor\\",
+			"dep_directory": "/lib/Vendor/",
+			"classmap_directory": "/lib/autoload/",
+			"classmap_prefix": "NEXTCLOUDSENTRY_",
+			"packages": [
+				"sentry/sentry"
+			],
+			"override_autoload": {
+				"symfony/polyfill-php80": {}
+			}
+		}
+	},
+	"config": {
+		"allow-plugins": {
+			"composer/package-versions-deprecated": true
+		}
 	}
 }

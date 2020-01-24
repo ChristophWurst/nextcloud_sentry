@@ -2,4 +2,5 @@
 /build
 /node_modules
 /vendor/
+/lib/Vendor
 /tests/.phpunit.result.cache 
