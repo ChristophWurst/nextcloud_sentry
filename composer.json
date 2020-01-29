@@ -8,8 +8,9 @@
 		}
 	],
 	"require": {
-		"sentry/sdk": "^2.0",
-		"christophwurst/nextcloud_testing": "^0.9.1"
+		"christophwurst/nextcloud_testing": "^0.9.1",
+		"sentry/sentry": "^2.3",
+		"php-http/curl-client": "^2.1"
 	},
 	"require-dev": {
 		"christophwurst/nextcloud": "^17.0.0-dev",
