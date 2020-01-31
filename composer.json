@@ -8,7 +8,7 @@
 		}
 	],
 	"require": {
-		"christophwurst/nextcloud_testing": "^0.9.1",
+		"christophwurst/nextcloud_testing": "^0.10.0",
 		"sentry/sentry": "^2.3",
 		"php-http/curl-client": "^2.1"
 	},
