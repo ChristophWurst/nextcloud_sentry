@@ -23,6 +23,7 @@ declare(strict_types=1);
 
 namespace OCA\Sentry\AppInfo;
 
+use OCA\Sentry\Reporter\RecursionAwareReporter;
 use OCA\Sentry\Reporter\SentryReporterAdapter;
 use OCP\AppFramework\App;
 use OCP\AppFramework\Http\ContentSecurityPolicy;
@@ -77,7 +78,7 @@ class Application extends App {
 		/* @var $registry IRegistry */
 		$registry = $container->query(IRegistry::class);
 		$reporter = $container->query(SentryReporterAdapter::class);
-		$registry->register($reporter);
+		$registry->register(new RecursionAwareReporter($reporter));
 	}
 
 	private function createCsp(?string $publicDsn, ?string $reportUrl): ContentSecurityPolicy {

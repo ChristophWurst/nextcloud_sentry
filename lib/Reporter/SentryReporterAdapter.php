@@ -50,7 +50,7 @@ class SentryReporterAdapter implements IMessageReporter, ICollectBreadcrumbs {
 	private $credentialStoreHelper;
 
 	/** @var array mapping of log levels */
-	protected $levels = [
+	private const levels = [
 		ILogger::DEBUG => Severity::DEBUG,
 		ILogger::INFO => Severity::INFO,
 		ILogger::WARN => Severity::WARNING,
@@ -59,7 +59,7 @@ class SentryReporterAdapter implements IMessageReporter, ICollectBreadcrumbs {
 	];
 
 	/** @var int */
-	protected $minimumLogLevel;
+	private $minimumLogLevel;
 
 	public function __construct(IUserSession $userSession,
 								IConfig $config,
@@ -91,7 +91,7 @@ class SentryReporterAdapter implements IMessageReporter, ICollectBreadcrumbs {
 		configureScope(function (Scope $scope) use ($context): void {
 			if (isset($context['level'])) {
 				$scope->setLevel(
-					new Severity($this->levels[$context['level']])
+					new Severity(self::levels[$context['level']])
 				);
 			}
 			if (isset($context['app'])) {
@@ -124,7 +124,7 @@ class SentryReporterAdapter implements IMessageReporter, ICollectBreadcrumbs {
 		$this->setSentryScope($context);
 
 		$level = $context['level'] ?? ILogger::WARN;
-		$sentryLevel = $this->levels[$level] ?? Breadcrumb::LEVEL_WARNING;
+		$sentryLevel = self::levels[$level] ?? Breadcrumb::LEVEL_WARNING;
 
 		addBreadcrumb(new Breadcrumb($sentryLevel, Breadcrumb::TYPE_ERROR, $category, $message));
 	}
@@ -148,7 +148,7 @@ class SentryReporterAdapter implements IMessageReporter, ICollectBreadcrumbs {
 
 		captureMessage(
 			$message,
-			new Severity($this->levels[$context['level'] ?? ILogger::WARN] ?? Severity::WARNING)
+			new Severity(self::levels[$context['level'] ?? ILogger::WARN] ?? Severity::WARNING)
 		);
 	}
 
