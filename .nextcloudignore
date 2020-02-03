@@ -1,0 +1,14 @@
+/.git
+/.github
+/.gitignore
+/.scrutinizer.yml
+/.travis.yml
+/composer.*
+/build
+/.nextcloudignore
+/node_modules
+/package.json
+/package-lock.json
+/src
+/tests
+/krankerl.toml

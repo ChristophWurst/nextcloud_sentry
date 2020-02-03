@@ -1,15 +1,4 @@
 [package]
-exclude = [
-	".git",
-	".gitignore",
-	".travis",
-	"composer.*",
-	"build",
-	"node_modules",
-	"src",
-	"krankerl.toml"
-]
-
 before_cmds = [
 	"composer install --no-dev -o",
 	"npm install --deps",
