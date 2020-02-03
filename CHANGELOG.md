@@ -1,6 +1,15 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 6.2.0 – 2020-02-03
+### Added
+- Nextcloud 19 support
+### Changed
+- Updated Sentry SDK
+### Fixed
+- Dependency conflict with other Guzzle instances
+- Recursive reports, e.g. with LDAP
+
 ## 6.1.1 – 2019-12-10
 - Downgraded Sentry php SDK due to conflict with Nextcloud's Guzzle client
 
