@@ -46,13 +46,13 @@ class Application extends App {
 
 		/* @var $config IConfig */
 		$config = $container->query(IConfig::class);
-		$dsn = $config->getSystemValue('sentry.dsn', null);
+		$publicDsn = $config->getSystemValueString('sentry.public-dsn', '');
+		$dsn = $config->getSystemValue('sentry.dsn', $publicDsn);
 		$reportUrl = $config->getSystemValue('sentry.csp-report-url', null);
 
 		if ($dsn !== '') {
 			$this->registerClient($dsn);
 		}
-		$publicDsn = $config->getSystemValueString('sentry.public-dsn', '');
 		$this->setInitialState($publicDsn);
 
 		/** @var IEventDispatcher $dispatcher */

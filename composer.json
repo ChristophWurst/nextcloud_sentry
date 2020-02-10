@@ -8,8 +8,9 @@
 		}
 	],
 	"require": {
-		"sentry/sentry": "^2.3",
-		"php-http/curl-client": "^2.1"
+		"nyholm/psr7": "^1.2",
+		"php-http/message": "^1.8",
+		"sentry/sentry": "^2.3"
 	},
 	"require-dev": {
 		"christophwurst/nextcloud_testing": "^0.10.0",
