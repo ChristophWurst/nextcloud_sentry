@@ -75,6 +75,8 @@ before_install:
 install:
   # Set up core
   - sh -c "if [ '$TEST_SUITE' = 'TEST-PHP' ]; then php -f core/occ maintenance:install --database-name oc_autotest --database-user oc_autotest --admin-user admin --admin-pass admin --database $DB --database-pass=''; fi"
+  # Set the testing DSN
+  - sh -c "if [ '$TEST_SUITE' = 'TEST-PHP' ]; then php core/occ config:system:set sentry.public-dsn2 --value https://4d8d6ccbbe594350ad4cac739c4b60a4@sentry.io/2404186; fi"
   # Set up app
   - sh -c "if [ '$TEST_SUITE' = 'TEST-PHP' ]; then php -f core/occ app:enable sentry; fi"
   # Enable app twice to check occ errors of registered commands
