@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 6.2.2 – 2020-03-19
+### Changed
+- Updated dependencies
+
 ## 6.2.1 – 2020-02-10
 ### Fixed
 - Problem with Curl php package
