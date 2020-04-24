@@ -10,7 +10,7 @@
   "dependencies": {
     "@nextcloud/auth": "^1.2.3",
     "@nextcloud/logger": "^1.1.2",
-    "@sentry/browser": "^5.15.4"
+    "@sentry/browser": "^5.15.5"
   },
   "devDependencies": {
     "webpack": "^4.43.0",
