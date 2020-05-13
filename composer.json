@@ -18,7 +18,7 @@
 		"roave/security-advisories": "dev-master"
 	},
 	"scripts": {
-		"lint": "find . -name \\*.php -not -path './vendor/*' -not -path './build/*' -exec php -l \"{}\" \\;",
+		"lint": "find . -name \\*.php -not -path './vendor/*' -not -path './build/*' -print0 | xargs -0 -n1 php -l",
 		"test:integration": "phpunit -c tests/phpunit.integration.xml tests/Integration --fail-on-warning",
 		"test:integration:dev": "phpunit -c tests/phpunit.integration.xml tests/Integration --no-coverage --fail-on-warning",
 		"test:unit": "phpunit -c tests/phpunit.unit.xml tests/Unit --fail-on-warning",
