@@ -15,7 +15,7 @@
   "devDependencies": {
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12",
-    "webpack-merge": "^5.0.9"
+    "webpack-merge": "^5.1.0"
   },
   "scripts": {
     "build": "webpack --config src/webpack.prod.config.js",
