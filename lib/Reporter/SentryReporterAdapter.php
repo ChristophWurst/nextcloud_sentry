@@ -49,6 +49,9 @@ class SentryReporterAdapter implements IMessageReporter, ICollectBreadcrumbs {
 	/** @var CredentialStoreHelper */
 	private $credentialStoreHelper;
 
+	/** @var bool */
+	private $userScopeSet = false;
+
 	/** @var array mapping of log levels */
 	private const levels = [
 		ILogger::DEBUG => Severity::DEBUG,
@@ -98,6 +101,11 @@ class SentryReporterAdapter implements IMessageReporter, ICollectBreadcrumbs {
 				$scope->setTag('app', $context['app']);
 			}
 
+			if ($this->userScopeSet) {
+				// Run the code below just once
+				return;
+			}
+			$this->userScopeSet = true;
 			$user = $this->userSession->getUser();
 			if ($user !== null) {
 				// Try to obtain the login name as well
