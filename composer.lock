@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "662f9b48293a42cda4e6a318f78f57b4",
+    "content-hash": "adcce24d73f932f454c72ed896f73beb",
     "packages": [
         {
             "name": "clue/stream-filter",
@@ -291,6 +291,16 @@
             "keywords": [
                 "psr-17",
                 "psr-7"
+            ],
+            "funding": [
+                {
+                    "url": "https://github.com/Zegnat",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/nyholm",
+                    "type": "github"
+                }
             ],
             "time": "2020-05-23T11:29:07+00:00"
         },
@@ -1209,25 +1219,25 @@
     "packages-dev": [
         {
             "name": "christophwurst/nextcloud",
-            "version": "v18.0.5",
+            "version": "v19.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ChristophWurst/nextcloud_composer.git",
-                "reference": "2cbf4d9b33e6c63ded02df1532728a712b1580cf"
+                "reference": "1329e82c5aaf79ce546d9c86ebb057ebe6f857e4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ChristophWurst/nextcloud_composer/zipball/2cbf4d9b33e6c63ded02df1532728a712b1580cf",
-                "reference": "2cbf4d9b33e6c63ded02df1532728a712b1580cf",
+                "url": "https://api.github.com/repos/ChristophWurst/nextcloud_composer/zipball/1329e82c5aaf79ce546d9c86ebb057ebe6f857e4",
+                "reference": "1329e82c5aaf79ce546d9c86ebb057ebe6f857e4",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.1"
+                "php": "^7.2"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "18.0.0-dev"
+                    "dev-master": "19.0.0-dev"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1241,7 +1251,7 @@
                 }
             ],
             "description": "Composer package containing Nextcloud's public API (classes, interfaces)",
-            "time": "2020-08-24T12:42:23+00:00"
+            "time": "2020-08-24T12:38:49+00:00"
         },
         {
             "name": "christophwurst/nextcloud_testing",
@@ -2014,6 +2024,7 @@
             "keywords": [
                 "tokenizer"
             ],
+            "abandoned": true,
             "time": "2019-09-17T06:23:10+00:00"
         },
         {
