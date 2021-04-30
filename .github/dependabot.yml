@@ -1,0 +1,39 @@
+version: 2
+updates:
+- package-ecosystem: composer
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "02:00"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: christophwurst/nextcloud
+    versions:
+    - "> 19.0.0"
+  - dependency-name: sentry/sdk
+    versions:
+    - "> 2.1.0, < 2.2"
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "02:00"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: "@sentry/browser"
+    versions:
+    - 6.0.2
+    - 6.0.3
+    - 6.0.4
+    - 6.1.0
+    - 6.2.0
+    - 6.2.1
+    - 6.2.2
+    - 6.2.3
+    - 6.2.4
+    - 6.2.5
+    - 6.3.0
+  - dependency-name: webpack-cli
+    versions:
+    - 4.4.0
+    - 4.5.0
