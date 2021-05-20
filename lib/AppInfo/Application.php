@@ -25,6 +25,7 @@ namespace OCA\Sentry\AppInfo;
 
 use OCA\Sentry\Reporter\RecursionAwareReporter;
 use OCA\Sentry\Reporter\SentryReporterAdapter;
+use function OCA\Sentry\Vendor\Sentry\init as initSentry;
 use OCP\AppFramework\App;
 use OCP\AppFramework\Http\ContentSecurityPolicy;
 use OCP\EventDispatcher\IEventDispatcher;
@@ -32,7 +33,6 @@ use OCP\IConfig;
 use OCP\IInitialStateService;
 use OCP\Security\CSP\AddContentSecurityPolicyEvent;
 use OCP\Support\CrashReport\IRegistry;
-use function Sentry\init as initSentry;
 
 class Application extends App {
 

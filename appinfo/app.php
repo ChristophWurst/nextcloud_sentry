@@ -19,7 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-include_once __DIR__ . '/../vendor/autoload.php';
+include_once __DIR__ . '/../lib/Vendor/Sentry/functions.php';
 
 \OCP\Util::addScript('sentry', 'sentry');
 
