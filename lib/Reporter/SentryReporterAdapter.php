@@ -41,7 +41,7 @@ use Sentry\Severity;
 use Sentry\State\Scope;
 use Throwable;
 
-class SentryReporterAdapter implements IMessageReporter, ICollectBreadcrumbs {
+class SentryReporterAdapter implements IMessageReporter, ICollectBreadcrumbs, ISentryReporter {
 
 	/** @var IUserSession */
 	protected $userSession;

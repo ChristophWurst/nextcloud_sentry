@@ -1,7 +1,11 @@
-<?php declare(strict_types=1);
+<?php
 
-/**
- * @author Christoph Wurst <christoph@winzerhof-wurst.at>
+declare(strict_types=1);
+
+/*
+ * @copyright 2021 Christoph Wurst <christoph@winzerhof-wurst.at>
+ *
+ * @author 2021 Christoph Wurst <christoph@winzerhof-wurst.at>
  *
  * @license GNU AGPL version 3 or any later version
  *
@@ -17,12 +21,27 @@
  *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
  */
-include_once __DIR__ . '/../vendor/autoload.php';
 
-\OCP\Util::addScript('sentry', 'sentry');
+namespace OCA\Sentry\InitialState;
 
-use OCA\Sentry\AppInfo\Application;
+use OCA\Sentry\Config;
+use OCP\AppFramework\Services\InitialStateProvider;
 
-\OC::$server->query(Application::class);
+class DsnProvider extends InitialStateProvider {
+
+	/** @var Config */
+	private $config;
+
+	public function __construct(Config $config) {
+		$this->config = $config;
+	}
+
+	public function getKey(): string {
+		return 'dsn';
+	}
+
+	public function getData() {
+		return $this->config->getPublicDsn();
+	}
+}

@@ -8,13 +8,13 @@
 		}
 	],
 	"require": {
-		"nyholm/psr7": "^1.2",
-		"php-http/message": "^1.8",
-		"sentry/sentry": "^2.3"
+		"nyholm/psr7": "^1.4",
+		"php-http/curl-client": "^2.2",
+		"sentry/sentry": "^3.3"
 	},
 	"require-dev": {
-		"christophwurst/nextcloud_testing": "^0.12.1",
-		"christophwurst/nextcloud": "^18.0.0",
+		"christophwurst/nextcloud_testing": "^0.12.4",
+		"christophwurst/nextcloud": "^21.0.0",
 		"roave/security-advisories": "dev-master"
 	},
 	"scripts": {

@@ -22,19 +22,20 @@
  *
  */
 
+import * as Sentry from '@sentry/browser'
 import {getCurrentUser} from '@nextcloud/auth'
-import * as Sentry from '@sentry/browser';
+import {loadState} from '@nextcloud/initial-state'
 
 import Logger from './logger'
 
 try {
-	const initialState = OCP.InitialState.loadState('sentry', 'dsn');
+	const dsn = loadState('sentry', 'dsn')
 
-	if (typeof initialState.dsn !== 'string') {
+	if (typeof dsn !== 'string') {
 		Logger.warn('no sentry dsn set')
 	} else {
 		const config = {
-			dsn: initialState.dsn,
+			dsn: dsn,
 		}
 
 		if (typeof OC.config.version !== 'undefined') {
