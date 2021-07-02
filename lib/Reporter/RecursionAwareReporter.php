@@ -32,14 +32,14 @@ use OCP\Support\CrashReport\IReporter;
 /**
  * Decorator that detects and stops recursive calls to reporter methods
  */
-class RecursionAwareReporter implements IMessageReporter, ICollectBreadcrumbs {
+class RecursionAwareReporter implements IMessageReporter, ICollectBreadcrumbs, ISentryReporter {
 
-	/** @var IReporter */
+	/** @var ISentryReporter */
 	private $reporter;
 
 	private $reporting = false;
 
-	public function __construct(IReporter $reporter) {
+	public function __construct(ISentryReporter $reporter) {
 		$this->reporter = $reporter;
 	}
 

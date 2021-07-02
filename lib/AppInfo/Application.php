@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /**
@@ -23,95 +24,63 @@ declare(strict_types=1);
 
 namespace OCA\Sentry\AppInfo;
 
+use OCA\Sentry\Config;
+use OCA\Sentry\InitialState\DsnProvider;
+use OCA\Sentry\Listener\CustomCspListener;
+use OCA\Sentry\Reporter\ISentryReporter;
 use OCA\Sentry\Reporter\RecursionAwareReporter;
 use OCA\Sentry\Reporter\SentryReporterAdapter;
 use OCP\AppFramework\App;
+use OCP\AppFramework\Bootstrap\IBootContext;
+use OCP\AppFramework\Bootstrap\IBootstrap;
+use OCP\AppFramework\Bootstrap\IRegistrationContext;
 use OCP\AppFramework\Http\ContentSecurityPolicy;
 use OCP\EventDispatcher\IEventDispatcher;
 use OCP\IConfig;
 use OCP\IInitialStateService;
 use OCP\Security\CSP\AddContentSecurityPolicyEvent;
 use OCP\Support\CrashReport\IRegistry;
+use OCP\Support\CrashReport\IReporter;
+use OCP\Util;
+use Psr\Container\ContainerInterface;
+use function parse_url;
 use function Sentry\init as initSentry;
 
-class Application extends App {
+class Application extends App implements IBootstrap {
 
-	/**
-	 * @param array $urlParams
-	 */
-	public function __construct($urlParams = []) {
+	public function __construct(array $urlParams = []) {
 		parent::__construct('sentry', $urlParams);
-
-		$container = $this->getContainer();
-
-		/* @var $config IConfig */
-		$config = $container->query(IConfig::class);
-		$publicDsn = $config->getSystemValueString('sentry.public-dsn', '');
-		$dsn = $config->getSystemValue('sentry.dsn', $publicDsn);
-		$reportUrl = $config->getSystemValue('sentry.csp-report-url', null);
-
-		if ($dsn !== '') {
-			$this->registerClient($dsn);
-		}
-		$this->setInitialState($publicDsn);
-
-		/** @var IEventDispatcher $dispatcher */
-		$dispatcher = $container->query(IEventDispatcher::class);
-		$dispatcher->addListener(AddContentSecurityPolicyEvent::class, function (AddContentSecurityPolicyEvent $event) use ($reportUrl, $publicDsn) {
-			$event->addPolicy($this->createCsp($publicDsn, $reportUrl));
-		});
 	}
 
-	/**
-	 * @param string $dsn
-	 */
-	private function registerClient(string $dsn): void {
-		$container = $this->getContainer();
-		/* @var $config IConfig */
-		$config = $container->query(IConfig::class);
+	public function register(IRegistrationContext $context): void {
+		// Register the autoloader
+		include_once __DIR__ . '/../../vendor/autoload.php';
 
-		initSentry([
-			'dsn' => $dsn,
-			'release' => $config->getSystemValue('version', '0.0.0'),
-		]);
+		// Wire the interface to our decorator and implementation
+		$context->registerService(ISentryReporter::class, function (ContainerInterface $c) {
+			/** @var Config $config */
+			$config = $c->get(Config::class);
+			/** @var SentryReporterAdapter $inner */
+			$inner = $c->get(SentryReporterAdapter::class);
 
-		/* @var $registry IRegistry */
-		$registry = $container->query(IRegistry::class);
-		$reporter = $container->query(SentryReporterAdapter::class);
-		$registry->register(new RecursionAwareReporter($reporter));
-	}
-
-	private function createCsp(?string $publicDsn, ?string $reportUrl): ContentSecurityPolicy {
-		$csp = new ContentSecurityPolicy();
-		if ($publicDsn === null && $reportUrl === null) {
-			// Don't add any custom CSP
-			return $csp;
-		}
-
-		if ($publicDsn !== null) {
-			$parsedUrl = parse_url($publicDsn);
-			if (isset($parsedUrl['scheme'], $parsedUrl['host'])) {
-				$domain = $parsedUrl['scheme'] . '://' . $parsedUrl['host'];
-				$csp->addAllowedConnectDomain($domain);
+			// Now it's time to connect Sentry
+			$dsn = $config->getDsn();
+			if ($dsn !== null) {
+				initSentry([
+					'dsn' => $dsn,
+					'release' => $config->getServerVersion(),
+				]);
 			}
-		}
-		if ($reportUrl !== null) {
-			$csp->addReportTo($reportUrl);
-		}
-		return $csp;
+
+			return new RecursionAwareReporter($inner);
+		});
+		$context->registerCrashReporter(ISentryReporter::class);
+		$context->registerEventListener(AddContentSecurityPolicyEvent::class, CustomCspListener::class);
+		$context->registerInitialStateProvider(DsnProvider::class);
 	}
 
-	private function setInitialState(string $dsn): void {
-		$container = $this->getContainer();
-
-		/** @var IInitialStateService $stateService */
-		$stateService = $container->query(IInitialStateService::class);
-
-		$stateService->provideLazyInitialState('sentry', 'dsn', function () use ($dsn) {
-			return [
-				'dsn' => $dsn === '' ? null : $dsn,
-			];
-		});
+	public function boot(IBootContext $context): void {
+		Util::addScript('sentry', 'sentry');
 	}
 
 }
