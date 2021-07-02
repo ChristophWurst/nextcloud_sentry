@@ -1,6 +1,16 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 8.0.0 – 2021-07-02
+### Added
+- Nextcloud 21-23 support
+- PHP8.0 support
+### Changed
+- Updated dependencies
+### Removed
+- Nextcloud 18-20 support
+- PHP7.3 support
+
 ## 7.0.0 – 2020-08-26
 ### Added
 - Nextcloud 20 support
