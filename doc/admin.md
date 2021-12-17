@@ -20,7 +20,7 @@ If you omit the `sentry.public-dsn` config, client-side (browser) errors won't b
 
 ### CSP error reporting
 
-[Sentry can capture CSP violation reports](https://docs.sentry.io/error-reporting/security-policy-reporting/). Just set the `sentry.csp-report-url` in addition to your other configuration parameters:
+[Sentry can capture CSP violation reports](https://docs.sentry.io/product/security-policy-reporting/). Just set the `sentry.csp-report-url` in addition to your other configuration parameters:
 
 ```
   "sentry.dsn" => "https://xxxxx:yyyyy@sentry.io/1234567",
