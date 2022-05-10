@@ -23,53 +23,25 @@ declare(strict_types=1);
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace OCA\Sentry;
+namespace OCA\Sentry\InitialState;
 
-use OCP\IConfig;
+use OCA\Sentry\Config;
+use OCP\AppFramework\Services\InitialStateProvider;
 
-class Config {
+class TracesSamplingRateProvider extends InitialStateProvider {
 
-	/** @var IConfig */
+	/** @var Config */
 	private $config;
 
-	public function __construct(IConfig $config) {
+	public function __construct(Config $config) {
 		$this->config = $config;
 	}
 
-	public function getPublicDsn(): ?string {
-		$publicDsn = $this->config->getSystemValueString('sentry.public-dsn');
-
-		if ($publicDsn === '') {
-			return null;
-		}
-
-		return $publicDsn;
+	public function getKey(): string {
+		return 'tracesSampleRate';
 	}
 
-	public function getTracesSamplingRate(): ?float {
-		$tracesSamplingRate = $this->config->getSystemValue('sentry.tracesSamplingRate', null);
-		return $tracesSamplingRate ? (float)$tracesSamplingRate : null;
+	public function getData() {
+		return $this->config->getTracesSamplingRate();
 	}
-
-	/**
-	 * @deprecated
-	 */
-	public function getDsn(): ?string {
-		$dsn = $this->config->getSystemValue('sentry.dsn');
-
-		if ($dsn !== '') {
-			return $dsn;
-		}
-
-		return $this->getPublicDsn();
-	}
-
-	public function getCspReportUrl(): ?string {
-		return $this->config->getSystemValue('sentry.csp-report-url', null);
-	}
-
-	public function getServerVersion(): string {
-		return $this->config->getSystemValue('version', '0.0.0');
-	}
-
 }

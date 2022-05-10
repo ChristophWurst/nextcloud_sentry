@@ -23,6 +23,7 @@
  */
 
 import * as Sentry from '@sentry/browser'
+import { BrowserTracing } from "@sentry/tracing"
 import {getCurrentUser} from '@nextcloud/auth'
 import {loadState} from '@nextcloud/initial-state'
 
@@ -40,6 +41,12 @@ try {
 
 		if (typeof OC.config.version !== 'undefined') {
 			config.release = oc_config.version
+		}
+
+		const tracesSampleRate = loadState('sentry', 'tracesSampleRate', null)
+		if (tracesSampleRate) {
+			config.integrations = [new BrowserTracing()]
+			config.tracesSampleRate = tracesSampleRate
 		}
 
 		Sentry.init(config)

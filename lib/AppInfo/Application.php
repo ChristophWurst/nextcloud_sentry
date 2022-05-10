@@ -26,6 +26,7 @@ namespace OCA\Sentry\AppInfo;
 
 use OCA\Sentry\Config;
 use OCA\Sentry\InitialState\DsnProvider;
+use OCA\Sentry\InitialState\TracesSamplingRateProvider;
 use OCA\Sentry\Listener\CustomCspListener;
 use OCA\Sentry\Reporter\ISentryReporter;
 use OCA\Sentry\Reporter\RecursionAwareReporter;
@@ -77,6 +78,7 @@ class Application extends App implements IBootstrap {
 		$context->registerCrashReporter(ISentryReporter::class);
 		$context->registerEventListener(AddContentSecurityPolicyEvent::class, CustomCspListener::class);
 		$context->registerInitialStateProvider(DsnProvider::class);
+		$context->registerInitialStateProvider(TracesSamplingRateProvider::class);
 	}
 
 	public function boot(IBootContext $context): void {

@@ -11,7 +11,8 @@
     "@nextcloud/auth": "^1.3.0",
     "@nextcloud/initial-state": "^1.2.1",
     "@nextcloud/logger": "^2",
-    "@sentry/browser": "^6.19"
+    "@sentry/browser": "^6.19.7",
+    "@sentry/tracing": "^6.19.7"
   },
   "devDependencies": {
     "webpack": "^4.46.0",
