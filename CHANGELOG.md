@@ -1,3 +1,12 @@
+## [8.2.2](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.2.1...v8.2.2) (2022-12-16)
+
+
+### Bug Fixes
+
+* Remove app store publishing until info.xml bump is done ([35b0c36](https://github.com/ChristophWurst/nextcloud_sentry/commit/35b0c3691a95d592c79d38326d63a9ff031d40ae))
+
+
+
 ## [8.2.1](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.2.0...v8.2.1) (2022-12-16)
 
 
@@ -36,20 +45,6 @@
 * release automation permissions ([c604a70](https://github.com/ChristophWurst/nextcloud_sentry/commit/c604a70e00db97ae11a9cfaffd0f5e8a2df0ab60))
 * Set PAT in checkout action ([52e3050](https://github.com/ChristophWurst/nextcloud_sentry/commit/52e3050e7d5e71397878d3caa1abaee71418a9e0))
 * unused imports ([f54127c](https://github.com/ChristophWurst/nextcloud_sentry/commit/f54127c99d6f0d0ff3430066226f8a8621e0fafe))
-
-
-
-# [8.1.0](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.0.0...v8.1.0) (2022-12-16)
-
-
-### Bug Fixes
-
-* **cli:** Add return code ([dbcfe06](https://github.com/ChristophWurst/nextcloud_sentry/commit/dbcfe06c825073a95bf8e8f8e8781e5b1aca3136))
-
-
-### Features
-
-* Update Nextcloud and PHP supported versions ([911a7eb](https://github.com/ChristophWurst/nextcloud_sentry/commit/911a7eb0c0e2064a6b46cd008c596d86b0440b24))
 
 
 
