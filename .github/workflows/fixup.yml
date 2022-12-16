@@ -1,0 +1,11 @@
+name: Pull request checks
+on: pull_request
+jobs:
+  commit-message-check:
+    name: Block fixup and squash commits
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run check
+        uses: xt0rted/block-autosquash-commits-action@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
