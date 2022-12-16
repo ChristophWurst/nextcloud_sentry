@@ -34,16 +34,9 @@ use OCP\AppFramework\App;
 use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IBootstrap;
 use OCP\AppFramework\Bootstrap\IRegistrationContext;
-use OCP\AppFramework\Http\ContentSecurityPolicy;
-use OCP\EventDispatcher\IEventDispatcher;
-use OCP\IConfig;
-use OCP\IInitialStateService;
 use OCP\Security\CSP\AddContentSecurityPolicyEvent;
-use OCP\Support\CrashReport\IRegistry;
-use OCP\Support\CrashReport\IReporter;
 use OCP\Util;
 use Psr\Container\ContainerInterface;
-use function parse_url;
 use function Sentry\init as initSentry;
 
 class Application extends App implements IBootstrap {
