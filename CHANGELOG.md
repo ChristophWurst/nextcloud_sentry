@@ -1,3 +1,12 @@
+# [8.2.0](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.1.2...v8.2.0) (2022-12-16)
+
+
+### Features
+
+* Full release automation ([f951e66](https://github.com/ChristophWurst/nextcloud_sentry/commit/f951e66e758957c22b67dd912032ab728ef862df))
+
+
+
 ## [8.1.2](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.1.1...v8.1.2) (2022-12-16)
 
 
@@ -36,10 +45,6 @@
 
 
 # [8.0.0](https://github.com/ChristophWurst/nextcloud_sentry/compare/v7.0.0...v8.0.0) (2021-07-02)
-
-
-
-# [7.0.0](https://github.com/ChristophWurst/nextcloud_sentry/compare/v6.2.2...v7.0.0) (2020-08-26)
 
 
 
