@@ -14,6 +14,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.RELEASE_PAT }}
       - name: Conventional Changelog Action
         uses: TriPSs/conventional-changelog-action@v3
         with:
