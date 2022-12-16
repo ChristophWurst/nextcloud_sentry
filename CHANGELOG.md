@@ -1,3 +1,12 @@
+## [8.2.1](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.2.0...v8.2.1) (2022-12-16)
+
+
+### Bug Fixes
+
+* Catch Throwable instead of Exception ([fcaff49](https://github.com/ChristophWurst/nextcloud_sentry/commit/fcaff49911a3b4db4baf4dcfaae7229731fc790c))
+
+
+
 # [8.2.0](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.1.2...v8.2.0) (2022-12-16)
 
 
@@ -41,10 +50,6 @@
 ### Features
 
 * Update Nextcloud and PHP supported versions ([911a7eb](https://github.com/ChristophWurst/nextcloud_sentry/commit/911a7eb0c0e2064a6b46cd008c596d86b0440b24))
-
-
-
-# [8.0.0](https://github.com/ChristophWurst/nextcloud_sentry/compare/v7.0.0...v8.0.0) (2021-07-02)
 
 
 
