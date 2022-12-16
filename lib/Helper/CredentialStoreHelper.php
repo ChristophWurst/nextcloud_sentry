@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2018, Roeland Jago Douma <roeland@famdouma.nl>
  *
@@ -27,7 +29,6 @@ namespace OCA\Sentry\Helper;
 use OCP\Authentication\Exceptions\CredentialsUnavailableException;
 use OCP\Authentication\LoginCredentials\ICredentials;
 use OCP\Authentication\LoginCredentials\IStore;
-
 
 /*
  * This helper class is added to break the circle when fetching the login credentials.
