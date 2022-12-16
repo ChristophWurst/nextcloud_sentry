@@ -11,7 +11,7 @@ php occ config:system:set sentry.public-dsn --value=https://xxxxx@sentry.io/1234
 
 or add the entry directly to `config/config.php`
 
-```
+```php
   "sentry.dsn" => "https://xxxxx:yyyyy@sentry.io/1234567",
   "sentry.public-dsn" => "https://xxxxx@sentry.io/1234567",
 ```
