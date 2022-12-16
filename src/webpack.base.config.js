@@ -13,14 +13,4 @@ module.exports = {
 			'handlebars': 'handlebars/runtime.js'
 		}
 	},
-	module: {
-		rules: [
-			{
-				test: /\.html$/, loader: "handlebars-loader", query: {
-					extensions: '.html',
-					helperDirs: __dirname + '/templatehelpers'
-				}
-			}
-		]
-	}
 };
