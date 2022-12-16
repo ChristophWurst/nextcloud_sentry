@@ -23,8 +23,8 @@
  */
 
 import * as Sentry from '@sentry/browser'
-import {getCurrentUser} from '@nextcloud/auth'
-import {loadState} from '@nextcloud/initial-state'
+import { getCurrentUser } from '@nextcloud/auth'
+import { loadState } from '@nextcloud/initial-state'
 
 import Logger from './logger'
 
@@ -35,7 +35,7 @@ try {
 		Logger.warn('no sentry dsn set')
 	} else {
 		const config = {
-			dsn: dsn,
+			dsn,
 		}
 
 		if (typeof OC.config.version !== 'undefined') {
