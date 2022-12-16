@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e5583badb27c1e2470ac6d8269391788",
+    "content-hash": "b0e55d6851bb1a4aed65823220abb360",
     "packages": [
         {
             "name": "clue/stream-filter",
@@ -1606,46 +1606,6 @@
         }
     ],
     "packages-dev": [
-        {
-            "name": "christophwurst/nextcloud",
-            "version": "v21.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ChristophWurst/nextcloud_composer.git",
-                "reference": "41e1476b4aed5bce7371895054049eca353729c5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ChristophWurst/nextcloud_composer/zipball/41e1476b4aed5bce7371895054049eca353729c5",
-                "reference": "41e1476b4aed5bce7371895054049eca353729c5",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.3 || ~8.0.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "21.0.0-dev"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "AGPL-3.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "Christoph Wurst",
-                    "email": "christoph@winzerhof-wurst.at"
-                }
-            ],
-            "description": "Composer package containing Nextcloud's public API (classes, interfaces)",
-            "support": {
-                "issues": "https://github.com/ChristophWurst/nextcloud_composer/issues",
-                "source": "https://github.com/ChristophWurst/nextcloud_composer/tree/v21.0.0"
-            },
-            "time": "2021-03-01T08:42:25+00:00"
-        },
         {
             "name": "christophwurst/nextcloud_testing",
             "version": "v0.12.4",
