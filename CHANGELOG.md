@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 8.1.0 – 2022-12-16
+### Added
+- Nextcloud 24-26 support
+### Changed
+- Nextcloud 21-23 support removed (EOL)
+- Updated dependencies
+
 ## 8.0.0 – 2021-07-02
 ### Added
 - Nextcloud 21-23 support
