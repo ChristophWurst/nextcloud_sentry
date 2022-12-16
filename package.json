@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@nextcloud/auth": "^2.0.0",
-    "@nextcloud/initial-state": "^1.2.1",
+    "@nextcloud/initial-state": "^2.0.0",
     "@nextcloud/logger": "^2",
     "@sentry/browser": "^7.26"
   },
