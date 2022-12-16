@@ -17,6 +17,7 @@ jobs:
       - name: Conventional Changelog Action
         uses: TriPSs/conventional-changelog-action@v3
         with:
+          github-token: ${{ secrets.RELEASE_PAT }}
           skip-git-pull: "true"
       - name: Create Release
         uses: actions/create-release@v1
