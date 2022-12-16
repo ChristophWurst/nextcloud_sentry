@@ -10,8 +10,12 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
       - name: Conventional Changelog Action
         uses: TriPSs/conventional-changelog-action@v3
+        with:
+          skip-git-pull: "true"
       - name: Create Release
         uses: actions/create-release@v1
         if: ${{ steps.changelog.outputs.skipped == 'false' }}
