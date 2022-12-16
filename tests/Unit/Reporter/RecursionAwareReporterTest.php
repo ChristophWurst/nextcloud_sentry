@@ -27,6 +27,7 @@ namespace OCA\Sentry\Test\Unit\Reporter;
 
 use ChristophWurst\Nextcloud\Testing\TestCase;
 use Exception;
+use OCA\Sentry\Reporter\ISentryReporter;
 use OCA\Sentry\Reporter\RecursionAwareReporter;
 use OCP\Support\CrashReport\ICollectBreadcrumbs;
 use OCP\Support\CrashReport\IMessageReporter;
@@ -44,7 +45,7 @@ class RecursionAwareReporterTest extends TestCase {
 	protected function setUp(): void {
 		parent::setUp();
 
-		$this->inner = $this->createMock(IReporter::class);
+		$this->inner = $this->createMock(ISentryReporter::class);
 
 		$this->reporter = new RecursionAwareReporter(
 			$this->inner
@@ -52,7 +53,6 @@ class RecursionAwareReporterTest extends TestCase {
 	}
 
 	public function testCollectRecursively(): void {
-		$user = null;
 		$this->inner
 			->expects($this->once())
 			->method('report')

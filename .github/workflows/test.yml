@@ -1,0 +1,110 @@
+name: Test
+on: pull_request
+
+permissions:
+  contents: read
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php-versions: ['7.4', '8.0', '8.1', '8.2']
+        nextcloud-versions: ['master']
+        include:
+          - php-versions: 8.0
+            nextcloud-versions: stable25
+    name: Nextcloud ${{ matrix.nextcloud-versions }} php${{ matrix.php-versions }} unit tests
+    steps:
+    - name: Set up php${{ matrix.php-versions }}
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php-versions }}
+        extensions: ctype,curl,dom,gd,iconv,intl,json,mbstring,openssl,posix,sqlite,xml,zip,gmp
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Checkout Nextcloud
+      run: git clone https://github.com/nextcloud/server.git --recursive --depth 1 -b ${{ matrix.nextcloud-versions }} nextcloud
+    - name: Patch version check for nightly PHP
+      if: ${{ matrix.php-versions == '8.2' }}
+      run: echo "<?php" > nextcloud/lib/versioncheck.php
+    - name: Install Nextcloud
+      run: php -f nextcloud/occ maintenance:install --database-name oc_autotest --database-user oc_autotest --admin-user admin --admin-pass admin --database sqlite --database-pass=''
+    - name: Checkout sentry
+      uses: actions/checkout@v3
+      with:
+        path: nextcloud/apps/sentry
+    - name: Install dependencies
+      working-directory: nextcloud/apps/sentry
+      run: composer install
+    - name: Run tests
+      working-directory: nextcloud/apps/sentry
+      run: composer run test:unit
+      env:
+        XDEBUG_MODE: off
+
+  integration-tests:
+      runs-on: ubuntu-latest
+      strategy:
+          matrix:
+              php-versions: ['8.0']
+              nextcloud-versions: ['master']
+              db: ['sqlite']
+              include:
+                - php-versions: 7.4
+                  nextcloud-versions: stable24
+                  db: 'sqlite'
+                - php-versions: 8.1
+                  nextcloud-versions: master
+                  db: 'sqlite'
+                - php-versions: 8.2
+                  nextcloud-versions: master
+                  db: 'sqlite'
+      name: php${{ matrix.php-versions }}-${{ matrix.db }} integration tests
+      steps:
+          - name: Set up php${{ matrix.php-versions }}
+            uses: shivammathur/setup-php@v2
+            with:
+                php-version: ${{ matrix.php-versions }}
+                extensions: ctype,curl,dom,gd,iconv,intl,json,mbstring,openssl,posix,sqlite,xml,zip,gmp
+            env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          - name: Checkout Nextcloud
+            run: git clone https://github.com/nextcloud/server.git --recursive --depth 1 -b ${{ matrix.nextcloud-versions }} nextcloud
+          - name: Patch version check for nightly PHP
+            if: ${{ matrix.php-versions == '8.2' }}
+            run: echo "<?php" > nextcloud/lib/versioncheck.php
+          - name: Install Nextcloud
+            run: php -f nextcloud/occ maintenance:install --database-host 127.0.0.1 --database-name nextcloud --database-user nextcloud --database-pass nextcloud --admin-user admin --admin-pass admin --database ${{ matrix.db }}
+          - name: Checkout sentry
+            uses: actions/checkout@v3
+            with:
+                path: nextcloud/apps/sentry
+          - name: Install dependencies
+            working-directory: nextcloud/apps/sentry
+            run: composer install
+          - name: Patch version check for nightly PHP
+            if: ${{ matrix.php-versions == '8.2' }}
+            run: sed -i 's/max-version="8.1"/max-version="8.2"/' nextcloud/apps/sentry/appinfo/info.xml
+          - name: Install sentry
+            run: php -f nextcloud/occ app:enable sentry
+          - name: Configure Nextcloud for testing
+            run: php -f nextcloud/occ config:system:set debug --type bool --value true
+          - name: Run tests
+            working-directory: nextcloud/apps/sentry
+            run: composer run test:integration
+            env:
+                XDEBUG_MODE: off
+
+  summary:
+    runs-on: ubuntu-latest
+    needs:
+      - unit-tests
+      - integration-tests
+    if: always()
+    name: test-summary
+    steps:
+      - name: Unit test status
+        run: if ${{ needs.unit-tests.result != 'success' && needs.unit-tests.result != 'skipped' }}; then exit 1; fi
+      - name: Integration test status
+        run: if ${{ needs.integration-tests.result != 'success' && needs.integration-tests.result != 'skipped' }}; then exit 1; fi
