@@ -32,6 +32,9 @@ use OCP\EventDispatcher\IEventListener;
 use OCP\Security\CSP\AddContentSecurityPolicyEvent;
 use function parse_url;
 
+/**
+ * @template-implements IEventListener<Event|AddContentSecurityPolicyEvent>
+ */
 class CustomCspListener implements IEventListener {
 
 	/** @var Config */

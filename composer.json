@@ -10,7 +10,8 @@
 	"require": {
 		"nyholm/psr7": "^1.4",
 		"php-http/curl-client": "^2.2",
-		"sentry/sentry": "^3.3"
+		"sentry/sentry": "^3.3",
+		"psalm/phar": "^5.2"
 	},
 	"require-dev": {
 		"christophwurst/nextcloud_testing": "^0.12.4",
@@ -18,6 +19,7 @@
 	},
 	"scripts": {
 		"lint": "find . -name \\*.php -not -path './vendor/*' -not -path './build/*' -print0 | xargs -0 -n1 php -l",
+		"psalm": "psalm.phar",
 		"test:integration": "phpunit -c tests/phpunit.integration.xml tests/Integration --fail-on-warning",
 		"test:integration:dev": "phpunit -c tests/phpunit.integration.xml tests/Integration --no-coverage --fail-on-warning",
 		"test:unit": "phpunit -c tests/phpunit.unit.xml tests/Unit --fail-on-warning",

@@ -25,11 +25,12 @@ declare(strict_types=1);
 
 namespace OCA\Sentry\Reporter;
 
-use OCP\Support\CrashReport\IReporter;
+use OCP\Support\CrashReport\ICollectBreadcrumbs;
+use OCP\Support\CrashReport\IMessageReporter;
 
 /**
  * Tagging interface so that DI can resolve our implementation
  */
-interface ISentryReporter extends IReporter {
+interface ISentryReporter extends ICollectBreadcrumbs, IMessageReporter {
 
 }
