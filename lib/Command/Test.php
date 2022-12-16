@@ -30,6 +30,7 @@ use OCP\ILogger;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Throwable;
 
 class Test extends Command {
 	/** @var ILogger */
@@ -51,7 +52,7 @@ class Test extends Command {
 			$this->logger->warning("you should get at least one Sentry alert soon");
 			$this->logger->emergency("This is a sentry emergency test message");
 			throw new \Exception('This is a sentry test exception!');
-		} catch (\Exception $e) {
+		} catch (Throwable $e) {
 			$this->logger->logException($e, ['app' => 'sentry']);
 		}
 		return 0;
