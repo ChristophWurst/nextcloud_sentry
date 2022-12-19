@@ -1,3 +1,13 @@
+## [8.3.2](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.3.1...v8.3.2) (2022-12-19)
+
+
+### Bug Fixes
+
+* Automated releases app ID ([92d2cc5](https://github.com/ChristophWurst/nextcloud_sentry/commit/92d2cc51be9b3dac0f9e9983f22e4fa6ff4b54e0))
+* Bump version in package lock too ([6d01fa9](https://github.com/ChristophWurst/nextcloud_sentry/commit/6d01fa9df15e5441659aa706a48511680f165fb4))
+
+
+
 ## [8.3.1](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.3.0...v8.3.1) (2022-12-19)
 
 
