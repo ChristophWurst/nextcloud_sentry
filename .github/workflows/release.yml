@@ -23,6 +23,7 @@ jobs:
           skip-git-pull: "true"
           pre-commit: build/pre-commit.js
           release-count: 0
+          version-file: "package.json, package-lock.json"
       - name: Create Release
         uses: actions/create-release@v1
         if: ${{ steps.changelog.outputs.skipped == 'false' }}
