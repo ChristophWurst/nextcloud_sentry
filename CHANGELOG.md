@@ -1,3 +1,12 @@
+## [8.3.1](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.3.0...v8.3.1) (2022-12-19)
+
+
+### Bug Fixes
+
+* Fix error breadcrump type for warnings, info and debug ([ebb5382](https://github.com/ChristophWurst/nextcloud_sentry/commit/ebb5382cccc4c2eab13599ec56fd19206d588229))
+
+
+
 # [8.3.0](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.1.1...v8.3.0) (2022-12-19)
 
 
