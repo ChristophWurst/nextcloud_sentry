@@ -1,5 +1,5 @@
 /js/
-/build
+/build/artifacts
 /node_modules
 /vendor/
-/tests/.phpunit.result.cache 
+/tests/.phpunit.result.cache
