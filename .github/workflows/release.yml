@@ -23,6 +23,7 @@ jobs:
         with:
           github-token: ${{ secrets.RELEASE_PAT }}
           skip-git-pull: "true"
+          pre-commit: build/pre-commit.js
       - name: Create Release
         uses: actions/create-release@v1
         if: ${{ steps.changelog.outputs.skipped == 'false' }}
