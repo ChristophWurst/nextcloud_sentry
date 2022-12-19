@@ -133,8 +133,13 @@ class SentryReporterAdapter implements IMessageReporter, ICollectBreadcrumbs, IS
 
 		$level = $context['level'] ?? ILogger::WARN;
 		$sentryLevel = self::levels[$level] ?? Breadcrumb::LEVEL_WARNING;
+		if ($level < ILogger::ERROR) {
+			$breadcrumbType = Breadcrumb::TYPE_DEFAULT;
+		} else {
+			$breadcrumbType = Breadcrumb::TYPE_ERROR;
+		}
 
-		addBreadcrumb(new Breadcrumb($sentryLevel, Breadcrumb::TYPE_ERROR, $category, $message));
+		addBreadcrumb(new Breadcrumb($sentryLevel, $breadcrumbType, $category, $message));
 	}
 
 	/**
