@@ -11,8 +11,12 @@ jobs:
   dependabot-approve:
     if: github.actor == 'dependabot[bot]'
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: write
     steps:
-      - uses: ahmadnassri/action-dependabot-auto-merge@v2
+      - uses: fastify/github-action-merge-dependabot@v3.0.0
         with:
           target: minor
           github-token: "${{ secrets.GITHUB_TOKEN }}"
+          use-github-auto-merge: true
