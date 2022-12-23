@@ -9,6 +9,40 @@ updates:
   commit-message:
     prefix: "chore"
     include: "scope"
+- package-ecosystem: composer
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "02:00"
+  open-pull-requests-limit: 10
+  commit-message:
+    prefix: "fix"
+    include: "scope"
+  ignore:
+    - dependency-type: production
+      update-types: [ "version-update:semver-major" ]
+    - dependency-type: production
+      update-types: [ "version-update:semver-minor" ]
+  allow:
+    - dependency-type: production
+      update-types: [ "version-update:semver-patch" ]
+- package-ecosystem: composer
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "02:00"
+  open-pull-requests-limit: 10
+  commit-message:
+    prefix: "feat"
+    include: "scope"
+  ignore:
+    - dependency-type: production
+      update-types: [ "version-update:semver-patch" ]
+  allow:
+    - dependency-type: production
+      update-types: [ "version-update:semver-major" ]
+    - dependency-type: production
+      update-types: [ "version-update:semver-minor" ]
 - package-ecosystem: npm
   directory: "/"
   schedule:
@@ -18,3 +52,39 @@ updates:
   commit-message:
     prefix: "chore"
     include: "scope"
+  ignore:
+    - dependency-type: production
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "02:00"
+  open-pull-requests-limit: 10
+  commit-message:
+    prefix: "fix"
+    include: "scope"
+  ignore:
+    - dependency-type: production
+      update-types: [ "version-update:semver-major" ]
+    - dependency-type: production
+      update-types: [ "version-update:semver-minor" ]
+  allow:
+    - dependency-type: production
+      update-types: [ "version-update:semver-patch" ]
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "02:00"
+  open-pull-requests-limit: 10
+  commit-message:
+    prefix: "feat"
+    include: "scope"
+  ignore:
+    - dependency-type: production
+      update-types: [ "version-update:semver-patch" ]
+  allow:
+    - dependency-type: production
+      update-types: [ "version-update:semver-major" ]
+    - dependency-type: production
+      update-types: [ "version-update:semver-minor" ]
