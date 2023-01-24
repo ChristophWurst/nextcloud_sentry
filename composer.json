@@ -10,12 +10,12 @@
 	"require": {
 		"nyholm/psr7": "^1.5.1",
 		"php-http/curl-client": "^2.2",
-		"sentry/sentry": "^3.3",
-		"psalm/phar": "^5.2"
+		"sentry/sentry": "^3.3"
 	},
 	"require-dev": {
 		"christophwurst/nextcloud_testing": "^0.12.4",
-		"roave/security-advisories": "dev-master"
+		"roave/security-advisories": "dev-master",
+		"psalm/phar": "^5.4"
 	},
 	"scripts": {
 		"lint": "find . -name \\*.php -not -path './vendor/*' -not -path './build/*' -print0 | xargs -0 -n1 php -l",
