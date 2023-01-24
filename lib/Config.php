@@ -67,4 +67,19 @@ class Config {
 		return $this->config->getSystemValue('version', '0.0.0');
 	}
 
+	public function getSamplingRate(): float {
+		$fromConfig = $this->config->getSystemValue('sentry.sampling-rate', null);
+		if ($fromConfig !== null) {
+			return $fromConfig;
+		}
+
+		return match ($this->config->getSystemValueInt('loglevel', 2)) {
+			0 => 1.0,
+			1 => 0.7,
+			2 => 0.3,
+			3 => 0.2,
+			default => 0.1,
+		};
+	}
+
 }

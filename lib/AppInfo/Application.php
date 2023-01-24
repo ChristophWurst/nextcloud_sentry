@@ -25,6 +25,7 @@ declare(strict_types=1);
 namespace OCA\Sentry\AppInfo;
 
 use OCA\Sentry\Config;
+use OCA\Sentry\Http\PerformanceMonitoringMiddleware;
 use OCA\Sentry\InitialState\DsnProvider;
 use OCA\Sentry\Listener\CustomCspListener;
 use OCA\Sentry\Reporter\ISentryReporter;
@@ -51,29 +52,31 @@ class Application extends App implements IBootstrap {
 
 		// Wire the interface to our decorator and implementation
 		$context->registerService(ISentryReporter::class, static function (ContainerInterface $c) {
-			/** @var Config $config */
-			$config = $c->get(Config::class);
 			/** @var SentryReporterAdapter $inner */
 			$inner = $c->get(SentryReporterAdapter::class);
-
-			// Now it's time to connect Sentry
-			$dsn = $config->getDsn();
-			if ($dsn !== null) {
-				initSentry([
-					'dsn' => $dsn,
-					'release' => $config->getServerVersion(),
-				]);
-			}
-
 			return new RecursionAwareReporter($inner);
 		});
 		$context->registerCrashReporter(ISentryReporter::class);
+		/** @psalm-suppress TooManyArguments */
+		$context->registerMiddleware(PerformanceMonitoringMiddleware::class, true);
 		$context->registerEventListener(AddContentSecurityPolicyEvent::class, CustomCspListener::class);
 		$context->registerInitialStateProvider(DsnProvider::class);
 	}
 
 	public function boot(IBootContext $context): void {
 		Util::addScript('sentry', 'sentry');
+
+		$context->injectFn(static function(Config $config) {
+			// Now it's time to connect Sentry
+			$dsn = $config->getDsn();
+			if ($dsn !== null) {
+				initSentry([
+					'dsn' => $dsn,
+					'release' => $config->getServerVersion(),
+					'traces_sample_rate' => $config->getSamplingRate(),
+				]);
+			}
+		});
 	}
 
 }

@@ -18,6 +18,16 @@ or add the entry directly to `config/config.php`
 
 If you omit the `sentry.public-dsn` config, client-side (browser) errors won't be reported.
 
+### Sampling rate
+
+This app can monitor Nextcloud's performance. The sampling rate is derived from the log level (more verbose -> more sampling) but can be overwritten:
+
+```php
+  "sentry.sampling-rate" => 0.1,
+```
+
+Read more at https://docs.sentry.io/platforms/php/guides/symfony/performance/.
+
 ### CSP error reporting
 
 [Sentry can capture CSP violation reports](https://docs.sentry.io/product/security-policy-reporting/). Just set the `sentry.csp-report-url` in addition to your other configuration parameters:
