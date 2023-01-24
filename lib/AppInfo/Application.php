@@ -50,7 +50,7 @@ class Application extends App implements IBootstrap {
 		include_once __DIR__ . '/../../vendor/autoload.php';
 
 		// Wire the interface to our decorator and implementation
-		$context->registerService(ISentryReporter::class, function (ContainerInterface $c) {
+		$context->registerService(ISentryReporter::class, static function (ContainerInterface $c) {
 			/** @var Config $config */
 			$config = $c->get(Config::class);
 			/** @var SentryReporterAdapter $inner */
