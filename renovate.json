@@ -1,0 +1,25 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base"
+  ],
+  "timezone": "Europe/Vienna",
+  "schedule": [
+    "before 5am every monday"
+  ],
+  "labels": ["dependencies"],
+  "rangeStrategy": "bump",
+  "rebaseWhen": "conflicted",
+  "ignoreUnstable": false,
+  "baseBranches": [
+    "master"
+  ],
+  "enabledManagers": [
+    "composer",
+    "npm"
+  ],
+  "ignoreDeps": [
+    "node",
+    "npm"
+  ]
+}
