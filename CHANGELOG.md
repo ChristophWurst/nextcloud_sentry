@@ -1,3 +1,19 @@
+## [8.3.3](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.3.2...v8.3.3) (2023-01-24)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sentry/browser to ^7.32 ([a6bdf5a](https://github.com/ChristophWurst/nextcloud_sentry/commit/a6bdf5a806f301ad8a1222be6861a44a5354edb1))
+* **deps:** update dependency nyholm/psr7 to ^1.5.1 ([2cc78c2](https://github.com/ChristophWurst/nextcloud_sentry/commit/2cc78c2be1b5ecf7c7f0df2592b48c014239ea59))
+* **deps:** update dependency sentry/sentry to ^3.12.1 ([57a9522](https://github.com/ChristophWurst/nextcloud_sentry/commit/57a9522984a9b98493ea594998f29a09fef15fd8))
+
+
+### Performance Improvements
+
+* **php:** Use static closures ([e002b86](https://github.com/ChristophWurst/nextcloud_sentry/commit/e002b86c244d4db7fe444c082cfc3d5633d960d9))
+
+
+
 ## [8.3.2](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.3.1...v8.3.2) (2022-12-19)
 
 
