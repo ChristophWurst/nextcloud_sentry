@@ -8,7 +8,7 @@
 		}
 	],
 	"require": {
-		"nyholm/psr7": "^1.4",
+		"nyholm/psr7": "^1.5.1",
 		"php-http/curl-client": "^2.2",
 		"sentry/sentry": "^3.3",
 		"psalm/phar": "^5.2"
