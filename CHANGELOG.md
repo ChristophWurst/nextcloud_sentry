@@ -1,3 +1,17 @@
+# [8.4.0](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.3.4...v8.4.0) (2023-01-26)
+
+
+### Bug Fixes
+
+* **deps:** update dependency php-http/curl-client to ^2.2.1 ([debb504](https://github.com/ChristophWurst/nextcloud_sentry/commit/debb5043e71641d8b6357f96d8a1f53c7fb5a3ae))
+
+
+### Features
+
+* **deps:** Drop PHP7.4 support (EOL) ([b6a55f5](https://github.com/ChristophWurst/nextcloud_sentry/commit/b6a55f50d6950e7af4975e42a6be9ba6fd6e7306))
+
+
+
 ## [8.3.4](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.3.3...v8.3.4) (2023-01-25)
 
 
