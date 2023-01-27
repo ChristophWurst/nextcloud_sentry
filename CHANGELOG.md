@@ -1,3 +1,12 @@
+# [8.5.0](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.4.0...v8.5.0) (2023-01-27)
+
+
+### Features
+
+* **deps:** Add PHP8.2 support ([d3f2112](https://github.com/ChristophWurst/nextcloud_sentry/commit/d3f21124cdec94be0b756c68e6004953d5416e51))
+
+
+
 # [8.4.0](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.3.4...v8.4.0) (2023-01-26)
 
 
