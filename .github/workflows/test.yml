@@ -83,9 +83,6 @@ jobs:
           - name: Install dependencies
             working-directory: nextcloud/apps/sentry
             run: composer install
-          - name: Patch version check for nightly PHP
-            if: ${{ matrix.php-versions == '8.2' }}
-            run: sed -i 's/max-version="8.1"/max-version="8.2"/' nextcloud/apps/sentry/appinfo/info.xml
           - name: Install sentry
             run: php -f nextcloud/occ app:enable sentry
           - name: Configure Nextcloud for testing
