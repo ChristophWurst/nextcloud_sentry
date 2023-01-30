@@ -14,7 +14,7 @@
 		"sort-packages": true
 	},
 	"require": {
-		"php": "^8.0 <= 8.1",
+		"php": "^8.2 <= 8.2",
 		"nyholm/psr7": "^1.5.1",
 		"php-http/curl-client": "^2.2.1",
 		"sentry/sentry": "^3.12.1"
