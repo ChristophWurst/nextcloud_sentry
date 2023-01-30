@@ -1,3 +1,12 @@
+# [8.6.0](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.5.0...v8.6.0) (2023-01-30)
+
+
+### Features
+
+* **performance:** Add performance monitoring ([b7c122d](https://github.com/ChristophWurst/nextcloud_sentry/commit/b7c122d90b3cb1d5bfa28cedf90938cba45c9604))
+
+
+
 # [8.5.0](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.4.0...v8.5.0) (2023-01-27)
 
 
