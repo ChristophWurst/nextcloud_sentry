@@ -11,13 +11,16 @@
 		"platform": {
 			"php": "8.0"
 		},
-		"sort-packages": true
+		"sort-packages": true,
+		"allow-plugins": {
+			"php-http/discovery": true
+		}
 	},
 	"require": {
 		"php": "^8.0 <= 8.1",
 		"nyholm/psr7": "^1.5.1",
 		"php-http/curl-client": "^2.2.1",
-		"sentry/sentry": "^3.12.1"
+		"sentry/sentry": "^3.13.0"
 	},
 	"require-dev": {
 		"christophwurst/nextcloud_testing": "^0.12.4",
