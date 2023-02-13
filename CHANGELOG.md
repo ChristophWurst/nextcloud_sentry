@@ -1,3 +1,13 @@
+## [8.6.4](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.6.3...v8.6.4) (2023-02-13)
+
+
+### Bug Fixes
+
+* **deps:** update dependency sentry/sentry to ^3.13.0 ([1e3d3de](https://github.com/ChristophWurst/nextcloud_sentry/commit/1e3d3dea44198873636c19ce1bf0605f36ba9231))
+* **deps:** update dependency sentry/sentry to ^3.13.1 ([fcc020c](https://github.com/ChristophWurst/nextcloud_sentry/commit/fcc020c71da0cce93ceb849dbfbe4cc9670ced09))
+
+
+
 ## [8.6.3](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.6.2...v8.6.3) (2023-02-10)
 
 
