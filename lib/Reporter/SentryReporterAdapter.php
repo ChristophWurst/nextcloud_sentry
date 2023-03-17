@@ -27,6 +27,7 @@ namespace OCA\Sentry\Reporter;
 use Exception;
 use OCA\Sentry\Helper\CredentialStoreHelper;
 use OCP\Authentication\Exceptions\CredentialsUnavailableException;
+use OCP\Defaults;
 use OCP\IConfig;
 use OCP\ILogger;
 use OCP\IUserSession;
@@ -43,14 +44,11 @@ use Throwable;
 
 class SentryReporterAdapter implements IMessageReporter, ICollectBreadcrumbs, ISentryReporter {
 
-	/** @var IUserSession */
-	protected $userSession;
-
-	/** @var CredentialStoreHelper */
-	private $credentialStoreHelper;
-
-	/** @var bool */
-	private $userScopeSet = false;
+	protected IUserSession $userSession;
+	private CredentialStoreHelper $credentialStoreHelper;
+	private IConfig $config;
+	private Defaults $defaults;
+	private bool $userScopeSet = false;
 
 	/** @var array mapping of log levels */
 	private const levels = [
@@ -61,15 +59,16 @@ class SentryReporterAdapter implements IMessageReporter, ICollectBreadcrumbs, IS
 		ILogger::FATAL => Severity::FATAL,
 	];
 
-	/** @var int */
-	private $minimumLogLevel;
+	private int $minimumLogLevel;
 
 	public function __construct(IUserSession $userSession,
 								IConfig $config,
-								CredentialStoreHelper $credentialStoreHelper) {
+								CredentialStoreHelper $credentialStoreHelper, Defaults $defaults) {
 		$this->userSession = $userSession;
+		$this->config = $config;
 		$this->minimumLogLevel = (int)$config->getSystemValue('sentry.minimum.log.level', ILogger::WARN);
 		$this->credentialStoreHelper = $credentialStoreHelper;
+		$this->defaults = $defaults;
 	}
 
 	/**
@@ -101,6 +100,9 @@ class SentryReporterAdapter implements IMessageReporter, ICollectBreadcrumbs, IS
 				$scope->setTag('app', $context['app']);
 			}
 
+			$scope->setTag('instance_url', $this->config->getSystemValueString('overwrite.cli.url'));
+			$scope->setTag('instance_name', $this->defaults->getName());
+
 			if ($this->userScopeSet) {
 				// Run the code below just once
 				return;
@@ -119,6 +121,7 @@ class SentryReporterAdapter implements IMessageReporter, ICollectBreadcrumbs, IS
 				$scope->setUser([
 					'id' => $user->getUID(),
 					'username' => $username,
+					'email' => $user->getEMailAddress()
 				]);
 			}
 		});
