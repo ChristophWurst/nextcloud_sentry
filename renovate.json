@@ -22,7 +22,8 @@
 	],
 	"ignoreDeps": [
 		"node",
-		"npm"
+		"npm",
+		"php"
 	],
 	"packageRules": [
 		{
