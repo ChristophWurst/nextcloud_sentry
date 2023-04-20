@@ -27,6 +27,12 @@
 		"roave/security-advisories": "dev-master",
 		"psalm/phar": "^5.9.0"
 	},
+	"provide": {
+		"psr/clock": "*",
+		"psr/container": "*",
+		"psr/event-dispatcher": "*",
+		"psr/log": "*"
+	},
 	"scripts": {
 		"lint": "find . -name \\*.php -not -path './vendor/*' -not -path './build/*' -print0 | xargs -0 -n1 php -l",
 		"psalm": "psalm.phar",
