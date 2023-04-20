@@ -1,3 +1,58 @@
+## [8.7.2](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.7.1...v8.7.2) (2023-04-10)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sentry/browser to ^7.47.0 ([0ef0d10](https://github.com/ChristophWurst/nextcloud_sentry/commit/0ef0d10dbab1b2e49e291a01da5bd655a3b5f9e1))
+* **deps:** update dependency nyholm/psr7 to ^1.6.0 ([75546e4](https://github.com/ChristophWurst/nextcloud_sentry/commit/75546e4a484ddf368081354633569e520c71d9b7))
+* **deps:** update dependency sentry/sentry to ^3.17.0 ([60b04cc](https://github.com/ChristophWurst/nextcloud_sentry/commit/60b04cc088ce7d5ce2c8cddafe27cd6553bfef2c))
+
+
+
+## [8.7.1](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.7.0...v8.7.1) (2023-03-27)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sentry/browser to ^7.45.0 ([7ec5444](https://github.com/ChristophWurst/nextcloud_sentry/commit/7ec5444be5ab2008a88c37d8e47172a2d5aaa112))
+
+
+
+# [8.7.0](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.6.6...v8.7.0) (2023-03-17)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @nextcloud/logger to ^2.5.0 ([5bb56d1](https://github.com/ChristophWurst/nextcloud_sentry/commit/5bb56d143ce262cd3bdf4923806c81d50ed1b0c7))
+* **deps:** update dependency @sentry/browser to ^7.43.0 ([056c33d](https://github.com/ChristophWurst/nextcloud_sentry/commit/056c33dfd7ab92b63ebd70c14998431480cd3bd1))
+* **deps:** update dependency sentry/sentry to ^3.16.0 ([cebd1ad](https://github.com/ChristophWurst/nextcloud_sentry/commit/cebd1ad2e9bb82977f20aca24233d963c60832be))
+
+
+### Features
+
+* Add extra tags to Sentry and modernize SentryReporterAdapter ([c72df01](https://github.com/ChristophWurst/nextcloud_sentry/commit/c72df01dc3035c8c66a2f470381dbdf5534f9d83))
+* **deps:** Add Nextcloud 27 support ([d5e0704](https://github.com/ChristophWurst/nextcloud_sentry/commit/d5e070447db1de8a7bb7db2ccd0f28acf4f29af1))
+
+
+
+## [8.6.6](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.6.5...v8.6.6) (2023-03-06)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sentry/browser to ^7.40 ([f6440d1](https://github.com/ChristophWurst/nextcloud_sentry/commit/f6440d1e99a7226549eabe099561f4eca9e1c83e))
+
+
+
+## [8.6.5](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.6.4...v8.6.5) (2023-02-20)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sentry/browser to ^7.38 ([211b558](https://github.com/ChristophWurst/nextcloud_sentry/commit/211b558005483e57db3ea437bcb4dfa7a479c8d1))
+
+
+
 ## [8.6.4](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.6.3...v8.6.4) (2023-02-13)
 
 
