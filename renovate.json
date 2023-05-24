@@ -18,6 +18,7 @@
 	],
 	"enabledManagers": [
 		"composer",
+		"github-actions",
 		"npm"
 	],
 	"ignoreDeps": [
