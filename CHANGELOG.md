@@ -1,3 +1,24 @@
+# [8.8.0](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.7.2...v8.8.0) (2023-05-24)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sentry/browser to ^7.48.0 ([487cc5f](https://github.com/ChristophWurst/nextcloud_sentry/commit/487cc5fb92c84c1ba367654f463b83601eb1b4e0))
+* **deps:** update dependency @sentry/browser to ^7.50.0 ([7caf89e](https://github.com/ChristophWurst/nextcloud_sentry/commit/7caf89e08e09035a487b70914a029a72ca936904))
+* **deps:** update dependency @sentry/browser to ^7.51.2 ([ca5a592](https://github.com/ChristophWurst/nextcloud_sentry/commit/ca5a592dd7a6f0648e2dc0af102c227d46459503))
+* **deps:** update dependency @sentry/browser to ^7.53.1 ([1e1a4a5](https://github.com/ChristophWurst/nextcloud_sentry/commit/1e1a4a54c3f50d01a3107b927f2e8afbcedc5735))
+* **deps:** update dependency nyholm/psr7 to ^1.7.0 ([2abd993](https://github.com/ChristophWurst/nextcloud_sentry/commit/2abd993a0e48d6adc19d5d258cffca4168cae160))
+* **deps:** update dependency nyholm/psr7 to ^1.8.0 ([0a391a3](https://github.com/ChristophWurst/nextcloud_sentry/commit/0a391a3bc2da7ebf40f559e653036170bc013b07))
+* **deps:** update dependency nyholm/psr7 to v1.6.1 [security] ([afb735b](https://github.com/ChristophWurst/nextcloud_sentry/commit/afb735b3ac0d899a7c962c6caa35cd043a0eef0e))
+* **deps:** update dependency php-http/curl-client to ^2.3.0 ([fb524f4](https://github.com/ChristophWurst/nextcloud_sentry/commit/fb524f4438505223c7275333087d873e499834b6))
+
+
+### Features
+
+* **deps:** Add Nextcloud 28 support ([91623b9](https://github.com/ChristophWurst/nextcloud_sentry/commit/91623b9399ecf8ec03935f1c1df9fe1746b2eed1))
+
+
+
 ## [8.7.2](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.7.1...v8.7.2) (2023-04-10)
 
 
