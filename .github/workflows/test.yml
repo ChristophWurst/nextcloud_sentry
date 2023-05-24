@@ -62,6 +62,9 @@ jobs:
                 - php-versions: 8.2
                   nextcloud-versions: stable26
                   db: 'sqlite'
+                - php-versions: 8.2
+                  nextcloud-versions: stable27
+                  db: 'sqlite'
       name: php${{ matrix.php-versions }}-${{ matrix.db }} integration tests
       steps:
           - name: Set up php${{ matrix.php-versions }}
