@@ -8,7 +8,7 @@
     "lib": "lib"
   },
   "dependencies": {
-    "@nextcloud/auth": "^2.0.0",
+    "@nextcloud/auth": "^2.1.0",
     "@nextcloud/initial-state": "^2.0.0",
     "@nextcloud/logger": "^2.5.0",
     "@sentry/browser": "^7.53.1"
