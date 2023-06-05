@@ -1,3 +1,14 @@
+## [8.8.2](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.8.1...v8.8.2) (2023-06-05)
+
+
+### Bug Fixes
+
+* **deps:** Downgrade psr/log to a compatible version ([235355b](https://github.com/ChristophWurst/nextcloud_sentry/commit/235355b3a7f4187f3bf6f352d1b09747b9b4d2c8))
+* **deps:** update dependency @sentry/browser to ^7.54.0 ([f661df4](https://github.com/ChristophWurst/nextcloud_sentry/commit/f661df4823a9a15bde56afe3133e3e3712d0b55c))
+* **deps:** update dependency sentry/sentry to ^3.19.1 ([d650d43](https://github.com/ChristophWurst/nextcloud_sentry/commit/d650d433d2a83e4506ed2fedd79dc25887600166))
+
+
+
 ## [8.8.1](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.8.0...v8.8.1) (2023-05-29)
 
 
