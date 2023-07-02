@@ -26,7 +26,7 @@
 	"require-dev": {
 		"christophwurst/nextcloud_testing": "^0.12.4",
 		"roave/security-advisories": "dev-master",
-		"psalm/phar": "^5.12.0"
+		"psalm/phar": "^5.13.1"
 	},
 	"scripts": {
 		"lint": "find . -name \\*.php -not -path './vendor/*' -not -path './build/*' -print0 | xargs -0 -n1 php -l",
