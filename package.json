@@ -14,7 +14,7 @@
     "@sentry/browser": "^7.58.1"
   },
   "devDependencies": {
-    "webpack": "^5.88.1",
+    "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4",
     "webpack-merge": "^5.9.0"
   },
