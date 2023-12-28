@@ -82,4 +82,18 @@ class Config {
 		};
 	}
 
+	public function getProfilesSamplingRate(): float {
+		$fromConfig = $this->config->getSystemValue('sentry.profiles-sampling-rate', null);
+		if ($fromConfig !== null) {
+			return $fromConfig;
+		}
+
+		return match ($this->config->getSystemValueInt('loglevel', 2)) {
+			0 => 1.0,
+			1 => 0.7,
+			2 => 0.3,
+			3 => 0.2,
+			default => 0.1,
+		};
+	}
 }
