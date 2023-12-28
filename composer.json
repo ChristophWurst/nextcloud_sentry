@@ -22,7 +22,7 @@
 		"php-http/curl-client": "^2.3.1",
 		"psr/log": "^1",
 		"sentry/sentry": "^3.22.1",
-		"guzzlehttp/promises": "^1.5.2"
+		"guzzlehttp/promises": "^1.5.3"
 	},
 	"require-dev": {
 		"christophwurst/nextcloud_testing": "^0.12.4",
