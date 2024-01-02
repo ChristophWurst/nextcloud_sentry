@@ -1,3 +1,40 @@
+# [8.9.0](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.8.11...v8.9.0) (2024-01-02)
+
+
+### Bug Fixes
+
+* **config:** cast config returned by getSystemValue to float as the function return type expects ([7f241f8](https://github.com/ChristophWurst/nextcloud_sentry/commit/7f241f8771fecbc4f0695a23f648f918864c81c1))
+* **deps:** downgrade guzzlehttp/promises to keep compatibility with 3rdparty ([ab69095](https://github.com/ChristophWurst/nextcloud_sentry/commit/ab69095932eceec500e8271cc60250509a7a7331))
+* **deps:** update dependency @nextcloud/auth to ^2.2.1 ([710efdd](https://github.com/ChristophWurst/nextcloud_sentry/commit/710efdd208e85974fd4a7ebaa22f0f5845253e91))
+* **deps:** update dependency @nextcloud/logger to ^2.7.0 ([b5c75bb](https://github.com/ChristophWurst/nextcloud_sentry/commit/b5c75bb85a7948d867a23df4ebe17da62282a83e))
+* **deps:** update dependency @sentry/browser to ^7.66.0 ([3135ee2](https://github.com/ChristophWurst/nextcloud_sentry/commit/3135ee2f5d5d1b01a6b2e9ea1494d5a402cd69a3))
+* **deps:** update dependency @sentry/browser to ^7.68.0 ([875496a](https://github.com/ChristophWurst/nextcloud_sentry/commit/875496a0e7002f163d24ef9e86dc84066c89fcd9))
+* **deps:** update dependency @sentry/browser to ^7.69.0 ([0f96c6e](https://github.com/ChristophWurst/nextcloud_sentry/commit/0f96c6ef737645877dcb7e60f55518328aee4588))
+* **deps:** update dependency @sentry/browser to ^7.70.0 ([44b0cdf](https://github.com/ChristophWurst/nextcloud_sentry/commit/44b0cdf2048db7b219963acb5756bb6bbf33ca2c))
+* **deps:** update dependency @sentry/browser to ^7.72.0 ([3a4e443](https://github.com/ChristophWurst/nextcloud_sentry/commit/3a4e443cc6e901a9679d129a5d481a94b476700b))
+* **deps:** update dependency @sentry/browser to ^7.73.0 ([e7c74fc](https://github.com/ChristophWurst/nextcloud_sentry/commit/e7c74fc35cc2facd119b7773f2b590a6a74573db))
+* **deps:** update dependency @sentry/browser to ^7.74.0 ([16ddbb4](https://github.com/ChristophWurst/nextcloud_sentry/commit/16ddbb4e7d14de12722d6d89525535eef8438622))
+* **deps:** update dependency @sentry/browser to ^7.74.1 ([e6718da](https://github.com/ChristophWurst/nextcloud_sentry/commit/e6718da8af1ce32d6f8f00aeaa1dd7de82115337))
+* **deps:** update dependency @sentry/browser to ^7.76.0 ([0e6586e](https://github.com/ChristophWurst/nextcloud_sentry/commit/0e6586e85f042ef8b691237e06c261864096cc82))
+* **deps:** update dependency @sentry/browser to ^7.77.0 ([10fd0bc](https://github.com/ChristophWurst/nextcloud_sentry/commit/10fd0bc8d4dcc03cb7491fc068b5fb0051ec8a74))
+* **deps:** update dependency @sentry/browser to ^7.80.0 ([1c00a10](https://github.com/ChristophWurst/nextcloud_sentry/commit/1c00a10992501339accda8b3db13d883eb994d29))
+* **deps:** update dependency @sentry/browser to ^7.80.1 ([21eb279](https://github.com/ChristophWurst/nextcloud_sentry/commit/21eb279363c8f1eb0fecb8b4d7b74ca1b5dc04a4))
+* **deps:** update dependency @sentry/browser to ^7.91.0 ([53f8d09](https://github.com/ChristophWurst/nextcloud_sentry/commit/53f8d09d5179b7057ebb50ed6bc7fdd10f59320e))
+* **deps:** update dependency guzzlehttp/promises to ^1.5.3 ([2a616f5](https://github.com/ChristophWurst/nextcloud_sentry/commit/2a616f5ff8c1ad34c2e311520f0ed5a8bbebae8c))
+* **deps:** update dependency nyholm/psr7 to ^1.8.1 ([fc4e024](https://github.com/ChristophWurst/nextcloud_sentry/commit/fc4e024e7b0065ceb93fba2f271d9d8224ce8261))
+* **deps:** update dependency php-http/curl-client to ^2.3.1 ([230dd86](https://github.com/ChristophWurst/nextcloud_sentry/commit/230dd864c0b08c3b42328e7f2ae34444dcddf6ac))
+* **deps:** update dependency sentry/sentry to ^3.22.0 ([0fce7a6](https://github.com/ChristophWurst/nextcloud_sentry/commit/0fce7a6523ccce3bb3183a97aec9215a0d3ab537))
+* **deps:** update dependency sentry/sentry to ^3.22.1 ([8a572ae](https://github.com/ChristophWurst/nextcloud_sentry/commit/8a572ae7d3d160d81df697336eded895fb91fa78))
+
+
+### Features
+
+* Add profiles_sample_rate ([1238dfa](https://github.com/ChristophWurst/nextcloud_sentry/commit/1238dfa5e901a6de6599a7e2daa8c26d93fa23c4))
+* **deps:** Add Nextcloud 29 support ([b6b9e18](https://github.com/ChristophWurst/nextcloud_sentry/commit/b6b9e18064e6b04818a1abc1330144b06b3ec32d))
+* **deps:** Add PHP8.3 support ([5921c3c](https://github.com/ChristophWurst/nextcloud_sentry/commit/5921c3c4d30bdffa029ccb24230daf00f221e8ec))
+
+
+
 ## [8.8.11](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.8.10...v8.8.11) (2023-08-21)
 
 
