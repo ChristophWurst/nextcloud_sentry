@@ -1,3 +1,13 @@
+## [8.9.6](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.9.5...v8.9.6) (2024-03-04)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sentry/browser to ^7.104.0 ([d6388f7](https://github.com/ChristophWurst/nextcloud_sentry/commit/d6388f782c32350cba7d5c98e8626b85f0e80eca))
+* **deps:** update dependency php-http/curl-client to ^2.3.2 ([363098b](https://github.com/ChristophWurst/nextcloud_sentry/commit/363098befba38b836c0c34a2939f004fc8a67722))
+
+
+
 ## [8.9.5](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.9.4...v8.9.5) (2024-02-26)
 
 
