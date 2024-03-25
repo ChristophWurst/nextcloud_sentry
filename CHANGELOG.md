@@ -1,3 +1,12 @@
+## [8.9.9](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.9.8...v8.9.9) (2024-03-25)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sentry/browser to ^7.108.0 ([4bad952](https://github.com/ChristophWurst/nextcloud_sentry/commit/4bad952dc7370c66bb5fb0b98e46f7d38a162b99))
+
+
+
 ## [8.9.8](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.9.7...v8.9.8) (2024-03-18)
 
 
