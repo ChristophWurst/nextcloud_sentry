@@ -12,14 +12,10 @@ jobs:
         php-versions: ['8.2']
         nextcloud-versions: ['master']
         include:
-          - php-versions: 8.0
-            nextcloud-versions: stable25
           - php-versions: 8.2
-            nextcloud-versions: stable26
-          - php-versions: 8.2
-            nextcloud-versions: stable27
-          - php-versions: 8.3
             nextcloud-versions: stable28
+          - php-versions: 8.3
+            nextcloud-versions: stable29
     name: Nextcloud ${{ matrix.nextcloud-versions }} php${{ matrix.php-versions }} unit tests
     steps:
     - name: Set up php${{ matrix.php-versions }}
@@ -57,20 +53,11 @@ jobs:
               nextcloud-versions: ['master']
               db: ['sqlite']
               include:
-                - php-versions: 8.0
-                  nextcloud-versions: stable24
-                  db: 'sqlite'
-                - php-versions: 8.1
-                  nextcloud-versions: stable25
-                  db: 'sqlite'
                 - php-versions: 8.2
-                  nextcloud-versions: stable26
-                  db: 'sqlite'
-                - php-versions: 8.2
-                  nextcloud-versions: stable27
+                  nextcloud-versions: stable28
                   db: 'sqlite'
                 - php-versions: 8.3
-                  nextcloud-versions: stable28
+                  nextcloud-versions: stable29
                   db: 'sqlite'
       name: php${{ matrix.php-versions }}-${{ matrix.db }} integration tests
       steps:
