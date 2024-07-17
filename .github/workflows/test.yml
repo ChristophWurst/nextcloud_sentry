@@ -53,7 +53,7 @@ jobs:
       runs-on: ubuntu-latest
       strategy:
           matrix:
-              php-versions: ['8.0']
+              php-versions: ['8.2']
               nextcloud-versions: ['master']
               db: ['sqlite']
               include:
