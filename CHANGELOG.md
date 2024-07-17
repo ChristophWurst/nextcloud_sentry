@@ -1,3 +1,18 @@
+# [8.10.0](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.9.9...v8.10.0) (2024-07-17)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @nextcloud/initial-state to ^2.2.0 ([5429a22](https://github.com/ChristophWurst/nextcloud_sentry/commit/5429a227e03c5214e21fc75567ceeeca70171566))
+* **deps:** update dependency @sentry/browser to ^7.118.0 ([d357504](https://github.com/ChristophWurst/nextcloud_sentry/commit/d3575042ff4aa0615d5189d6df7199347a058032))
+
+
+### Features
+
+* **deps:** Support Nextcloud 30, drop 24-27 ([ae22cbe](https://github.com/ChristophWurst/nextcloud_sentry/commit/ae22cbe68b1cd59d51e19c9ee293b7e0fac4be45))
+
+
+
 ## [8.9.9](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.9.8...v8.9.9) (2024-03-25)
 
 
