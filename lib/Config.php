@@ -97,7 +97,7 @@ class Config {
 		};
 	}
 
-    public function getEnvironment(): string {
-        return $this->config->getSystemValue('sentry.environment', 'production');
-    }
+	public function getEnvironment(): string {
+		return $this->config->getSystemValue('sentry.environment', 'production');
+	}
 }
