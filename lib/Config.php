@@ -96,4 +96,8 @@ class Config {
 			default => 0.1,
 		};
 	}
+
+	public function getEnvironment(): string {
+		return $this->config->getSystemValue('sentry.environment', 'production');
+	}
 }
