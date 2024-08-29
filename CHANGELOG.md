@@ -1,3 +1,12 @@
+# [8.11.0](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.10.1...v8.11.0) (2024-08-29)
+
+
+### Features
+
+* **environment:** Add support for environment config parameter ([d9fc314](https://github.com/ChristophWurst/nextcloud_sentry/commit/d9fc3141cac8112ce84e7d23ca99d15fb4643256))
+
+
+
 ## [8.10.1](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.10.0...v8.10.1) (2024-07-18)
 
 
