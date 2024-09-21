@@ -77,6 +77,9 @@ class Application extends App implements IBootstrap {
 					'profiles_sample_rate' => $config->getProfilesSamplingRate(),
 					'environment' => $config->getEnvironment(),
 				]);
+
+				\OC_Util::addHeader('meta', ['name' => 'baggage', 'content' => \Sentry\getBaggage()]);
+				\OC_Util::addHeader('meta', ['name' => 'sentry-trace', 'content' => \Sentry\getTraceparent()]);
 			}
 		});
 	}
