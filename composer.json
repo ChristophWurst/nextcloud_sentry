@@ -24,6 +24,9 @@
 		"sentry/sentry": "^3.22.1",
 		"guzzlehttp/promises": "^1.5.3"
 	},
+	"provide": {
+		"psr/log": "^1.0.4|^2|^3"
+	},
 	"require-dev": {
 		"christophwurst/nextcloud_testing": "^1.0.0",
 		"roave/security-advisories": "dev-master",
