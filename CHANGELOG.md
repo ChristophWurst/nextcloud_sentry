@@ -1,3 +1,21 @@
+# [8.12.0](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.11.0...v8.12.0) (2024-10-25)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @nextcloud/auth to ^2.4.0 ([8afa3b6](https://github.com/ChristophWurst/nextcloud_sentry/commit/8afa3b63b26e0056b36d150f190100bfe70908ad))
+* **deps:** update dependency @nextcloud/logger to v3 ([91d076b](https://github.com/ChristophWurst/nextcloud_sentry/commit/91d076b73916e517a7673d74526e8f5504162453))
+* **deps:** update dependency @sentry/browser to v7.119.1 [security] ([#687](https://github.com/ChristophWurst/nextcloud_sentry/issues/687)) ([5770142](https://github.com/ChristophWurst/nextcloud_sentry/commit/5770142f03e075cf745e059b87965a409b7df3d8))
+* **deps:** update dependency nyholm/psr7 to ^1.8.2 ([#686](https://github.com/ChristophWurst/nextcloud_sentry/issues/686)) ([bf3cec4](https://github.com/ChristophWurst/nextcloud_sentry/commit/bf3cec427c88c29389aaa1c487f6505e8422561b))
+* Do not ship psr/log ([239096f](https://github.com/ChristophWurst/nextcloud_sentry/commit/239096ff044b5581380dfcd4728f175188d31fde))
+
+
+### Features
+
+* **deps:** Add Nextcloud 31 support ([a8075a4](https://github.com/ChristophWurst/nextcloud_sentry/commit/a8075a4de02ec9ba4f61b1122f0a9dd12459f6e9))
+
+
+
 # [8.11.0](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.10.1...v8.11.0) (2024-08-29)
 
 
