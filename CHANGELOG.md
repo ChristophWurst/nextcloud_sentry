@@ -1,3 +1,12 @@
+## [8.12.2](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.12.1...v8.12.2) (2024-11-04)
+
+
+### Bug Fixes
+
+* **deps:** update dependency php-http/curl-client to ^2.3.3 ([#694](https://github.com/ChristophWurst/nextcloud_sentry/issues/694)) ([5a6145c](https://github.com/ChristophWurst/nextcloud_sentry/commit/5a6145c33806ea2062488c06c9e1779f91098538))
+
+
+
 ## [8.12.1](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.12.0...v8.12.1) (2024-10-28)
 
 
