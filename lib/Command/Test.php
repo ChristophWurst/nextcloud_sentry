@@ -26,19 +26,15 @@ declare(strict_types=1);
 
 namespace OCA\Sentry\Command;
 
-use OCP\ILogger;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Throwable;
 
 class Test extends Command {
-	/** @var ILogger */
-	private $logger;
-
-	public function __construct(ILogger $logger) {
+	public function __construct(private LoggerInterface $logger) {
 		parent::__construct();
-		$this->logger = $logger;
 	}
 
 	protected function configure(): void {
@@ -53,7 +49,7 @@ class Test extends Command {
 			$this->logger->emergency("This is a sentry emergency test message");
 			throw new \Exception('This is a sentry test exception!');
 		} catch (Throwable $e) {
-			$this->logger->logException($e, ['app' => 'sentry']);
+			$this->logger->error($e->getMessage(), ['exception' => $e]);
 		}
 		return 0;
 	}
