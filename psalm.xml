@@ -17,6 +17,8 @@
 	<issueHandlers>
 		<UndefinedClass>
 			<errorLevel type="suppress">
+				<referencedClass name="Sabre\Dav\Server" />
+				<referencedClass name="Sabre\Dav\ServerPlugin" />
 				<referencedClass name="Symfony\Component\Console\Command\Command" />
 			</errorLevel>
 		</UndefinedClass>

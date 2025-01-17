@@ -12,6 +12,7 @@
 	<namespace>Sentry</namespace>
 	<types>
 		<authentication/>
+		<dav/>
 	</types>
 	<documentation>
 		<admin>https://github.com/ChristophWurst/nextcloud_sentry/blob/master/doc/admin.md</admin>
@@ -28,4 +29,9 @@
 	<commands>
 		<command>OCA\Sentry\Command\Test</command>
 	</commands>
+	<sabre>
+		<plugins>
+			<plugin>OCA\Sentry\DAV\PerformanceMonitoringPlugin</plugin>
+		</plugins>
+	</sabre>
 </info>
