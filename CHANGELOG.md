@@ -1,3 +1,12 @@
+# [8.13.0](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.12.4...v8.13.0) (2025-01-20)
+
+
+### Features
+
+* Transactions for DAV ([519fe30](https://github.com/ChristophWurst/nextcloud_sentry/commit/519fe309d423d2aba7214a6dddcbeb200ec6f186))
+
+
+
 ## [8.12.4](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.12.3...v8.12.4) (2025-01-13)
 
 
