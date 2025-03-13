@@ -1,3 +1,12 @@
+# [8.14.0](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.13.0...v8.14.0) (2025-03-13)
+
+
+### Features
+
+* **deps:** Support Nextcloud 29-32, PHP8.0-8.4 ([3abc280](https://github.com/ChristophWurst/nextcloud_sentry/commit/3abc2803d5d257e47cbdafc755fea23f542e0451))
+
+
+
 # [8.13.0](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.12.4...v8.13.0) (2025-01-20)
 
 
