@@ -45,8 +45,8 @@ jobs:
         continue-on-error: true
         with:
           path: ${{ env.APP_NAME }}
-          fallbackNode: "^12"
-          fallbackNpm: "^6"
+          fallbackNode: "^20"
+          fallbackNpm: "^10"
 
       - name: Set up node ${{ steps.versions.outputs.nodeVersion }}
         # Skip if no package.json
