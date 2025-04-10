@@ -1,3 +1,12 @@
+# [8.15.0](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.14.1...v8.15.0) (2025-04-10)
+
+
+### Features
+
+* **performance:** track HTTP status codes ([100fea1](https://github.com/ChristophWurst/nextcloud_sentry/commit/100fea13decedef556265ac4dab1d24750402b6a))
+
+
+
 ## [8.14.1](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.14.0...v8.14.1) (2025-04-10)
 
 
