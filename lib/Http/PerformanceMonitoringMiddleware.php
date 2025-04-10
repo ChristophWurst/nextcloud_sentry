@@ -58,6 +58,7 @@ class PerformanceMonitoringMiddleware extends Middleware {
 	public function afterController($controller, $methodName, Response $response) {
 		if ($this->transaction !== null) {
 			$this->transaction->setStatus(SpanStatus::ok());
+			$this->transaction->setHttpStatus($response->getStatus());
 			$this->transaction->finish();
 		}
 		return $response;
