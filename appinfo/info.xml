@@ -24,7 +24,7 @@
 	<repository>https://github.com/ChristophWurst/nextcloud_sentry</repository>
 	<dependencies>
 		<php min-version="8.0" max-version="8.4" />
-		<nextcloud min-version="29" max-version="32" />
+		<nextcloud min-version="30" max-version="32" />
 	</dependencies>
 	<commands>
 		<command>OCA\Sentry\Command\Test</command>
