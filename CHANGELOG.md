@@ -1,3 +1,13 @@
+## [8.15.1](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.15.0...v8.15.1) (2025-04-28)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sentry/browser to ^9.14.0 ([#713](https://github.com/ChristophWurst/nextcloud_sentry/issues/713)) ([faac87c](https://github.com/ChristophWurst/nextcloud_sentry/commit/faac87c982d243002090a4fc0c29e4b8118c53d7))
+* **deps:** update dependency sentry/sentry to ^4.11.0 ([#714](https://github.com/ChristophWurst/nextcloud_sentry/issues/714)) ([6a5664e](https://github.com/ChristophWurst/nextcloud_sentry/commit/6a5664ef568e6c2258a186ef41a5f95c401ffb6a))
+
+
+
 # [8.15.0](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.14.1...v8.15.0) (2025-04-10)
 
 
