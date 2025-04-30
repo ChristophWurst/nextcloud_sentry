@@ -1,3 +1,12 @@
+## [8.15.2](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.15.1...v8.15.2) (2025-04-30)
+
+
+### Bug Fixes
+
+* **deps:** drop Nextcloud 29 support ([d3d2392](https://github.com/ChristophWurst/nextcloud_sentry/commit/d3d2392c9674e290f040caaba6e85123e4ea49d5))
+
+
+
 ## [8.15.1](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.15.0...v8.15.1) (2025-04-28)
 
 
