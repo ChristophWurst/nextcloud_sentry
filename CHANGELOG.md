@@ -1,3 +1,12 @@
+## [8.15.4](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.15.3...v8.15.4) (2025-05-19)
+
+
+### Bug Fixes
+
+* **deps:** update dependency sentry/sentry to ^4.11.1 ([#717](https://github.com/ChristophWurst/nextcloud_sentry/issues/717)) ([3633e45](https://github.com/ChristophWurst/nextcloud_sentry/commit/3633e45a555f541e6aed91dc39f41d8f813aaa20))
+
+
+
 ## [8.15.3](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.15.2...v8.15.3) (2025-05-05)
 
 
