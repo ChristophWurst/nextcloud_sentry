@@ -2,14 +2,14 @@
 
 ## Configuration
 
-All this app needs to operate is a valid Sentry DSN and a public DSN. You can set it via the command line
+This app needs both a valid Sentry DSN to operate and a deprecated Sentry DSN. From the "Client Keys" tab in your Sentry project, use the "DSN" as `sentry.public-dsn` and the "deprecated DSN" as `sentry.dsn`. You can set these values via the command line:
 
 ```bash
 php occ config:system:set sentry.dsn --value=https://xxxxx:yyyyy@sentry.io/1234567
 php occ config:system:set sentry.public-dsn --value=https://xxxxx@sentry.io/1234567
 ```
 
-or add the entry directly to `config/config.php`
+or add the entries directly to `config/config.php`
 
 ```php
   "sentry.dsn" => "https://xxxxx:yyyyy@sentry.io/1234567",
