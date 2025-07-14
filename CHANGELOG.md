@@ -1,3 +1,13 @@
+## [8.15.10](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.15.9...v8.15.10) (2025-07-14)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @nextcloud/auth to ^2.5.2 ([#731](https://github.com/ChristophWurst/nextcloud_sentry/issues/731)) ([62211ce](https://github.com/ChristophWurst/nextcloud_sentry/commit/62211ceb335bcab76403ef1ff2b13c1e7d7a756b))
+* **deps:** update dependency @sentry/browser to ^9.38.0 ([#733](https://github.com/ChristophWurst/nextcloud_sentry/issues/733)) ([b1e04e1](https://github.com/ChristophWurst/nextcloud_sentry/commit/b1e04e15644353f0d798c4a8696122ef2efc2b24))
+
+
+
 ## [8.15.9](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.15.8...v8.15.9) (2025-07-07)
 
 
