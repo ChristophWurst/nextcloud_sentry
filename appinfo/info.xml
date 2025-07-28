@@ -5,7 +5,7 @@
 	<name>Sentry</name>
 	<summary>Sentry client</summary>
 	<description>A Sentry integration that sends unhandled exceptions to a Sentry instance to aggregate application crashes. You either have to set up your own Sentry instance or use your sentry.io account. See the admin documentation for how to configure this app.</description>
-	<version>8.15.11</version>
+	<version>8.15.12</version>
 	<licence>agpl</licence>
 	<author>Christoph Wurst</author>
 	<author>Morris Jobke</author>
