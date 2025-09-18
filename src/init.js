@@ -56,3 +56,5 @@ try {
 } catch (e) {
 	Logger.error('could not load sentry config', e)
 }
+
+window.Sentry ??= Sentry
