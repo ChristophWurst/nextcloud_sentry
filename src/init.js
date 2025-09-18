@@ -28,6 +28,17 @@ import { loadState } from '@nextcloud/initial-state'
 
 import Logger from './logger'
 
+const attachErrorIntegration = {
+	name: 'AttachErrorIntegration',
+	processEvent(event, hint, client) {
+		if (hint.originalException) {
+			event.extra ??= {}
+			event.extra['error'] = hint.originalException
+		}
+		return event
+	},
+}
+
 try {
 	const dsn = loadState('sentry', 'dsn')
 
@@ -36,6 +47,9 @@ try {
 	} else {
 		const config = {
 			dsn,
+			integrations: [
+				attachErrorIntegration,
+			],
 		}
 
 		if (typeof OC.config.version !== 'undefined') {
