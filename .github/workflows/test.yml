@@ -13,7 +13,7 @@ jobs:
         nextcloud-versions: ['master']
         include:
           - php-versions: '8.1'
-            nextcloud-versions: stable30
+            nextcloud-versions: stable31
           - php-versions: '8.2'
             nextcloud-versions: stable31
           - php-versions: '8.3'
@@ -56,7 +56,7 @@ jobs:
               db: ['sqlite']
               include:
                 - php-versions: '8.1'
-                  nextcloud-versions: stable30
+                  nextcloud-versions: stable31
                   db: 'sqlite'
                 - php-versions: '8.2'
                   nextcloud-versions: stable31
