@@ -1,3 +1,20 @@
+# [8.16.0](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.15.15...v8.16.0) (2025-09-23)
+
+
+### Bug Fixes
+
+* **deps:** drop Nextcloud 30 support (EOL) ([21afe7a](https://github.com/ChristophWurst/nextcloud_sentry/commit/21afe7aaf80da1d86c1f25e19346859e69b1b03c))
+* **deps:** update dependency @nextcloud/initial-state to v3 ([e321fcd](https://github.com/ChristophWurst/nextcloud_sentry/commit/e321fcdfdb6711fa121cc51b32916ea0258c4aff))
+* **deps:** update dependency sentry/sentry to ^4.16.0 ([#746](https://github.com/ChristophWurst/nextcloud_sentry/issues/746)) ([f8bb095](https://github.com/ChristophWurst/nextcloud_sentry/commit/f8bb095df92c33e3dce6cbe259b8d25a23750d7f))
+
+
+### Features
+
+* capture whole error objects ([da595c0](https://github.com/ChristophWurst/nextcloud_sentry/commit/da595c00def81a20d68e0786d3069d2a2090c21b))
+* **deps:** add Nextcloud 33 support, adjust CI ([c91bc03](https://github.com/ChristophWurst/nextcloud_sentry/commit/c91bc03d8807d4bf5153e839a6542694c645edba))
+
+
+
 ## [8.15.15](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.15.14...v8.15.15) (2025-08-25)
 
 
