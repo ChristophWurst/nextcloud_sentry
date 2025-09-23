@@ -13,7 +13,6 @@ jobs:
                   - 'dev-master'
                   - 'dev-stable32'
                   - 'dev-stable31'
-                  - 'dev-stable30'
       name: Nextcloud ${{ matrix.ocp-version }}
       steps:
           - name: Checkout
