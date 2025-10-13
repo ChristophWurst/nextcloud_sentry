@@ -1,3 +1,12 @@
+## [8.16.1](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.16.0...v8.16.1) (2025-10-13)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @nextcloud/auth to ^2.5.3 ([#755](https://github.com/ChristophWurst/nextcloud_sentry/issues/755)) ([3e5be23](https://github.com/ChristophWurst/nextcloud_sentry/commit/3e5be23d282e6585e78bfcbc4962a8553303c069))
+
+
+
 # [8.16.0](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.15.15...v8.16.0) (2025-09-23)
 
 
