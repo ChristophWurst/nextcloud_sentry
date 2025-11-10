@@ -21,7 +21,7 @@
 		"nyholm/psr7": "^1.8.2",
 		"php-http/curl-client": "^2.3.3",
 		"psr/log": "^1",
-		"sentry/sentry": "^4.17.1",
+		"sentry/sentry": "^4.18.0",
 		"guzzlehttp/promises": "^1.5.3"
 	},
 	"provide": {
