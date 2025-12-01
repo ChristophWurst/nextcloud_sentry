@@ -28,7 +28,7 @@
 		"psr/log": "^1.0.4|^2|^3"
 	},
 	"require-dev": {
-		"christophwurst/nextcloud_testing": "^1.0.1",
+		"christophwurst/nextcloud_testing": "^1.0.4",
 		"nextcloud/ocp": "dev-master",
 		"psalm/phar": "^5.26.1",
 		"roave/security-advisories": "dev-master"
