@@ -1,3 +1,12 @@
+## [8.16.10](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.16.9...v8.16.10) (2025-12-15)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @nextcloud/logger to ^3.0.3 ([#771](https://github.com/ChristophWurst/nextcloud_sentry/issues/771)) ([496a797](https://github.com/ChristophWurst/nextcloud_sentry/commit/496a7978f6bea9ed16514ebe99b834e26d33adfd))
+
+
+
 ## [8.16.9](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.16.8...v8.16.9) (2025-12-08)
 
 
