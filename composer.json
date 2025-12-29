@@ -19,7 +19,7 @@
 	"require": {
 		"php": "^8.0 <= 8.1",
 		"nyholm/psr7": "^1.8.2",
-		"php-http/curl-client": "^2.3.3",
+		"php-http/curl-client": "^2.4.0",
 		"psr/log": "^1",
 		"sentry/sentry": "^4.19.1",
 		"guzzlehttp/promises": "^1.5.3"
