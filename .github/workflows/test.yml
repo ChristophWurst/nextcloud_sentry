@@ -37,7 +37,7 @@ jobs:
     - name: Install Nextcloud
       run: php -f nextcloud/occ maintenance:install --database-name oc_autotest --database-user oc_autotest --admin-user admin --admin-pass admin --database sqlite --database-pass=''
     - name: Checkout sentry
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
       with:
         path: nextcloud/apps/sentry
     - name: Install dependencies
@@ -83,7 +83,7 @@ jobs:
           - name: Install Nextcloud
             run: php -f nextcloud/occ maintenance:install --database-host 127.0.0.1 --database-name nextcloud --database-user nextcloud --database-pass nextcloud --admin-user admin --admin-pass admin --database ${{ matrix.db }}
           - name: Checkout sentry
-            uses: actions/checkout@v5
+            uses: actions/checkout@v6
             with:
                 path: nextcloud/apps/sentry
           - name: Install dependencies
