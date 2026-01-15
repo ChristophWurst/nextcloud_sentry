@@ -1,3 +1,12 @@
+## [8.16.13](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.16.12...v8.16.13) (2026-01-15)
+
+
+### Bug Fixes
+
+* remove conflicting guzzlehttp promises package ([4e00e5d](https://github.com/ChristophWurst/nextcloud_sentry/commit/4e00e5da068663ac6bfa1506ce173e775f13c19f))
+
+
+
 ## [8.16.12](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.16.11...v8.16.12) (2025-12-29)
 
 
