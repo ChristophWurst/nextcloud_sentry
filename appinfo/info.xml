@@ -23,7 +23,7 @@
 	<bugs>https://github.com/ChristophWurst/nextcloud_sentry/issues</bugs>
 	<repository>https://github.com/ChristophWurst/nextcloud_sentry</repository>
 	<dependencies>
-		<php min-version="8.0" max-version="8.4" />
+		<php min-version="8.0" max-version="8.5" />
 		<nextcloud min-version="31" max-version="33" />
 	</dependencies>
 	<commands>
