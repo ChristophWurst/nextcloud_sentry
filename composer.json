@@ -29,7 +29,7 @@
 	"require-dev": {
 		"christophwurst/nextcloud_testing": "^1.1.0",
 		"nextcloud/ocp": "dev-master",
-		"psalm/phar": "^5.26.1",
+		"psalm/phar": "^7.0.0-beta14",
 		"roave/security-advisories": "dev-master"
 	},
 	"scripts": {
