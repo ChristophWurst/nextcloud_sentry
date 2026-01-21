@@ -27,6 +27,7 @@ namespace OCA\Sentry\AppInfo;
 use OCA\Sentry\Config;
 use OCA\Sentry\Http\PerformanceMonitoringMiddleware;
 use OCA\Sentry\InitialState\DsnProvider;
+use OCA\Sentry\Listener\BackgroundJobListener;
 use OCA\Sentry\Listener\CustomCspListener;
 use OCA\Sentry\Reporter\ISentryReporter;
 use OCA\Sentry\Reporter\RecursionAwareReporter;
@@ -35,9 +36,12 @@ use OCP\AppFramework\App;
 use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IBootstrap;
 use OCP\AppFramework\Bootstrap\IRegistrationContext;
+use OCP\BackgroundJob\Events\BeforeJobExecutedEvent;
+use OCP\BackgroundJob\Events\JobExecutedEvent;
 use OCP\Security\CSP\AddContentSecurityPolicyEvent;
 use OCP\Util;
 use Psr\Container\ContainerInterface;
+use function class_exists;
 use function Sentry\init as initSentry;
 
 class Application extends App implements IBootstrap {
@@ -60,6 +64,12 @@ class Application extends App implements IBootstrap {
 		/** @psalm-suppress TooManyArguments */
 		$context->registerMiddleware(PerformanceMonitoringMiddleware::class, true);
 		$context->registerEventListener(AddContentSecurityPolicyEvent::class, CustomCspListener::class);
+		if (class_exists(BeforeJobExecutedEvent::class)) {
+			$context->registerEventListener(BeforeJobExecutedEvent::class, BackgroundJobListener::class);
+		}
+		if (class_exists(JobExecutedEvent::class)) {
+			$context->registerEventListener(JobExecutedEvent::class, BackgroundJobListener::class);
+		}
 		$context->registerInitialStateProvider(DsnProvider::class);
 	}
 
