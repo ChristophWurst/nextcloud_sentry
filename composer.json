@@ -21,7 +21,7 @@
 		"nyholm/psr7": "^1.8.2",
 		"php-http/curl-client": "^2.4.0",
 		"psr/log": "^1",
-		"sentry/sentry": "^4.19.1"
+		"sentry/sentry": "^4.21.0"
 	},
 	"provide": {
 		"psr/log": "^1.0.4|^2|^3"
