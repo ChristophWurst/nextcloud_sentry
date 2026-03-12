@@ -33,19 +33,18 @@ use OCP\ILogger;
 use OCP\IUserSession;
 use OCP\Support\CrashReport\ICollectBreadcrumbs;
 use OCP\Support\CrashReport\IMessageReporter;
-use function Sentry\addBreadcrumb;
 use Sentry\Breadcrumb;
-use function Sentry\captureException;
-use function Sentry\captureMessage;
-use function Sentry\configureScope;
 use Sentry\Severity;
 use Sentry\State\Scope;
 use Throwable;
+use function Sentry\addBreadcrumb;
+use function Sentry\captureException;
+use function Sentry\captureMessage;
+use function Sentry\configureScope;
 
 class SentryReporterAdapter implements IMessageReporter, ICollectBreadcrumbs, ISentryReporter {
 
 	protected IUserSession $userSession;
-	private CredentialStoreHelper $credentialStoreHelper;
 	private IConfig $config;
 	private Defaults $defaults;
 	private bool $userScopeSet = false;
@@ -61,13 +60,15 @@ class SentryReporterAdapter implements IMessageReporter, ICollectBreadcrumbs, IS
 
 	private int $minimumLogLevel;
 
-	public function __construct(IUserSession $userSession,
-								IConfig $config,
-								CredentialStoreHelper $credentialStoreHelper, Defaults $defaults) {
+	public function __construct(
+		IUserSession $userSession,
+		IConfig $config,
+		private CredentialStoreHelper $credentialStoreHelper,
+		Defaults $defaults,
+	) {
 		$this->userSession = $userSession;
 		$this->config = $config;
 		$this->minimumLogLevel = (int)$config->getSystemValue('sentry.minimum.log.level', ILogger::WARN);
-		$this->credentialStoreHelper = $credentialStoreHelper;
 		$this->defaults = $defaults;
 	}
 
@@ -114,7 +115,7 @@ class SentryReporterAdapter implements IMessageReporter, ICollectBreadcrumbs, IS
 				try {
 					$credentials = $this->credentialStoreHelper->getLoginCredentials();
 					$username = $credentials->getLoginName();
-				} catch (CredentialsUnavailableException $e) {
+				} catch (CredentialsUnavailableException) {
 					$username = null;
 				}
 
@@ -129,7 +130,7 @@ class SentryReporterAdapter implements IMessageReporter, ICollectBreadcrumbs, IS
 
 	public function collect(string $message, string $category, array $context = []) {
 		if (isset($context['app'])) {
-			$message = "[" . $context['app'] . "] " . $message;
+			$message = '[' . $context['app'] . '] ' . $message;
 		}
 
 		$this->setSentryScope($context);
@@ -159,7 +160,7 @@ class SentryReporterAdapter implements IMessageReporter, ICollectBreadcrumbs, IS
 		}
 
 		if (isset($context['app'])) {
-			$message = "[" . $context['app'] . "] " . $message;
+			$message = '[' . $context['app'] . '] ' . $message;
 		}
 
 		captureMessage(

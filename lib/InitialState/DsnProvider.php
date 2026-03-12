@@ -30,11 +30,9 @@ use OCP\AppFramework\Services\InitialStateProvider;
 
 class DsnProvider extends InitialStateProvider {
 
-	/** @var Config */
-	private $config;
-
-	public function __construct(Config $config) {
-		$this->config = $config;
+	public function __construct(
+		private Config $config,
+	) {
 	}
 
 	public function getKey(): string {

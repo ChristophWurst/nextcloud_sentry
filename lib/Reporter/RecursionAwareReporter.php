@@ -27,20 +27,17 @@ namespace OCA\Sentry\Reporter;
 
 use OCP\Support\CrashReport\ICollectBreadcrumbs;
 use OCP\Support\CrashReport\IMessageReporter;
-use OCP\Support\CrashReport\IReporter;
 
 /**
  * Decorator that detects and stops recursive calls to reporter methods
  */
 class RecursionAwareReporter implements IMessageReporter, ICollectBreadcrumbs, ISentryReporter {
 
-	/** @var ISentryReporter */
-	private $reporter;
-
 	private $reporting = false;
 
-	public function __construct(ISentryReporter $reporter) {
-		$this->reporter = $reporter;
+	public function __construct(
+		private ISentryReporter $reporter,
+	) {
 	}
 
 	private function guard(callable $run): void {
@@ -58,7 +55,7 @@ class RecursionAwareReporter implements IMessageReporter, ICollectBreadcrumbs, I
 
 	public function collect(string $message, string $category, array $context = []): void {
 		if ($this->reporter instanceof ICollectBreadcrumbs) {
-			$this->guard(function() use ($context, $category, $message) {
+			$this->guard(function () use ($context, $category, $message) {
 				$this->reporter->collect($message, $category, $context);
 			});
 		}
@@ -66,14 +63,14 @@ class RecursionAwareReporter implements IMessageReporter, ICollectBreadcrumbs, I
 
 	public function reportMessage(string $message, array $context = []): void {
 		if ($this->reporter instanceof IMessageReporter) {
-			$this->guard(function() use ($context, $message) {
+			$this->guard(function () use ($context, $message) {
 				$this->reporter->reportMessage($message, $context);
 			});
 		}
 	}
 
 	public function report($exception, array $context = []): void {
-		$this->guard(function() use ($context, $exception) {
+		$this->guard(function () use ($context, $exception) {
 			$this->reporter->report($exception, $context);
 		});
 	}

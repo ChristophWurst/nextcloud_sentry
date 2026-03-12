@@ -30,7 +30,7 @@ use ChristophWurst\Nextcloud\Testing\TestCase;
 use Exception;
 use OCA\Sentry\Reporter\SentryReporterAdapter;
 
-class SentryReporterAdapterTest extends TestCase {
+final class SentryReporterAdapterTest extends TestCase {
 
 	/** @var ServiceMockObject */
 	private $serviceMock;

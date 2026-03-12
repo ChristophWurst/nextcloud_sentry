@@ -34,7 +34,7 @@ use OCP\Support\CrashReport\IMessageReporter;
 use OCP\Support\CrashReport\IReporter;
 use PHPUnit\Framework\MockObject\MockObject;
 
-class RecursionAwareReporterTest extends TestCase {
+final class RecursionAwareReporterTest extends TestCase {
 
 	/** @var RecursionAwareReporter */
 	private $reporter;

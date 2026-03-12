@@ -1,5 +1,7 @@
+/.php-cs-fixer.cache
 /js/
 /build/artifacts
 /node_modules
 /vendor/
+/vendor-bin/*/vendor
 /tests/.phpunit.result.cache

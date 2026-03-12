@@ -33,7 +33,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Throwable;
 
 class Test extends Command {
-	public function __construct(private LoggerInterface $logger) {
+	public function __construct(
+		private LoggerInterface $logger,
+	) {
 		parent::__construct();
 	}
 
@@ -43,10 +45,10 @@ class Test extends Command {
 	}
 
 	public function execute(InputInterface $input, OutputInterface $output): int {
-		$this->logger->info("starting sentry test command");
+		$this->logger->info('starting sentry test command');
 		try {
-			$this->logger->warning("you should get at least one Sentry alert soon");
-			$this->logger->emergency("This is a sentry emergency test message");
+			$this->logger->warning('you should get at least one Sentry alert soon');
+			$this->logger->emergency('This is a sentry emergency test message');
 			throw new \Exception('This is a sentry test exception!');
 		} catch (Throwable $e) {
 			$this->logger->error($e->getMessage(), ['exception' => $e]);

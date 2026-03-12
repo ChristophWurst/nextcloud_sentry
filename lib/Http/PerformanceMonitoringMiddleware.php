@@ -32,7 +32,6 @@ use Sentry\SentrySdk;
 use Sentry\Tracing\SpanStatus;
 use Sentry\Tracing\Transaction;
 use Sentry\Tracing\TransactionContext;
-use function get_class;
 use function Sentry\startTransaction;
 
 class PerformanceMonitoringMiddleware extends Middleware {
@@ -41,7 +40,7 @@ class PerformanceMonitoringMiddleware extends Middleware {
 
 	public function beforeController($controller, $methodName) {
 		$transactionContext = new TransactionContext();
-		$transactionContext->setName(get_class($controller) . '::' . $methodName);
+		$transactionContext->setName($controller::class . '::' . $methodName);
 		$transactionContext->setOp('http.request');
 		$this->transaction = startTransaction($transactionContext);
 		SentrySdk::getCurrentHub()->setSpan($this->transaction);

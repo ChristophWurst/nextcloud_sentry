@@ -28,7 +28,7 @@ namespace OCA\sentry\tests\Integration;
 use ChristophWurst\Nextcloud\Testing\TestCase;
 use OCA\Sentry\AppInfo\Application;
 
-class InitializationTest extends TestCase {
+final class InitializationTest extends TestCase {
 
 	public function testCreateApplication(): void {
 		new Application();
