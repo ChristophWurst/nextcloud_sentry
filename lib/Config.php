@@ -104,12 +104,6 @@ class Config {
 	}
 
 	public function getEnvironment(): string {
-		$env = $this->config->getSystemValueString('sentry.environment');
-
-		if ($env === '') {
-			return 'production';
-		}
-
-		return $env;
+		return $this->config->getSystemValueString('sentry.environment', 'production');
 	}
 }

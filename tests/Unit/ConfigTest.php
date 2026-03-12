@@ -224,8 +224,8 @@ class ConfigTest extends TestCase {
 	public function testGetEnvironmentReturnsDefault(): void {
 		$this->nextcloudConfig
 			->method('getSystemValueString')
-			->with('sentry.environment', '')
-			->willReturn('');
+			->with('sentry.environment', 'production')
+			->willReturn('production');
 
 		$result = $this->config->getEnvironment();
 
@@ -235,7 +235,7 @@ class ConfigTest extends TestCase {
 	public function testGetEnvironmentReturnsConfigured(): void {
 		$this->nextcloudConfig
 			->method('getSystemValueString')
-			->with('sentry.environment', '')
+			->with('sentry.environment', 'production')
 			->willReturn('staging');
 
 		$result = $this->config->getEnvironment();
