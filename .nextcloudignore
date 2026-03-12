@@ -3,6 +3,7 @@
 /.gitignore
 /.scrutinizer.yml
 /.travis.yml
+/AGENTS.md
 /composer.*
 /build
 /.nextcloudignore
