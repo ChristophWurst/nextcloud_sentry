@@ -37,11 +37,9 @@ use function parse_url;
  */
 class CustomCspListener implements IEventListener {
 
-	/** @var Config */
-	private $config;
-
-	public function __construct(Config $config) {
-		$this->config = $config;
+	public function __construct(
+		private Config $config,
+	) {
 	}
 
 	public function handle(Event $event): void {

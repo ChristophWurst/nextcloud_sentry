@@ -13,6 +13,7 @@
 		},
 		"sort-packages": true,
 		"allow-plugins": {
+			"bamarni/composer-bin-plugin": true,
 			"php-http/discovery": true
 		}
 	},
@@ -27,14 +28,17 @@
 		"psr/log": "^1.0.4|^2|^3"
 	},
 	"require-dev": {
+		"bamarni/composer-bin-plugin": "^1.9",
 		"christophwurst/nextcloud_testing": "^1.1.3",
 		"nextcloud/ocp": "dev-master",
 		"psalm/phar": "^5.26.1",
 		"roave/security-advisories": "dev-master"
 	},
 	"scripts": {
+		"cs:fix": "php-cs-fixer fix",
 		"lint": "find . -name \\*.php -not -path './vendor/*' -not -path './build/*' -print0 | xargs -0 -n1 php -l",
 		"psalm": "psalm.phar",
+		"rector": "rector process",
 		"test:integration": "phpunit -c tests/phpunit.integration.xml tests/Integration --fail-on-warning",
 		"test:integration:dev": "phpunit -c tests/phpunit.integration.xml tests/Integration --no-coverage --fail-on-warning",
 		"test:unit": "phpunit -c tests/phpunit.unit.xml tests/Unit --fail-on-warning",

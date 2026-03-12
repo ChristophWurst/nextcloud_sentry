@@ -8,7 +8,7 @@ use ChristophWurst\Nextcloud\Testing\TestCase;
 use OCP\Http\Client\IClientService;
 use OCP\IServerContainer;
 
-class GuzzleTest extends TestCase {
+final class GuzzleTest extends TestCase {
 
 	/** @var IServerContainer */
 	private $container;

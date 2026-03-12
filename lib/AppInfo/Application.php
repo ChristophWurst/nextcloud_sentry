@@ -66,7 +66,7 @@ class Application extends App implements IBootstrap {
 	public function boot(IBootContext $context): void {
 		Util::addScript('sentry', 'sentry');
 
-		$context->injectFn(static function(Config $config) {
+		$context->injectFn(static function (Config $config) {
 			// Now it's time to connect Sentry
 			$dsn = $config->getDsn();
 			if ($dsn !== null) {

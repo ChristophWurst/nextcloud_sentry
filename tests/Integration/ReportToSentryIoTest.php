@@ -25,14 +25,13 @@ declare(strict_types=1);
 
 namespace OCA\sentry\tests\Integration;
 
-
 use ChristophWurst\Nextcloud\Testing\TestCase;
 use Exception;
 use function OCP\Log\logger;
 
-class ReportToSentryIoTest extends TestCase {
+final class ReportToSentryIoTest extends TestCase {
 
-	public function testSendException() {
+	public function testSendException(): void {
 		$logger = logger('sentry');
 		$logger->critical('Test is a Sentry CI test', ['exception' => new Exception('Test is a Sentry CI test')]);
 		$this->addToAssertionCount(1);
