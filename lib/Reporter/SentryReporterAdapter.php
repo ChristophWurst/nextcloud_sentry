@@ -66,7 +66,7 @@ class SentryReporterAdapter implements IMessageReporter, ICollectBreadcrumbs, IS
 								CredentialStoreHelper $credentialStoreHelper, Defaults $defaults) {
 		$this->userSession = $userSession;
 		$this->config = $config;
-		$this->minimumLogLevel = (int)$config->getSystemValue('sentry.minimum.log.level', ILogger::WARN);
+		$this->minimumLogLevel = $config->getSystemValueInt('sentry.minimum.log.level', ILogger::WARN);
 		$this->credentialStoreHelper = $credentialStoreHelper;
 		$this->defaults = $defaults;
 	}

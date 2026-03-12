@@ -47,10 +47,10 @@ class Config {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated use getPublicDsn() instead
 	 */
 	public function getDsn(): ?string {
-		$dsn = $this->config->getSystemValue('sentry.dsn');
+		$dsn = $this->config->getSystemValueString('sentry.dsn');
 
 		if ($dsn !== '') {
 			return $dsn;
@@ -60,16 +60,22 @@ class Config {
 	}
 
 	public function getCspReportUrl(): ?string {
-		return $this->config->getSystemValue('sentry.csp-report-url', null);
+		$url = $this->config->getSystemValueString('sentry.csp-report-url');
+
+		if ($url === '') {
+			return null;
+		}
+
+		return $url;
 	}
 
 	public function getServerVersion(): string {
-		return $this->config->getSystemValue('version', '0.0.0');
+		return $this->config->getSystemValueString('version', '0.0.0');
 	}
 
 	public function getSamplingRate(): float {
-		$fromConfig = $this->config->getSystemValue('sentry.sampling-rate', null);
-		if ($fromConfig !== null) {
+		$fromConfig = $this->config->getSystemValueString('sentry.sampling-rate');
+		if ($fromConfig !== '') {
 			return (float) $fromConfig;
 		}
 
@@ -83,9 +89,9 @@ class Config {
 	}
 
 	public function getProfilesSamplingRate(): float {
-		$fromConfig = $this->config->getSystemValue('sentry.profiles-sampling-rate', null);
-		if ($fromConfig !== null) {
-			return $fromConfig;
+		$fromConfig = $this->config->getSystemValueString('sentry.profiles-sampling-rate');
+		if ($fromConfig !== '') {
+			return (float) $fromConfig;
 		}
 
 		return match ($this->config->getSystemValueInt('loglevel', 2)) {
@@ -98,6 +104,12 @@ class Config {
 	}
 
 	public function getEnvironment(): string {
-		return $this->config->getSystemValue('sentry.environment', 'production');
+		$env = $this->config->getSystemValueString('sentry.environment');
+
+		if ($env === '') {
+			return 'production';
+		}
+
+		return $env;
 	}
 }
