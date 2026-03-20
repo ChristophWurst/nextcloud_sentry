@@ -1,3 +1,12 @@
+## [8.18.1](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.18.0...v8.18.1) (2026-03-20)
+
+
+### Bug Fixes
+
+* **deps:** bump ajv ([124ca4f](https://github.com/ChristophWurst/nextcloud_sentry/commit/124ca4fb98a7457fcce090876c00e1c3a3f660ac))
+
+
+
 # [8.18.0](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.17.1...v8.18.0) (2026-03-12)
 
 
