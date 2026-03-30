@@ -8,9 +8,9 @@ jobs:
         node-version: [ 16, 18 ]
     name: Build front-end with Node ${{ matrix.node-version }}
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@61b9e3751b92087fd0b06925ba6dd6314e06f089 # master
       - name: Set up Node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
         with:
           node-version: ${{ matrix.node-version }}
       - name: Install dependencies

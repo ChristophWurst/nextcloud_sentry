@@ -10,9 +10,9 @@ jobs:
     name: php${{ matrix.php-versions }} lint
     steps:
     - name: Checkout
-      uses: actions/checkout@master
+      uses: actions/checkout@61b9e3751b92087fd0b06925ba6dd6314e06f089 # master
     - name: Set up php${{ matrix.php-versions }}
-      uses: shivammathur/setup-php@master
+      uses: shivammathur/setup-php@accd6127cb78bee3e8082180cb391013d204ef9f # master
       with:
         php-version: ${{ matrix.php-versions }}
         coverage: none
