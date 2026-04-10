@@ -100,4 +100,8 @@ class Config {
 	public function getEnvironment(): string {
 		return $this->config->getSystemValue('sentry.environment', 'production');
 	}
+
+	public function getMaxRequestBodySize(): string {
+		return $this->config->getSystemValueString('sentry.max-request-body-size', 'never');
+	}
 }

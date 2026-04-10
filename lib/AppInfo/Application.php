@@ -76,6 +76,7 @@ class Application extends App implements IBootstrap {
 					'traces_sample_rate' => $config->getSamplingRate(),
 					'profiles_sample_rate' => $config->getProfilesSamplingRate(),
 					'environment' => $config->getEnvironment(),
+					'max_request_body_size' => $config->getMaxRequestBodySize(),
 				]);
 			}
 		});
