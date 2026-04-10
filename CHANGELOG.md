@@ -1,3 +1,12 @@
+## [8.18.3](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.18.2...v8.18.3) (2026-04-10)
+
+
+### Bug Fixes
+
+* don't send http request body by default ([517a2ad](https://github.com/ChristophWurst/nextcloud_sentry/commit/517a2ad77e288b20840621a2e09df5c9cda20e95))
+
+
+
 ## [8.18.2](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.18.1...v8.18.2) (2026-03-30)
 
 
