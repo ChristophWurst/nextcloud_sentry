@@ -242,4 +242,26 @@ class ConfigTest extends TestCase {
 
 		self::assertSame('staging', $result);
 	}
+
+	public function testGetMaxRequestBodySizeReturnsDefault(): void {
+		$this->nextcloudConfig
+			->method('getSystemValueString')
+			->with('sentry.max-request-body-size', 'never')
+			->willReturn('never');
+
+		$result = $this->config->getMaxRequestBodySize();
+
+		self::assertSame('never', $result);
+	}
+
+	public function testGetMaxRequestBodySizeReturnsConfigured(): void {
+		$this->nextcloudConfig
+			->method('getSystemValueString')
+			->with('sentry.max-request-body-size', 'never')
+			->willReturn('medium');
+
+		$result = $this->config->getMaxRequestBodySize();
+
+		self::assertSame('medium', $result);
+	}
 }
