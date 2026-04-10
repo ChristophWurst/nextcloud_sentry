@@ -27,6 +27,7 @@ namespace OCA\Sentry\AppInfo;
 use OCA\Sentry\Config;
 use OCA\Sentry\Http\PerformanceMonitoringMiddleware;
 use OCA\Sentry\InitialState\DsnProvider;
+use OCA\Sentry\Listener\CommandListener;
 use OCA\Sentry\Listener\CustomCspListener;
 use OCA\Sentry\Reporter\ISentryReporter;
 use OCA\Sentry\Reporter\RecursionAwareReporter;
@@ -35,6 +36,9 @@ use OCP\AppFramework\App;
 use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IBootstrap;
 use OCP\AppFramework\Bootstrap\IRegistrationContext;
+use OCP\Command\Events\BeforeCommandExecutedEvent;
+use OCP\Command\Events\CommandExecutedEvent;
+use OCP\Command\Events\CommandFailedEvent;
 use OCP\Security\CSP\AddContentSecurityPolicyEvent;
 use OCP\Util;
 use Psr\Container\ContainerInterface;
@@ -60,6 +64,15 @@ class Application extends App implements IBootstrap {
 		/** @psalm-suppress TooManyArguments */
 		$context->registerMiddleware(PerformanceMonitoringMiddleware::class, true);
 		$context->registerEventListener(AddContentSecurityPolicyEvent::class, CustomCspListener::class);
+		}
+		if (class_exists(BeforeCommandExecutedEvent::class)) {
+			$context->registerEventListener(BeforeCommandExecutedEvent::class, CommandListener::class);
+		}
+		if (class_exists(CommandExecutedEvent::class)) {
+			$context->registerEventListener(CommandExecutedEvent::class, CommandListener::class);
+		}
+		if (class_exists(CommandFailedEvent::class)) {
+			$context->registerEventListener(CommandFailedEvent::class, CommandListener::class);
 		$context->registerInitialStateProvider(DsnProvider::class);
 	}
 
