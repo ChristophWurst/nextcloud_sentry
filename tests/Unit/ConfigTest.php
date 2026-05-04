@@ -28,7 +28,7 @@ use OCA\Sentry\Config;
 use OCP\IConfig;
 use PHPUnit\Framework\MockObject\MockObject;
 
-class ConfigTest extends TestCase {
+final class ConfigTest extends TestCase {
 
 	private IConfig|MockObject $nextcloudConfig;
 	private Config $config;
@@ -48,7 +48,7 @@ class ConfigTest extends TestCase {
 
 		$result = $this->config->getPublicDsn();
 
-		self::assertNull($result);
+		$this->assertNull($result);
 	}
 
 	public function testGetPublicDsnReturnsValue(): void {
@@ -59,7 +59,7 @@ class ConfigTest extends TestCase {
 
 		$result = $this->config->getPublicDsn();
 
-		self::assertSame('https://key@sentry.example.com/1', $result);
+		$this->assertSame('https://key@sentry.example.com/1', $result);
 	}
 
 	public function testGetDsnPrefersDeprecatedKey(): void {
@@ -72,7 +72,7 @@ class ConfigTest extends TestCase {
 
 		$result = $this->config->getDsn();
 
-		self::assertSame('https://secret@sentry.example.com/1', $result);
+		$this->assertSame('https://secret@sentry.example.com/1', $result);
 	}
 
 	public function testGetDsnFallsBackToPublicDsn(): void {
@@ -85,7 +85,7 @@ class ConfigTest extends TestCase {
 
 		$result = $this->config->getDsn();
 
-		self::assertSame('https://public@sentry.example.com/1', $result);
+		$this->assertSame('https://public@sentry.example.com/1', $result);
 	}
 
 	public function testGetDsnReturnsNullWhenBothEmpty(): void {
@@ -95,7 +95,7 @@ class ConfigTest extends TestCase {
 
 		$result = $this->config->getDsn();
 
-		self::assertNull($result);
+		$this->assertNull($result);
 	}
 
 	public function testGetCspReportUrlReturnsNullWhenEmpty(): void {
@@ -106,7 +106,7 @@ class ConfigTest extends TestCase {
 
 		$result = $this->config->getCspReportUrl();
 
-		self::assertNull($result);
+		$this->assertNull($result);
 	}
 
 	public function testGetCspReportUrlReturnsValue(): void {
@@ -117,7 +117,7 @@ class ConfigTest extends TestCase {
 
 		$result = $this->config->getCspReportUrl();
 
-		self::assertSame('https://sentry.example.com/api/1/security/', $result);
+		$this->assertSame('https://sentry.example.com/api/1/security/', $result);
 	}
 
 	public function testGetServerVersionReturnsDefault(): void {
@@ -128,7 +128,7 @@ class ConfigTest extends TestCase {
 
 		$result = $this->config->getServerVersion();
 
-		self::assertSame('0.0.0', $result);
+		$this->assertSame('0.0.0', $result);
 	}
 
 	public function testGetServerVersionReturnsConfigured(): void {
@@ -139,7 +139,7 @@ class ConfigTest extends TestCase {
 
 		$result = $this->config->getServerVersion();
 
-		self::assertSame('28.0.1', $result);
+		$this->assertSame('28.0.1', $result);
 	}
 
 	public function testGetSamplingRateFromConfig(): void {
@@ -150,7 +150,7 @@ class ConfigTest extends TestCase {
 
 		$result = $this->config->getSamplingRate();
 
-		self::assertSame(0.5, $result);
+		$this->assertEqualsWithDelta(0.5, $result, PHP_FLOAT_EPSILON);
 	}
 
 	public function testGetSamplingRateFromLogLevel(): void {
@@ -165,7 +165,7 @@ class ConfigTest extends TestCase {
 
 		$result = $this->config->getSamplingRate();
 
-		self::assertSame(1.0, $result);
+		$this->assertEqualsWithDelta(1.0, $result, PHP_FLOAT_EPSILON);
 	}
 
 	public function testGetSamplingRateDefaultLogLevel(): void {
@@ -180,7 +180,7 @@ class ConfigTest extends TestCase {
 
 		$result = $this->config->getSamplingRate();
 
-		self::assertSame(0.3, $result);
+		$this->assertEqualsWithDelta(0.3, $result, PHP_FLOAT_EPSILON);
 	}
 
 	public function testGetProfilesSamplingRateFromConfig(): void {
@@ -191,7 +191,7 @@ class ConfigTest extends TestCase {
 
 		$result = $this->config->getProfilesSamplingRate();
 
-		self::assertSame(0.8, $result);
+		$this->assertEqualsWithDelta(0.8, $result, PHP_FLOAT_EPSILON);
 	}
 
 	public function testGetProfilesSamplingRateFromLogLevel(): void {
@@ -206,7 +206,7 @@ class ConfigTest extends TestCase {
 
 		$result = $this->config->getProfilesSamplingRate();
 
-		self::assertSame(0.7, $result);
+		$this->assertEqualsWithDelta(0.7, $result, PHP_FLOAT_EPSILON);
 	}
 
 	public function testGetProfilesSamplingRateReturnsFloat(): void {
@@ -217,8 +217,8 @@ class ConfigTest extends TestCase {
 
 		$result = $this->config->getProfilesSamplingRate();
 
-		self::assertIsFloat($result);
-		self::assertSame(0.42, $result);
+		$this->assertIsFloat($result);
+		$this->assertEqualsWithDelta(0.42, $result, PHP_FLOAT_EPSILON);
 	}
 
 	public function testGetEnvironmentReturnsDefault(): void {
@@ -229,7 +229,7 @@ class ConfigTest extends TestCase {
 
 		$result = $this->config->getEnvironment();
 
-		self::assertSame('production', $result);
+		$this->assertSame('production', $result);
 	}
 
 	public function testGetEnvironmentReturnsConfigured(): void {
@@ -240,7 +240,7 @@ class ConfigTest extends TestCase {
 
 		$result = $this->config->getEnvironment();
 
-		self::assertSame('staging', $result);
+		$this->assertSame('staging', $result);
 	}
 
 	public function testGetMaxRequestBodySizeReturnsDefault(): void {
@@ -251,7 +251,7 @@ class ConfigTest extends TestCase {
 
 		$result = $this->config->getMaxRequestBodySize();
 
-		self::assertSame('never', $result);
+		$this->assertSame('never', $result);
 	}
 
 	public function testGetMaxRequestBodySizeReturnsConfigured(): void {
@@ -262,6 +262,6 @@ class ConfigTest extends TestCase {
 
 		$result = $this->config->getMaxRequestBodySize();
 
-		self::assertSame('medium', $result);
+		$this->assertSame('medium', $result);
 	}
 }
