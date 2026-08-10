@@ -11,6 +11,7 @@ jobs:
           matrix:
               ocp-version:
                   - 'dev-master'
+                  - 'dev-stable34'
                   - 'dev-stable33'
                   - 'dev-stable32'
       name: Nextcloud ${{ matrix.ocp-version }}
@@ -20,14 +21,14 @@ jobs:
           - name: Set up php
             uses: shivammathur/setup-php@accd6127cb78bee3e8082180cb391013d204ef9f # v2.37.0
             with:
-                php-version: 8.1
+                php-version: 8.3
                 coverage: none
             env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           - name: Install dependencies
             run: composer i
           - name: Install OCP package
-            run: composer require --dev nextcloud/ocp:${{ matrix.ocp-version }} -W
+            run: composer require --dev nextcloud/ocp:${{ matrix.ocp-version }} --ignore-platform-reqs -W
           - name: Run coding standards check
             run: composer run psalm
 
