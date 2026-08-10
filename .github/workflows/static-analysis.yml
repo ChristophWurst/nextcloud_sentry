@@ -28,7 +28,7 @@ jobs:
           - name: Install dependencies
             run: composer i
           - name: Install OCP package
-            run: composer require --dev nextcloud/ocp:${{ matrix.ocp-version }} -W
+            run: composer require --dev nextcloud/ocp:${{ matrix.ocp-version }} --ignore-platform-reqs -W
           - name: Run coding standards check
             run: composer run psalm
 
