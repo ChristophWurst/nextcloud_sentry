@@ -93,6 +93,8 @@ jobs:
             run: composer install
           - name: Install sentry
             run: php -f nextcloud/occ app:enable sentry
+          - name: Regression #830 - server HTTP client must not collide with the app's bundled psr7
+            run: php -f nextcloud/occ update:check
           - name: Configure Nextcloud for testing
             run: php -f nextcloud/occ config:system:set debug --type bool --value true
           - name: Run tests
