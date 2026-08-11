@@ -1,3 +1,12 @@
+## [8.19.1](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.19.0...v8.19.1) (2026-08-11)
+
+
+### Bug Fixes
+
+* **deps:** bump guzzlehttp/psr7 to 2.13.0 to fix class collision with server ([cf1f82d](https://github.com/ChristophWurst/nextcloud_sentry/commit/cf1f82d3abb2ac2b18be6a59f1c4563446b82f90)), closes [#830](https://github.com/ChristophWurst/nextcloud_sentry/issues/830)
+
+
+
 # [8.19.0](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.18.6...v8.19.0) (2026-08-10)
 
 
