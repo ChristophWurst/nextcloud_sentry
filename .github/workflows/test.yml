@@ -54,6 +54,7 @@ jobs:
   integration-tests:
       runs-on: ubuntu-latest
       strategy:
+          fail-fast: false
           matrix:
               php-versions: ['8.4']
               nextcloud-versions: ['master']
@@ -90,15 +91,17 @@ jobs:
           - name: Checkout sentry
             uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
             with:
+                # TEMP (test/ branch only): check out the branch head, not the PR
+                # merge with master. Master already carries the psr7 2.13.0 fix
+                # (#831); the merge would hide the collision. The branch head still
+                # pins the stale 2.7.1 lock, reproducing #830 via composer install.
+                ref: ${{ github.event.pull_request.head.sha }}
                 path: nextcloud/apps/sentry
           - name: Install dependencies
             working-directory: nextcloud/apps/sentry
             run: composer install
           - name: Install sentry
             run: php -f nextcloud/occ app:enable sentry
-          - name: TEMP (test/ branch only) - force buggy psr7 2.7.1 to prove the regression guard trips
-            working-directory: nextcloud/apps/sentry
-            run: composer require guzzlehttp/psr7:2.7.1 --with-all-dependencies --no-audit
           - name: Configure Nextcloud for testing
             run: php -f nextcloud/occ config:system:set debug --type bool --value true
           - name: Run tests
