@@ -68,6 +68,9 @@ jobs:
                 - php-versions: '8.3'
                   nextcloud-versions: stable33
                   db: 'sqlite'
+                - php-versions: '8.5'
+                  nextcloud-versions: stable34
+                  db: 'sqlite'
       name: php${{ matrix.php-versions }}-${{ matrix.db }} integration tests
       steps:
           - name: Set up php${{ matrix.php-versions }}
@@ -93,8 +96,9 @@ jobs:
             run: composer install
           - name: Install sentry
             run: php -f nextcloud/occ app:enable sentry
-          - name: Regression #830 - server HTTP client must not collide with the app's bundled psr7
-            run: php -f nextcloud/occ update:check
+          - name: TEMP (test/ branch only) - force buggy psr7 2.7.1 to prove the regression guard trips
+            working-directory: nextcloud/apps/sentry
+            run: composer require guzzlehttp/psr7:2.7.1 --with-all-dependencies --no-audit
           - name: Configure Nextcloud for testing
             run: php -f nextcloud/occ config:system:set debug --type bool --value true
           - name: Run tests
