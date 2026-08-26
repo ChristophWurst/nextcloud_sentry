@@ -1,3 +1,12 @@
+# [8.20.0](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.19.1...v8.20.0) (2026-08-26)
+
+
+### Features
+
+* **deps:** add Nextcloud 35 support ([1aefc23](https://github.com/ChristophWurst/nextcloud_sentry/commit/1aefc233df4e3ba647096a1a23c8dfd012899c5a))
+
+
+
 ## [8.19.1](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.19.0...v8.19.1) (2026-08-11)
 
 
