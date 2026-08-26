@@ -11,6 +11,7 @@ jobs:
           matrix:
               ocp-version:
                   - 'dev-master'
+                  - 'dev-stable35'
                   - 'dev-stable34'
                   - 'dev-stable33'
                   - 'dev-stable32'
