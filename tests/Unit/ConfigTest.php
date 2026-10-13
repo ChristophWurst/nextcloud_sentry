@@ -264,4 +264,73 @@ final class ConfigTest extends TestCase {
 
 		$this->assertSame('medium', $result);
 	}
+
+	public function testGetIgnoredExceptionsDefault(): void {
+		$this->nextcloudConfig
+			->method('getSystemValue')
+			->with('sentry.ignored-exceptions', [])
+			->willReturn([]);
+
+		$this->assertSame([], $this->config->getIgnoredExceptions());
+	}
+
+	public function testGetIgnoredExceptionsNormalizesValues(): void {
+		$this->nextcloudConfig
+			->method('getSystemValue')
+			->with('sentry.ignored-exceptions', [])
+			->willReturn(['\\RuntimeException', 42, 'OCP\\Files\\NotFoundException']);
+
+		$this->assertSame(
+			['RuntimeException', 'OCP\\Files\\NotFoundException'],
+			$this->config->getIgnoredExceptions(),
+		);
+	}
+
+	public function testGetIgnoredExceptionsWithInvalidValue(): void {
+		$this->nextcloudConfig
+			->method('getSystemValue')
+			->with('sentry.ignored-exceptions', [])
+			->willReturn('RuntimeException');
+
+		$this->assertSame([], $this->config->getIgnoredExceptions());
+	}
+
+	public function testSetIgnoredExceptions(): void {
+		$this->nextcloudConfig
+			->expects($this->once())
+			->method('setSystemValue')
+			->with('sentry.ignored-exceptions', ['RuntimeException']);
+
+		$this->config->setIgnoredExceptions(['RuntimeException']);
+	}
+
+	public function testSetIgnoredExceptionsDeletesEmptyList(): void {
+		$this->nextcloudConfig
+			->expects($this->never())
+			->method('setSystemValue');
+		$this->nextcloudConfig
+			->expects($this->once())
+			->method('deleteSystemValue')
+			->with('sentry.ignored-exceptions');
+
+		$this->config->setIgnoredExceptions([]);
+	}
+
+	public function testGetIgnoredMessagesDropsInvalidValues(): void {
+		$this->nextcloudConfig
+			->method('getSystemValue')
+			->with('sentry.ignored-messages', [])
+			->willReturn(['', 42, 'quota exceeded', null]);
+
+		$this->assertSame(['quota exceeded'], $this->config->getIgnoredMessages());
+	}
+
+	public function testGetIgnoredMessagesWithInvalidValue(): void {
+		$this->nextcloudConfig
+			->method('getSystemValue')
+			->with('sentry.ignored-messages', [])
+			->willReturn('quota exceeded');
+
+		$this->assertSame([], $this->config->getIgnoredMessages());
+	}
 }

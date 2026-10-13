@@ -28,7 +28,14 @@ namespace OCA\Tests\Unit\Reporter;
 use ChristophWurst\Nextcloud\Testing\ServiceMockObject;
 use ChristophWurst\Nextcloud\Testing\TestCase;
 use Exception;
+use OCA\Sentry\Config;
+use OCA\Sentry\Helper\CredentialStoreHelper;
 use OCA\Sentry\Reporter\SentryReporterAdapter;
+use OCP\Defaults;
+use OCP\IConfig;
+use OCP\IUserSession;
+use Sentry\ClientInterface;
+use Sentry\SentrySdk;
 
 final class SentryReporterAdapterTest extends TestCase {
 
@@ -43,6 +50,13 @@ final class SentryReporterAdapterTest extends TestCase {
 
 		$this->serviceMock = $this->createServiceMock(SentryReporterAdapter::class);
 		$this->adapter = $this->serviceMock->getService();
+	}
+
+	protected function tearDown(): void {
+		// Reset the global hub in case a test bound a client mock
+		SentrySdk::init();
+
+		parent::tearDown();
 	}
 
 	public function testReportAnonymously(): void {
@@ -61,6 +75,60 @@ final class SentryReporterAdapterTest extends TestCase {
 			->method('getUser')
 			->willReturn($user);
 		$this->adapter->collect('msg 1', 'log');
+	}
+
+	public function testReportMessageIgnoresMessageContainingIgnoredText(): void {
+		$client = $this->createMock(ClientInterface::class);
+		$client->expects($this->never())
+			->method('captureMessage');
+		SentrySdk::getCurrentHub()->bindClient($client);
+		$adapter = $this->createAdapterWithIgnoredMessages([
+			'file is GONE',
+		]);
+
+		$adapter->reportMessage('Uncaught OCP\\Files\\NotFoundException: File is gone', ['app' => 'files']);
+	}
+
+	public function testReportMessageIgnoresNonAsciiTextCaseInsensitively(): void {
+		$client = $this->createMock(ClientInterface::class);
+		$client->expects($this->never())
+			->method('captureMessage');
+		SentrySdk::getCurrentHub()->bindClient($client);
+		$adapter = $this->createAdapterWithIgnoredMessages([
+			'ÉCHEC DE CONNEXION',
+		]);
+
+		$adapter->reportMessage('échec de connexion au serveur');
+	}
+
+	public function testReportMessageReportsOtherMessages(): void {
+		$client = $this->createMock(ClientInterface::class);
+		$client->expects($this->once())
+			->method('captureMessage')
+			->with('[files] Uncaught RuntimeException: something broke');
+		SentrySdk::getCurrentHub()->bindClient($client);
+		$adapter = $this->createAdapterWithIgnoredMessages([
+			'file is gone',
+		]);
+
+		$adapter->reportMessage('Uncaught RuntimeException: something broke', ['app' => 'files']);
+	}
+
+	private function createAdapterWithIgnoredMessages(array $ignoredMessages): SentryReporterAdapter {
+		$config = $this->createMock(IConfig::class);
+		$config->method('getSystemValueInt')
+			->willReturnArgument(1);
+		$config->method('getSystemValue')
+			->with('sentry.ignored-messages', [])
+			->willReturn($ignoredMessages);
+
+		return new SentryReporterAdapter(
+			$this->createMock(IUserSession::class),
+			$config,
+			$this->createMock(CredentialStoreHelper::class),
+			$this->createMock(Defaults::class),
+			new Config($config),
+		);
 	}
 
 }

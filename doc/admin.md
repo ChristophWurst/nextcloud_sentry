@@ -61,3 +61,35 @@ or add the entry directly to `config/config.php`
 ```
 
 The value needs to be a number between 0 and 4, where 0 is debug, 1 is info, 2 is warning, 3 is error and 4 is fatal.
+
+### Ignored exceptions and Ignored messages
+
+The setting `sentry.ignored-exceptions` and `sentry.ignored-messages` can be used to prevent specific exception types and messages containing specific texts from being sent to the Sentry instance, e.g. expected or non-actionable exceptions that only generate noise. Subclasses of the configured exception classes are ignored as well, and so are exceptions that wrap one of them as a previous exception. Reported messages that contain one of the `sentry.ignored-messages` texts (case-insensitive) are not sent.
+
+You can manage the list via the command line:
+
+```bash
+php occ sentry:ignored-exceptions list                     # add --output=json for machine-readable output
+php occ sentry:ignored-exceptions add 'OCP\Files\NotFoundException'
+php occ sentry:ignored-exceptions remove 'OC\ServerNotAvailableException'
+```
+
+```bash
+php occ sentry:ignored-messages list                       # add --output=json for machine-readable output
+php occ sentry:ignored-messages add 'this is a test message'
+php occ sentry:ignored-messages remove 'this is a test message'
+```
+
+or add the entries directly to `config/config.php`
+
+```php
+  "sentry.ignored-exceptions" => [
+    \OCP\Files\NotFoundException::class,
+    'OC\\ServerNotAvailableException',
+  ],
+  "sentry.ignored-messages" => [
+    'this is a test message',
+  ],
+```
+
+This only applies to server-side (PHP) exceptions.
