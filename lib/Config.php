@@ -110,4 +110,58 @@ class Config {
 	public function getMaxRequestBodySize(): string {
 		return $this->config->getSystemValueString('sentry.max-request-body-size', 'never');
 	}
+
+	/**
+	 * @return list<string> fully qualified class names without a leading backslash
+	 */
+	public function getIgnoredExceptions(): array {
+		$ignoredExceptions = $this->config->getSystemValue('sentry.ignored-exceptions', []);
+		if (!is_array($ignoredExceptions)) {
+			return [];
+		}
+
+		return array_map(
+			static fn (string $class): string => ltrim($class, '\\'),
+			array_values(array_filter($ignoredExceptions, 'is_string')),
+		);
+	}
+
+	/**
+	 * @param list<string> $ignoredExceptions
+	 */
+	public function setIgnoredExceptions(array $ignoredExceptions): void {
+		if ($ignoredExceptions === []) {
+			$this->config->deleteSystemValue('sentry.ignored-exceptions');
+			return;
+		}
+
+		$this->config->setSystemValue('sentry.ignored-exceptions', array_values($ignoredExceptions));
+	}
+
+	/**
+	 * @return list<string> non-empty texts; an empty one would match every message
+	 */
+	public function getIgnoredMessages(): array {
+		$ignoredMessages = $this->config->getSystemValue('sentry.ignored-messages', []);
+		if (!is_array($ignoredMessages)) {
+			return [];
+		}
+
+		return array_values(array_filter(
+			$ignoredMessages,
+			static fn ($message): bool => is_string($message) && $message !== '',
+		));
+	}
+
+	/**
+	 * @param list<string> $ignoredMessages
+	 */
+	public function setIgnoredMessages(array $ignoredMessages): void {
+		if ($ignoredMessages === []) {
+			$this->config->deleteSystemValue('sentry.ignored-messages');
+			return;
+		}
+
+		$this->config->setSystemValue('sentry.ignored-messages', array_values($ignoredMessages));
+	}
 }

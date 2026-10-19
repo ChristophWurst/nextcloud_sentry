@@ -25,6 +25,7 @@ declare(strict_types=1);
 namespace OCA\Sentry\Reporter;
 
 use Exception;
+use OCA\Sentry\Config;
 use OCA\Sentry\Helper\CredentialStoreHelper;
 use OCP\Authentication\Exceptions\CredentialsUnavailableException;
 use OCP\Defaults;
@@ -47,6 +48,7 @@ class SentryReporterAdapter implements IMessageReporter, ICollectBreadcrumbs, IS
 	protected IUserSession $userSession;
 	private IConfig $config;
 	private Defaults $defaults;
+	private Config $sentryConfig;
 	private bool $userScopeSet = false;
 
 	/** @var array mapping of log levels */
@@ -65,10 +67,12 @@ class SentryReporterAdapter implements IMessageReporter, ICollectBreadcrumbs, IS
 		IConfig $config,
 		private CredentialStoreHelper $credentialStoreHelper,
 		Defaults $defaults,
+		Config $sentryConfig,
 	) {
 		$this->userSession = $userSession;
 		$this->config = $config;
 		$this->minimumLogLevel = $config->getSystemValueInt('sentry.minimum.log.level', ILogger::WARN);
+		$this->sentryConfig = $sentryConfig;
 		$this->defaults = $defaults;
 	}
 
@@ -88,6 +92,16 @@ class SentryReporterAdapter implements IMessageReporter, ICollectBreadcrumbs, IS
 		$this->setSentryScope($context);
 
 		captureException($exception);
+	}
+
+	private function isIgnoredMessage(string $message): bool {
+		foreach ($this->sentryConfig->getIgnoredMessages() as $ignoredMessage) {
+			if (mb_stripos($message, $ignoredMessage) !== false) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	protected function setSentryScope(array $context): void {
@@ -156,6 +170,9 @@ class SentryReporterAdapter implements IMessageReporter, ICollectBreadcrumbs, IS
 		if (isset($context['level'])
 			&& $context['level'] < $this->minimumLogLevel) {
 			$this->collect($message, 'message', $context);
+			return;
+		}
+		if ($this->isIgnoredMessage($message)) {
 			return;
 		}
 
