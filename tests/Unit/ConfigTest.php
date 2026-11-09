@@ -77,7 +77,7 @@ final class ConfigTest extends TestCase {
 		$this->assertSame('https://public@sentry.example.com/1', $result);
 	}
 
-	public function testGetPublicDsnFallsBackToDeprecatedDsn(): void {
+	public function testGetPublicDsnFallsBackToDeprecatedDsnAndStripsSecret(): void {
 		$this->nextcloudConfig
 			->method('getSystemValueString')
 			->willReturnMap([
@@ -87,7 +87,20 @@ final class ConfigTest extends TestCase {
 
 		$result = $this->config->getPublicDsn();
 
-		$this->assertSame('https://public:secret@sentry.example.com/1', $result);
+		$this->assertSame('https://public@sentry.example.com/1', $result);
+	}
+
+	public function testGetPublicDsnReturnsNullForInvalidDeprecatedDsn(): void {
+		$this->nextcloudConfig
+			->method('getSystemValueString')
+			->willReturnMap([
+				['sentry.public-dsn', '', ''],
+				['sentry.dsn', '', 'not-a-dsn'],
+			]);
+
+		$result = $this->config->getPublicDsn();
+
+		$this->assertNull($result);
 	}
 
 	public function testGetPublicDsnReturnsNullWhenBothEmpty(): void {

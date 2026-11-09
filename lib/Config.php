@@ -26,6 +26,7 @@ declare(strict_types=1);
 namespace OCA\Sentry;
 
 use OCP\IConfig;
+use Sentry\Dsn;
 
 class Config {
 
@@ -44,15 +45,20 @@ class Config {
 		}
 
 		// Fall back to the deprecated DSN (Legacy) config so existing setups
-		// that only set `sentry.dsn` keep working without manual changes.
-		// Sentry SDKs ignore the secret part of a legacy DSN, so this is safe.
+		// that only set `sentry.dsn` keep working without manual changes. The
+		// secret is stripped before the value is returned, since this DSN is
+		// also exposed to the browser and must never carry it.
 		$deprecatedDsn = $this->config->getSystemValueString('sentry.dsn');
 
-		if ($deprecatedDsn !== '') {
-			return $deprecatedDsn;
+		if ($deprecatedDsn === '') {
+			return null;
 		}
 
-		return null;
+		try {
+			return (string)Dsn::createFromString($deprecatedDsn);
+		} catch (\InvalidArgumentException) {
+			return null;
+		}
 	}
 
 	public function getCspReportUrl(): ?string {

@@ -16,7 +16,7 @@ or add the entry directly to `config/config.php`
 
 ### Deprecated `sentry.dsn`
 
-Older versions of this app also required a separate `sentry.dsn` config, using the "DSN (Legacy)" value that included a secret key. This is no longer needed: as of Sentry 9, the secret key is not required and this app now only uses `sentry.public-dsn`. If you still have `sentry.dsn` configured, it continues to work as a fallback for server-side reporting, but you should remove it and rely solely on `sentry.public-dsn`.
+Older versions of this app also required a separate `sentry.dsn` config, using the "DSN (Legacy)" value that included a secret key. This is no longer needed: as of Sentry 9, the secret key is not required and this app now only uses `sentry.public-dsn`. If you still have `sentry.dsn` configured, it continues to work as a fallback (its secret is stripped automatically before use), but you should remove it and rely solely on `sentry.public-dsn`.
 
 ### Sampling rate
 
