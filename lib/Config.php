@@ -26,6 +26,7 @@ declare(strict_types=1);
 namespace OCA\Sentry;
 
 use OCP\IConfig;
+use Sentry\Dsn;
 
 class Config {
 
@@ -39,24 +40,25 @@ class Config {
 	public function getPublicDsn(): ?string {
 		$publicDsn = $this->config->getSystemValueString('sentry.public-dsn');
 
-		if ($publicDsn === '') {
+		if ($publicDsn !== '') {
+			return $publicDsn;
+		}
+
+		// Fall back to the deprecated DSN (Legacy) config so existing setups
+		// that only set `sentry.dsn` keep working without manual changes. The
+		// secret is stripped before the value is returned, since this DSN is
+		// also exposed to the browser and must never carry it.
+		$deprecatedDsn = $this->config->getSystemValueString('sentry.dsn');
+
+		if ($deprecatedDsn === '') {
 			return null;
 		}
 
-		return $publicDsn;
-	}
-
-	/**
-	 * @deprecated use getPublicDsn() instead
-	 */
-	public function getDsn(): ?string {
-		$dsn = $this->config->getSystemValueString('sentry.dsn');
-
-		if ($dsn !== '') {
-			return $dsn;
+		try {
+			return (string)Dsn::createFromString($deprecatedDsn);
+		} catch (\InvalidArgumentException) {
+			return null;
 		}
-
-		return $this->getPublicDsn();
 	}
 
 	public function getCspReportUrl(): ?string {
