@@ -6,11 +6,11 @@ namespace OCA\Sentry\Tests\Integration;
 
 use ChristophWurst\Nextcloud\Testing\TestCase;
 use OCP\Http\Client\IClientService;
-use OCP\IServerContainer;
+use Psr\Container\ContainerInterface;
 
 final class GuzzleTest extends TestCase {
 
-	/** @var IServerContainer */
+	/** @var ContainerInterface */
 	private $container;
 
 	protected function setUp(): void {
@@ -21,7 +21,7 @@ final class GuzzleTest extends TestCase {
 
 	public function testHttpClient(): void {
 		/** @var IClientService $clientFactory */
-		$clientFactory = $this->container->query(IClientService::class);
+		$clientFactory = $this->container->get(IClientService::class);
 		$client = $clientFactory->newClient();
 
 		$client->get('https://example.com/');
