@@ -39,24 +39,20 @@ class Config {
 	public function getPublicDsn(): ?string {
 		$publicDsn = $this->config->getSystemValueString('sentry.public-dsn');
 
-		if ($publicDsn === '') {
-			return null;
+		if ($publicDsn !== '') {
+			return $publicDsn;
 		}
 
-		return $publicDsn;
-	}
+		// Fall back to the deprecated DSN (Legacy) config so existing setups
+		// that only set `sentry.dsn` keep working without manual changes.
+		// Sentry SDKs ignore the secret part of a legacy DSN, so this is safe.
+		$deprecatedDsn = $this->config->getSystemValueString('sentry.dsn');
 
-	/**
-	 * @deprecated use getPublicDsn() instead
-	 */
-	public function getDsn(): ?string {
-		$dsn = $this->config->getSystemValueString('sentry.dsn');
-
-		if ($dsn !== '') {
-			return $dsn;
+		if ($deprecatedDsn !== '') {
+			return $deprecatedDsn;
 		}
 
-		return $this->getPublicDsn();
+		return null;
 	}
 
 	public function getCspReportUrl(): ?string {

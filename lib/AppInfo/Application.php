@@ -68,7 +68,7 @@ class Application extends App implements IBootstrap {
 
 		$context->injectFn(static function (Config $config) {
 			// Now it's time to connect Sentry
-			$dsn = $config->getDsn();
+			$dsn = $config->getPublicDsn();
 			if ($dsn !== null) {
 				initSentry([
 					'dsn' => $dsn,

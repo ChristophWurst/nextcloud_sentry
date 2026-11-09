@@ -43,8 +43,10 @@ final class ConfigTest extends TestCase {
 	public function testGetPublicDsnReturnsNullWhenEmpty(): void {
 		$this->nextcloudConfig
 			->method('getSystemValueString')
-			->with('sentry.public-dsn')
-			->willReturn('');
+			->willReturnMap([
+				['sentry.public-dsn', '', ''],
+				['sentry.dsn', '', ''],
+			]);
 
 		$result = $this->config->getPublicDsn();
 
@@ -62,38 +64,38 @@ final class ConfigTest extends TestCase {
 		$this->assertSame('https://key@sentry.example.com/1', $result);
 	}
 
-	public function testGetDsnPrefersDeprecatedKey(): void {
+	public function testGetPublicDsnPrefersPublicDsn(): void {
 		$this->nextcloudConfig
 			->method('getSystemValueString')
 			->willReturnMap([
-				['sentry.dsn', '', 'https://secret@sentry.example.com/1'],
 				['sentry.public-dsn', '', 'https://public@sentry.example.com/1'],
+				['sentry.dsn', '', 'https://public:secret@sentry.example.com/1'],
 			]);
 
-		$result = $this->config->getDsn();
-
-		$this->assertSame('https://secret@sentry.example.com/1', $result);
-	}
-
-	public function testGetDsnFallsBackToPublicDsn(): void {
-		$this->nextcloudConfig
-			->method('getSystemValueString')
-			->willReturnMap([
-				['sentry.dsn', '', ''],
-				['sentry.public-dsn', '', 'https://public@sentry.example.com/1'],
-			]);
-
-		$result = $this->config->getDsn();
+		$result = $this->config->getPublicDsn();
 
 		$this->assertSame('https://public@sentry.example.com/1', $result);
 	}
 
-	public function testGetDsnReturnsNullWhenBothEmpty(): void {
+	public function testGetPublicDsnFallsBackToDeprecatedDsn(): void {
+		$this->nextcloudConfig
+			->method('getSystemValueString')
+			->willReturnMap([
+				['sentry.public-dsn', '', ''],
+				['sentry.dsn', '', 'https://public:secret@sentry.example.com/1'],
+			]);
+
+		$result = $this->config->getPublicDsn();
+
+		$this->assertSame('https://public:secret@sentry.example.com/1', $result);
+	}
+
+	public function testGetPublicDsnReturnsNullWhenBothEmpty(): void {
 		$this->nextcloudConfig
 			->method('getSystemValueString')
 			->willReturn('');
 
-		$result = $this->config->getDsn();
+		$result = $this->config->getPublicDsn();
 
 		$this->assertNull($result);
 	}

@@ -2,21 +2,21 @@
 
 ## Configuration
 
-This app needs both a valid Sentry DSN to operate and a deprecated Sentry DSN. From the "Client Keys" tab in your Sentry project, use the "DSN" as `sentry.public-dsn` and the "deprecated DSN" as `sentry.dsn`. You can set these values via the command line:
+This app needs a valid Sentry DSN to operate. From the "Client Keys" tab in your Sentry project, use the "DSN" as `sentry.public-dsn`. This single DSN is used for both server-side and client-side (browser) error reporting. You can set it via the command line:
 
 ```bash
-php occ config:system:set sentry.dsn --value=https://xxxxx:yyyyy@sentry.io/1234567
 php occ config:system:set sentry.public-dsn --value=https://xxxxx@sentry.io/1234567
 ```
 
-or add the entries directly to `config/config.php`
+or add the entry directly to `config/config.php`
 
 ```php
-  "sentry.dsn" => "https://xxxxx:yyyyy@sentry.io/1234567",
   "sentry.public-dsn" => "https://xxxxx@sentry.io/1234567",
 ```
 
-If you omit the `sentry.public-dsn` config, client-side (browser) errors won't be reported.
+### Deprecated `sentry.dsn`
+
+Older versions of this app also required a separate `sentry.dsn` config, using the "DSN (Legacy)" value that included a secret key. This is no longer needed: as of Sentry 9, the secret key is not required and this app now only uses `sentry.public-dsn`. If you still have `sentry.dsn` configured, it continues to work as a fallback for server-side reporting, but you should remove it and rely solely on `sentry.public-dsn`.
 
 ### Sampling rate
 
@@ -33,7 +33,6 @@ Read more at https://docs.sentry.io/platforms/php/guides/symfony/performance/.
 [Sentry can capture CSP violation reports](https://docs.sentry.io/product/security-policy-reporting/). Just set the `sentry.csp-report-url` in addition to your other configuration parameters:
 
 ```
-  "sentry.dsn" => "https://xxxxx:yyyyy@sentry.io/1234567",
   "sentry.public-dsn" => "https://xxxxx@sentry.io/1234567",
   "sentry.csp-report-url" => "https://sentry.io/api/1234567/security/?sentry_key=adf205d197bd7201da1d564379e694a2",
 ```
