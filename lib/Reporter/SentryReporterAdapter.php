@@ -26,6 +26,7 @@ namespace OCA\Sentry\Reporter;
 
 use Exception;
 use OCA\Sentry\Helper\CredentialStoreHelper;
+use OCP\App\IAppManager;
 use OCP\Authentication\Exceptions\CredentialsUnavailableException;
 use OCP\Defaults;
 use OCP\IConfig;
@@ -65,6 +66,7 @@ class SentryReporterAdapter implements IMessageReporter, ICollectBreadcrumbs, IS
 		IConfig $config,
 		private CredentialStoreHelper $credentialStoreHelper,
 		Defaults $defaults,
+		private IAppManager $appManager,
 	) {
 		$this->userSession = $userSession;
 		$this->config = $config;
@@ -99,6 +101,13 @@ class SentryReporterAdapter implements IMessageReporter, ICollectBreadcrumbs, IS
 			}
 			if (isset($context['app'])) {
 				$scope->setTag('app', $context['app']);
+				$scope->setTag('app_version', $this->getAppVersion($context['app']));
+			} else {
+				// The scope persists across calls within the same request, so a
+				// report without an app context must not inherit app tags set
+				// by an earlier one
+				$scope->removeTag('app');
+				$scope->removeTag('app_version');
 			}
 
 			$scope->setTag('instance_url', $this->config->getSystemValueString('overwrite.cli.url'));
@@ -126,6 +135,12 @@ class SentryReporterAdapter implements IMessageReporter, ICollectBreadcrumbs, IS
 				]);
 			}
 		});
+	}
+
+	private function getAppVersion(string $appId): string {
+		$version = $this->appManager->getAppVersion($appId);
+
+		return !in_array($version, ['', '0'], true) ? $version : 'unknown';
 	}
 
 	public function collect(string $message, string $category, array $context = []) {
