@@ -27,6 +27,7 @@ namespace OCA\Sentry\Command;
 
 use OCP\HintException;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Formatter\OutputFormatter;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -80,7 +81,7 @@ abstract class BaseIgnoreCommand extends Command {
 		$ignoredItems = $this->getListFromConfig();
 
 		if ($input->getOption(self::OUTPUT) === 'json') {
-			$output->writeln(json_encode($ignoredItems, JSON_THROW_ON_ERROR));
+			$output->writeln(json_encode($ignoredItems, JSON_THROW_ON_ERROR), OutputInterface::OUTPUT_RAW);
 			return 0;
 		}
 
@@ -90,7 +91,7 @@ abstract class BaseIgnoreCommand extends Command {
 		}
 
 		foreach ($ignoredItems as $ignoredItem) {
-			$output->writeln($ignoredItem);
+			$output->writeln($ignoredItem, OutputInterface::OUTPUT_RAW);
 		}
 
 		return 0;
@@ -100,7 +101,7 @@ abstract class BaseIgnoreCommand extends Command {
 		$ignoredItems = $this->getListFromConfig();
 
 		if (in_array(mb_strtolower($item), array_map('mb_strtolower', $ignoredItems), true)) {
-			$output->writeln("<comment>$item is already ignored</comment>");
+			$output->writeln("<comment>" . OutputFormatter::escape($item) . " is already ignored</comment>");
 			return 0;
 		}
 
@@ -109,7 +110,7 @@ abstract class BaseIgnoreCommand extends Command {
 			return 1;
 		}
 
-		$output->writeln("<info>Added $item</info>");
+		$output->writeln("<info>Added " . OutputFormatter::escape($item) . "</info>");
 		return 0;
 	}
 
@@ -122,7 +123,7 @@ abstract class BaseIgnoreCommand extends Command {
 		));
 
 		if (count($remaining) === count($ignoredItems)) {
-			$output->writeln("<comment>$item is not ignored</comment>");
+			$output->writeln("<comment>" . OutputFormatter::escape($item) . " is not ignored</comment>");
 			return 1;
 		}
 
@@ -130,7 +131,7 @@ abstract class BaseIgnoreCommand extends Command {
 			return 1;
 		}
 
-		$output->writeln("<info>Removed $item</info>");
+		$output->writeln("<info>Removed " . OutputFormatter::escape($item) . "</info>");
 		return 0;
 	}
 

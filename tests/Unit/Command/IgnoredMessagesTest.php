@@ -60,4 +60,12 @@ final class IgnoredMessagesTest extends TestCase {
 
 		$this->assertSame(0, $this->tester->execute(['action' => 'remove', 'args' => 'some MESSAGE']));
 	}
+
+	public function testAddPrintsMarkupLiterally(): void {
+		$this->config->method('getIgnoredMessages')->willReturn([]);
+
+		$this->tester->execute(['action' => 'add', 'args' => '<error>boom</error>']);
+
+		$this->assertStringContainsString('Added <error>boom</error>', $this->tester->getDisplay());
+	}
 }

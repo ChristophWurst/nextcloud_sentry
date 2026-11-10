@@ -120,10 +120,12 @@ class Config {
 			return [];
 		}
 
-		return array_map(
-			static fn (string $class): string => ltrim($class, '\\'),
-			array_values(array_filter($ignoredExceptions, 'is_string')),
+		$classes = array_map(
+			static fn (string $class): string => ltrim(trim($class), '\\'),
+			array_filter($ignoredExceptions, 'is_string'),
 		);
+
+		return array_values(array_filter($classes, static fn (string $class): bool => $class !== ''));
 	}
 
 	/**

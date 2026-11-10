@@ -35,7 +35,10 @@ use OCP\Defaults;
 use OCP\IConfig;
 use OCP\IUserSession;
 use Sentry\ClientInterface;
+use Sentry\Event;
+use Sentry\Options;
 use Sentry\SentrySdk;
+use Sentry\State\Scope;
 
 final class SentryReporterAdapterTest extends TestCase {
 
@@ -112,6 +115,39 @@ final class SentryReporterAdapterTest extends TestCase {
 		]);
 
 		$adapter->reportMessage('Uncaught RuntimeException: something broke', ['app' => 'files']);
+	}
+
+	public function testReportMessageIgnoresMessageMatchingAppPrefix(): void {
+		$client = $this->createMock(ClientInterface::class);
+		$client->expects($this->never())
+			->method('captureMessage');
+		SentrySdk::getCurrentHub()->bindClient($client);
+		$adapter = $this->createAdapterWithIgnoredMessages([
+			'[files] Uncaught',
+		]);
+
+		$adapter->reportMessage('Uncaught RuntimeException: something broke', ['app' => 'files']);
+	}
+
+	public function testReportMessageDoesNotCollectIgnoredMessageAsBreadcrumb(): void {
+		$client = $this->createMock(ClientInterface::class);
+		$client->method('getOptions')->willReturn(new Options());
+		SentrySdk::getCurrentHub()->bindClient($client);
+		$adapter = $this->createAdapterWithIgnoredMessages([
+			'file is gone',
+		]);
+
+		$adapter->reportMessage('File is gone', ['level' => 0]);
+		$adapter->reportMessage('Something else', ['level' => 0]);
+
+		$messages = [];
+		SentrySdk::getCurrentHub()->configureScope(static function (Scope $scope) use (&$messages): void {
+			$event = $scope->applyToEvent(Event::createEvent());
+			foreach ($event->getBreadcrumbs() as $breadcrumb) {
+				$messages[] = $breadcrumb->getMessage();
+			}
+		});
+		$this->assertSame(['Something else'], $messages);
 	}
 
 	private function createAdapterWithIgnoredMessages(array $ignoredMessages): SentryReporterAdapter {

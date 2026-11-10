@@ -83,6 +83,10 @@ class SentryReporterAdapter implements IMessageReporter, ICollectBreadcrumbs, IS
 	 * @param array $context
 	 */
 	public function report($exception, array $context = []) {
+		if ($this->isIgnoredMessage($exception->getMessage())) {
+			return;
+		}
+
 		if (isset($context['level'])
 			&& $context['level'] < $this->minimumLogLevel) {
 			// TODO: report as breadcrumb instead?
@@ -167,21 +171,23 @@ class SentryReporterAdapter implements IMessageReporter, ICollectBreadcrumbs, IS
 	 * @param array $context
 	 */
 	public function reportMessage(string $message, array $context = []): void {
+		// Match against the text as Sentry shows it, so patterns copied from Sentry work
+		$displayedMessage = isset($context['app'])
+			? '[' . $context['app'] . '] ' . $message
+			: $message;
+		if ($this->isIgnoredMessage($displayedMessage)) {
+			return;
+		}
+
 		if (isset($context['level'])
 			&& $context['level'] < $this->minimumLogLevel) {
+			// collect() adds the app prefix itself
 			$this->collect($message, 'message', $context);
 			return;
 		}
-		if ($this->isIgnoredMessage($message)) {
-			return;
-		}
-
-		if (isset($context['app'])) {
-			$message = '[' . $context['app'] . '] ' . $message;
-		}
 
 		captureMessage(
-			$message,
+			$displayedMessage,
 			new Severity(self::levels[$context['level'] ?? ILogger::WARN] ?? Severity::WARNING)
 		);
 	}

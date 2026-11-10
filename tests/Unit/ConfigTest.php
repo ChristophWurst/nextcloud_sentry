@@ -278,7 +278,7 @@ final class ConfigTest extends TestCase {
 		$this->nextcloudConfig
 			->method('getSystemValue')
 			->with('sentry.ignored-exceptions', [])
-			->willReturn(['\\RuntimeException', 42, 'OCP\\Files\\NotFoundException']);
+			->willReturn(['\\RuntimeException', 42, '\\', ' ', 'OCP\\Files\\NotFoundException']);
 
 		$this->assertSame(
 			['RuntimeException', 'OCP\\Files\\NotFoundException'],
