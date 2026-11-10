@@ -1,3 +1,20 @@
+# [8.21.0](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.20.0...v8.21.0) (2026-11-09)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sentry/browser to ^10.76.2 ([#855](https://github.com/ChristophWurst/nextcloud_sentry/issues/855)) ([9d0e0de](https://github.com/ChristophWurst/nextcloud_sentry/commit/9d0e0debba20cdcfee3dc7c50ced98401a9eacca))
+* **deps:** update dependency sentry/sentry to ^4.34.0 ([#856](https://github.com/ChristophWurst/nextcloud_sentry/issues/856)) ([10268d6](https://github.com/ChristophWurst/nextcloud_sentry/commit/10268d63ba233262288e216d78c96532f7e16ccb))
+* only use the public Sentry DSN ([#859](https://github.com/ChristophWurst/nextcloud_sentry/issues/859)) ([901ae48](https://github.com/ChristophWurst/nextcloud_sentry/commit/901ae48e5d579cd749cfb4ff6ed96168869ddb48)), closes [#55](https://github.com/ChristophWurst/nextcloud_sentry/issues/55)
+* use ContainerInterface::get() in GuzzleTest instead of removed query() ([0589f6f](https://github.com/ChristophWurst/nextcloud_sentry/commit/0589f6fa74cff91c3131107d87374461cf2f968f))
+
+
+### Features
+
+* tag app version on Sentry reports ([64d1b83](https://github.com/ChristophWurst/nextcloud_sentry/commit/64d1b83fd81b5ba12475b8b6aceaf0b042190698))
+
+
+
 # [8.20.0](https://github.com/ChristophWurst/nextcloud_sentry/compare/v8.19.1...v8.20.0) (2026-08-26)
 
 

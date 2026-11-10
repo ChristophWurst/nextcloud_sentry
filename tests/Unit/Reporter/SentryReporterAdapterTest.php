@@ -20,7 +20,7 @@ declare(strict_types=1);
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace OCA\Tests\Unit\Reporter;
@@ -39,6 +39,7 @@ use Sentry\Event;
 use Sentry\Options;
 use Sentry\SentrySdk;
 use Sentry\State\Scope;
+use function Sentry\configureScope;
 
 final class SentryReporterAdapterTest extends TestCase {
 
@@ -165,6 +166,73 @@ final class SentryReporterAdapterTest extends TestCase {
 			$this->createMock(Defaults::class),
 			new Config($config),
 		);
+	}
+
+	public function testReportTagsAppVersion(): void {
+		$user = null;
+		$this->serviceMock->getParameter('userSession')
+			->expects($this->once())
+			->method('getUser')
+			->willReturn($user);
+		$this->serviceMock->getParameter('appManager')
+			->expects($this->once())
+			->method('getAppVersion')
+			->with('contacts')
+			->willReturn('5.1.0');
+
+		$this->adapter->report(new Exception(), ['app' => 'contacts']);
+	}
+
+	public function testReportTagsUnknownAppVersionWhenAppVersionIsZero(): void {
+		$user = null;
+		$this->serviceMock->getParameter('userSession')
+			->expects($this->once())
+			->method('getUser')
+			->willReturn($user);
+		$this->serviceMock->getParameter('appManager')
+			->expects($this->once())
+			->method('getAppVersion')
+			->with('contacts')
+			->willReturn('0');
+
+		$this->adapter->report(new Exception(), ['app' => 'contacts']);
+	}
+
+	public function testReportTagsUnknownAppVersionWhenAppVersionIsEmpty(): void {
+		$user = null;
+		$this->serviceMock->getParameter('userSession')
+			->expects($this->once())
+			->method('getUser')
+			->willReturn($user);
+		$this->serviceMock->getParameter('appManager')
+			->expects($this->once())
+			->method('getAppVersion')
+			->with('contacts')
+			->willReturn('');
+
+		$this->adapter->report(new Exception(), ['app' => 'contacts']);
+	}
+
+	public function testReportDoesNotLeakAppTagsIntoReportWithoutAppContext(): void {
+		$this->serviceMock->getParameter('userSession')
+			->method('getUser')
+			->willReturn(null);
+		$this->serviceMock->getParameter('appManager')
+			->expects($this->once())
+			->method('getAppVersion')
+			->with('contacts')
+			->willReturn('5.1.0');
+
+		$this->adapter->report(new Exception(), ['app' => 'contacts']);
+		$this->adapter->report(new Exception());
+
+		$tags = null;
+		configureScope(function (Scope $scope) use (&$tags): void {
+			$tags = (new ReflectionProperty($scope, 'tags'))->getValue($scope);
+		});
+
+		$this->assertArrayNotHasKey('app', $tags);
+		$this->assertArrayNotHasKey('app_version', $tags);
 	}
 
 }
