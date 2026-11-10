@@ -22,5 +22,11 @@
 				<referencedClass name="Symfony\Component\Console\Command\Command" />
 			</errorLevel>
 		</UndefinedClass>
+		<MissingDependency>
+			<!-- Symfony Command is provided by the Nextcloud server at runtime -->
+			<errorLevel type="suppress">
+				<directory name="lib/Command" />
+			</errorLevel>
+		</MissingDependency>
 	</issueHandlers>
 </psalm>

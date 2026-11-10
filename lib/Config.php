@@ -139,7 +139,7 @@ class Config {
 			return;
 		}
 
-		$this->config->setSystemValue('sentry.ignored-exceptions', array_values($ignoredExceptions));
+		$this->config->setSystemValue('sentry.ignored-exceptions', $ignoredExceptions);
 	}
 
 	/**
@@ -166,6 +166,6 @@ class Config {
 			return;
 		}
 
-		$this->config->setSystemValue('sentry.ignored-messages', array_values($ignoredMessages));
+		$this->config->setSystemValue('sentry.ignored-messages', $ignoredMessages);
 	}
 }

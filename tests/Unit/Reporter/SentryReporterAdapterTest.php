@@ -28,9 +28,11 @@ namespace OCA\Tests\Unit\Reporter;
 use ChristophWurst\Nextcloud\Testing\ServiceMockObject;
 use ChristophWurst\Nextcloud\Testing\TestCase;
 use Exception;
+use ReflectionProperty;
 use OCA\Sentry\Config;
 use OCA\Sentry\Helper\CredentialStoreHelper;
 use OCA\Sentry\Reporter\SentryReporterAdapter;
+use OCP\App\IAppManager;
 use OCP\Defaults;
 use OCP\IConfig;
 use OCP\IUserSession;
@@ -165,6 +167,7 @@ final class SentryReporterAdapterTest extends TestCase {
 			$this->createMock(CredentialStoreHelper::class),
 			$this->createMock(Defaults::class),
 			new Config($config),
+			$this->createMock(IAppManager::class),
 		);
 	}
 
