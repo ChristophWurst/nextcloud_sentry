@@ -36,6 +36,9 @@
 	"scripts": {
 		"cs:fix": "php-cs-fixer fix",
 		"lint": "find . -name \\*.php -not -path './vendor/*' -not -path './build/*' -print0 | xargs -0 -n1 php -l",
+		"post-install-cmd": [
+			"@composer bin all install --ansi"
+		],
 		"psalm": "psalm.phar",
 		"rector": "rector process",
 		"test:integration": "phpunit -c tests/phpunit.integration.xml tests/Integration --fail-on-warning",

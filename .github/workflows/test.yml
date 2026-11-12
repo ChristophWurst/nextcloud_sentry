@@ -46,9 +46,7 @@ jobs:
         path: nextcloud/apps/sentry
     - name: Install dependencies
       working-directory: nextcloud/apps/sentry
-      run: |
-        composer install
-        composer bin phpunit install
+      run: composer install
     - name: Run tests
       working-directory: nextcloud/apps/sentry
       run: composer run test:unit
@@ -94,9 +92,7 @@ jobs:
                 path: nextcloud/apps/sentry
           - name: Install dependencies
             working-directory: nextcloud/apps/sentry
-            run: |
-              composer install
-              composer bin phpunit install
+            run: composer install
           - name: Install sentry
             run: php -f nextcloud/occ app:enable sentry
           - name: Configure Nextcloud for testing
