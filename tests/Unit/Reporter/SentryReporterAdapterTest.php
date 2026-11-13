@@ -20,7 +20,7 @@ declare(strict_types=1);
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace OCA\Tests\Unit\Reporter;
@@ -28,8 +28,18 @@ namespace OCA\Tests\Unit\Reporter;
 use ChristophWurst\Nextcloud\Testing\ServiceMockObject;
 use ChristophWurst\Nextcloud\Testing\TestCase;
 use Exception;
-use OCA\Sentry\Reporter\SentryReporterAdapter;
 use ReflectionProperty;
+use OCA\Sentry\Config;
+use OCA\Sentry\Helper\CredentialStoreHelper;
+use OCA\Sentry\Reporter\SentryReporterAdapter;
+use OCP\App\IAppManager;
+use OCP\Defaults;
+use OCP\IConfig;
+use OCP\IUserSession;
+use Sentry\ClientInterface;
+use Sentry\Event;
+use Sentry\Options;
+use Sentry\SentrySdk;
 use Sentry\State\Scope;
 use function Sentry\configureScope;
 
@@ -48,6 +58,13 @@ final class SentryReporterAdapterTest extends TestCase {
 		$this->adapter = $this->serviceMock->getService();
 	}
 
+	protected function tearDown(): void {
+		// Reset the global hub in case a test bound a client mock
+		SentrySdk::init();
+
+		parent::tearDown();
+	}
+
 	public function testReportAnonymously(): void {
 		$user = null;
 		$this->serviceMock->getParameter('userSession')
@@ -64,6 +81,94 @@ final class SentryReporterAdapterTest extends TestCase {
 			->method('getUser')
 			->willReturn($user);
 		$this->adapter->collect('msg 1', 'log');
+	}
+
+	public function testReportMessageIgnoresMessageContainingIgnoredText(): void {
+		$client = $this->createMock(ClientInterface::class);
+		$client->expects($this->never())
+			->method('captureMessage');
+		SentrySdk::getCurrentHub()->bindClient($client);
+		$adapter = $this->createAdapterWithIgnoredMessages([
+			'file is GONE',
+		]);
+
+		$adapter->reportMessage('Uncaught OCP\\Files\\NotFoundException: File is gone', ['app' => 'files']);
+	}
+
+	public function testReportMessageIgnoresNonAsciiTextCaseInsensitively(): void {
+		$client = $this->createMock(ClientInterface::class);
+		$client->expects($this->never())
+			->method('captureMessage');
+		SentrySdk::getCurrentHub()->bindClient($client);
+		$adapter = $this->createAdapterWithIgnoredMessages([
+			'ÉCHEC DE CONNEXION',
+		]);
+
+		$adapter->reportMessage('échec de connexion au serveur');
+	}
+
+	public function testReportMessageReportsOtherMessages(): void {
+		$client = $this->createMock(ClientInterface::class);
+		$client->expects($this->once())
+			->method('captureMessage')
+			->with('[files] Uncaught RuntimeException: something broke');
+		SentrySdk::getCurrentHub()->bindClient($client);
+		$adapter = $this->createAdapterWithIgnoredMessages([
+			'file is gone',
+		]);
+
+		$adapter->reportMessage('Uncaught RuntimeException: something broke', ['app' => 'files']);
+	}
+
+	public function testReportMessageIgnoresMessageMatchingAppPrefix(): void {
+		$client = $this->createMock(ClientInterface::class);
+		$client->expects($this->never())
+			->method('captureMessage');
+		SentrySdk::getCurrentHub()->bindClient($client);
+		$adapter = $this->createAdapterWithIgnoredMessages([
+			'[files] Uncaught',
+		]);
+
+		$adapter->reportMessage('Uncaught RuntimeException: something broke', ['app' => 'files']);
+	}
+
+	public function testReportMessageDoesNotCollectIgnoredMessageAsBreadcrumb(): void {
+		$client = $this->createMock(ClientInterface::class);
+		$client->method('getOptions')->willReturn(new Options());
+		SentrySdk::getCurrentHub()->bindClient($client);
+		$adapter = $this->createAdapterWithIgnoredMessages([
+			'file is gone',
+		]);
+
+		$adapter->reportMessage('File is gone', ['level' => 0]);
+		$adapter->reportMessage('Something else', ['level' => 0]);
+
+		$messages = [];
+		SentrySdk::getCurrentHub()->configureScope(static function (Scope $scope) use (&$messages): void {
+			$event = $scope->applyToEvent(Event::createEvent());
+			foreach ($event->getBreadcrumbs() as $breadcrumb) {
+				$messages[] = $breadcrumb->getMessage();
+			}
+		});
+		$this->assertSame(['Something else'], $messages);
+	}
+
+	private function createAdapterWithIgnoredMessages(array $ignoredMessages): SentryReporterAdapter {
+		$config = $this->createMock(IConfig::class);
+		$config->method('getSystemValueInt')
+			->willReturnArgument(1);
+		$config->method('getSystemValue')
+			->with('sentry.ignored-messages', [])
+			->willReturn($ignoredMessages);
+
+		return new SentryReporterAdapter(
+			$this->createMock(IUserSession::class),
+			$config,
+			$this->createMock(CredentialStoreHelper::class),
+			$this->createMock(Defaults::class),
+			new Config($config),
+			$this->createMock(IAppManager::class),
+		);
 	}
 
 	public function testReportTagsAppVersion(): void {
